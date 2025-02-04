@@ -13,6 +13,7 @@ import persistStore from "redux-persist/es/persistStore";
 // import vehicleReducer from "../features/Slices/VehicleSlice/vehicleSlice";
 
 import teamsReducer from "../features/slices/teamsSlice";
+import focusAreaReducer from "../features/slices/focusAreaSlice";
 // import newsReducer from "../features/slices/newsSlice";
 
 const persistConfig = {
@@ -34,6 +35,7 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
+  focusArea: focusAreaReducer,
 });
 
 const rootReducer = (state, action) => {

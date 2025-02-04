@@ -15,7 +15,7 @@ const EditTeam = () => {
     dispatch(getSingleTeam(id));
   }, [dispatch, id]);
 
-  const [imagePreview, setImagePreview] = useState(null); // For image preview
+  const [imagePreview, setImagePreview] = useState(null);
   const {
     register,
     handleSubmit,

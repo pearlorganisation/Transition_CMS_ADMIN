@@ -1,34 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteTeam, getAllTeams } from "../../features/actions/teamsAction";
-
-// const teamsData = [
-//   {
-//     id: 1,
-//     name: "Shubham Mamgain",
-//     designation: "Full Stack Developer",
-//     imageUrl:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBlPlpTtK_z4wQ4W74DmV5pxpZYatxBAmzrg&s",
-//     linkedinLink: "https://linkedin/1234",
-//   },
-//   {
-//     id: 2,
-//     name: "Abhishek Bahuguna",
-//     designation: "Vice President",
-//     imageUrl:
-//       "https://static1.squarespace.com/static/656f4e4dababbd7c042c4946/657236350931ee4538eea52c/65baf15103d8ad2826032a8a/1727029299965/how-to-stop-being-a-people-pleaser-1_1.jpg?format=1500w",
-//     linkedinLink: "https://linkedin/8468",
-//   },
-//   {
-//     id: 3,
-//     name: "Akriti",
-//     designation: "CEO",
-//     imageUrl:
-//       "https://img.freepik.com/free-photo/man-woman-covered-with-american-flag-isolated-blue-wall-unity-american-people_231208-11968.jpg",
-//     linkedinLink: "https://linkedin/5989",
-//   },
-// ];
 
 const Team = () => {
   const dispatch = useDispatch();

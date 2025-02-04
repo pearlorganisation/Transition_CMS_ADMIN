@@ -10,6 +10,14 @@ import AddTeam from "../pages/Team/AddTeam";
 import EditTeam from "../pages/Team/EditTeam";
 import ViewNews from "../pages/News/ViewNews";
 import Viewteam from "../pages/Team/ViewTeam";
+import FocusArea from "../pages/FocusArea/FocusArea";
+import AddFocusArea from "../pages/FocusArea/AddFocusArea";
+import EditFocusArea from "../pages/FocusArea/EditFocusArea";
+import ViewFocusArea from "../pages/FocusArea/ViewFocusArea";
+import FocusAreaFeature from "../pages/FocusArea/FocusAreaFeature";
+import AddFocusAreaFeature from "../pages/FocusArea/AddFocusAreaFeature";
+import EditFocusAreaFeature from "../pages/FocusArea/EditFocusAreaFeature";
+import ViewFocusAreaFeature from "../pages/FocusArea/ViewFocusAreaFeature";
 
 const Routes = createBrowserRouter([
   {
@@ -53,6 +61,42 @@ const Routes = createBrowserRouter([
       {
         path: "/team/view-team/:id",
         element: <Viewteam />,
+      },
+
+      {
+        path: "/focusarea",
+        element: <FocusArea />,
+      },
+
+      {
+        path: "/focusarea/add-focusarea",
+        element: <AddFocusArea />,
+      },
+      {
+        path: "/focusarea/edit-focusarea/:id",
+        element: <EditFocusArea />,
+      },
+      {
+        path: "/focusarea/view-focusarea/:id",
+        element: <ViewFocusArea />,
+      },
+
+      {
+        path: "/focusareafeature",
+        element: <FocusAreaFeature />,
+      },
+
+      {
+        path: "/focusarea/add-focusareafeature",
+        element: <AddFocusAreaFeature />,
+      },
+      {
+        path: "/focusarea/edit-focusareafeature/:id",
+        element: <EditFocusAreaFeature />,
+      },
+      {
+        path: "/focusarea/view-focusareafeature/:id",
+        element: <ViewFocusAreaFeature />,
       },
     ],
   },

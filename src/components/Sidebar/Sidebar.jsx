@@ -77,6 +77,34 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/focusarea",
+    name: "Focus Area",
+    icon: <FaAmazonPay />,
+    subRoutes: [
+      {
+        path: "/focusareafeature",
+        name: "List Focus Area Features",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/focusarea/add-focusareafeature",
+        name: "Add Focus Area Feature",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/focusarea",
+        name: "List Focus Areas",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/focusarea/add-focusarea",
+        name: "Add Focus Area",
+        icon: <LuWallpaper />,
+      },
+    ],
+  },
 ];
 
 // const userVendorRoutes = [

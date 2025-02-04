@@ -117,6 +117,21 @@ export const updateTeam = createAsyncThunk(
   "update/team",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
+      const formData = new FormData();
+      formData.append("image", updatedData.image[0]);
+
+      for (const key in updatedData) {
+        if (key !== "image") {
+          if (
+            typeof updatedData[key] === "object" &&
+            updatedData[key] !== null
+          ) {
+            formData.append(key, JSON.stringify(updatedData[key]));
+          } else {
+            formData.append(key, updatedData[key]);
+          }
+        }
+      }
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -124,7 +139,7 @@ export const updateTeam = createAsyncThunk(
       };
       const { data } = await axiosInstance.patch(
         `/api/v1/teams/${id}`,
-        updatedData,
+        formData,
         config
       );
       return data; // Return the updated destination
