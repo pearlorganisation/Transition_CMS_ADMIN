@@ -11,7 +11,7 @@ import persistStore from "redux-persist/es/persistStore";
 // import partnerReducer from "../features/Slices/Partner/getAllPartnerSlice";
 // import packageReducer from "../features/Slices/TripPackageSlice/packageSlice";
 // import vehicleReducer from "../features/Slices/VehicleSlice/vehicleSlice";
-
+import investerReducer from "../features/slices/CoInvester"
 import teamsReducer from "../features/slices/teamsSlice";
 // import newsReducer from "../features/slices/newsSlice";
 
@@ -34,6 +34,7 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
+  coInvestors:investerReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -10,6 +10,9 @@ import AddTeam from "../pages/Team/AddTeam";
 import EditTeam from "../pages/Team/EditTeam";
 import ViewNews from "../pages/News/ViewNews";
 import Viewteam from "../pages/Team/ViewTeam";
+import { path } from "framer-motion/client";
+import CoInvester from "../pages/CoInvester/CoInvester"
+import CoInvestorView from "../pages/CoInvester/viewInvester";
 
 const Routes = createBrowserRouter([
   {
@@ -54,6 +57,15 @@ const Routes = createBrowserRouter([
         path: "/team/view-team/:id",
         element: <Viewteam />,
       },
+
+      {
+        path:"/co-invester",
+        element:<CoInvester/>
+      },
+      {
+        path:"/Co-InvestorView",
+        element:<CoInvestorView/>
+      }
     ],
   },
 ]);

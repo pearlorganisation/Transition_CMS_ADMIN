@@ -20,27 +20,52 @@ const routes = [
     name: "Dashboard",
     icon: <FaHome />,
   },
+  // {
+  //   path: "/client",
+  //   name: "Client Panel",
+  //   icon: <Fa42Group />,
+  //   subRoutes: [
+  //     {
+  //       path: "/client/homeBanners",
+  //       name: "Home Banner",
+  //       icon: <LuWallpaper />,
+  //     },
+  //     {
+  //       path: "/client/eventBanners",
+  //       name: "Shows/Events Banner",
+  //       icon: <LuWallpaper />,
+  //     },
+  //     { path: "/client/faqs", name: "FAQs", icon: <FaQuestion /> },
+  //     {
+  //       path: "/client/listYourEvent",
+  //       name: "List Your Event",
+  //       icon: <FaQuestion />,
+  //     },
+   
+  //   ],
+  // },
+
+
   {
     path: "/client",
-    name: "Client Panel",
+    name: "Portfolio",
     icon: <Fa42Group />,
     subRoutes: [
       {
-        path: "/client/homeBanners",
-        name: "Home Banner",
-        icon: <LuWallpaper />,
+ 
       },
       {
-        path: "/client/eventBanners",
-        name: "Shows/Events Banner",
+        path: "/co-invester",
+        name: "co-invester",
         icon: <LuWallpaper />,
       },
-      { path: "/client/faqs", name: "FAQs", icon: <FaQuestion /> },
+      { path: "/Co-InvestorView", name: "FAQs", icon: <FaQuestion /> },
       {
         path: "/client/listYourEvent",
         name: "List Your Event",
         icon: <FaQuestion />,
       },
+   
     ],
   },
   {
@@ -75,6 +100,7 @@ const routes = [
         name: "Add Team",
         icon: <LuWallpaper />,
       },
+ 
     ],
   },
 ];
