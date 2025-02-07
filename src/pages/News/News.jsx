@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const newsData = [
@@ -48,7 +48,10 @@ const News = () => {
       setData(data.filter((item) => item.id !== id));
     }
   };
-
+console.log(data)
+  // useEffect(()=>{
+  //   setData(data)
+  // },[data])
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">News List</h1>
@@ -68,7 +71,7 @@ const News = () => {
             </tr>
           </thead>
           <tbody>
-            {newsData.map((item, index) => (
+            {data?.map((item, index) => (
               <tr key={item.id} className="text-center">
                 <td className="border border-gray-300 p-2">{index + 1}</td>
                 <td className="border border-gray-300 p-2 w-[20%]">
