@@ -14,6 +14,7 @@ import persistStore from "redux-persist/es/persistStore";
 
 import teamsReducer from "../features/slices/teamsSlice";
 // import newsReducer from "../features/slices/newsSlice";
+import blogsReducer from "../features/slices/Blogs/blogsSlice"
 
 const persistConfig = {
   key: "Transition_CMS_Admin",
@@ -34,6 +35,8 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
+  blogs: blogsReducer
+  
 });
 
 const rootReducer = (state, action) => {

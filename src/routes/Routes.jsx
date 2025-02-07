@@ -16,6 +16,7 @@ import Articles from "../pages/Insights/Articles/Articles";
 import AddArticle from "../pages/Insights/Articles/AddArticle";
 import AddPress from "../pages/Insights/Press/AddPress";
 import AddPodcast from "../pages/Insights/Podcast/AddPodcast";
+import UpdateArticle from "../pages/Insights/Press/EditPress";
 
 
 const Routes = createBrowserRouter([
@@ -86,6 +87,10 @@ const Routes = createBrowserRouter([
         path: "/add_press",
         element: <AddPress />,
       },
+      {
+        path:"/edit-press/:id",
+        element:<UpdateArticle />
+      }
       
     ],
   },
