@@ -88,10 +88,14 @@ const Articles = () => {
                 <td class="px-6 py-4">
                     {el?.link ? "LINK":"BODY"}
                 </td>
+
                 <td class="px-6 py-4 flex gap-4">
-                    <button   className='text-green-400 hover:text-green-500'>
+                    <Link to={`/edit-article/${el?._id}`}>
+                      <button className='text-green-400 hover:text-green-500'>
                         Edit
-                    </button>
+                      </button>
+                      </Link>
+                     
                     <button onClick={()=>deleteArticle(el?._id)}  className='text-red-400 hover:text-red-500'>
                         Delete
                     </button>

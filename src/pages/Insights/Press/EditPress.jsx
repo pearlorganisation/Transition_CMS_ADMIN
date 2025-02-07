@@ -11,7 +11,7 @@ const UpdateArticle = () => {
     const [articleType, setArticleType] = useState('link');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { singlePressData } = useSelector(state => state.blogs);
+    const { singleBlogData } = useSelector(state => state.blogs);
 
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
         defaultValues: {
@@ -31,17 +31,17 @@ const UpdateArticle = () => {
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (singlePressData) {
+        if (singleBlogData) {
             reset({
-                title: singlePressData.title || '',
-                dateMetaData: singlePressData.dateMetaData || '',
-                shortTitle: singlePressData.shortTitle || '',
-                link: singlePressData.link || '',
-                blogBody: singlePressData.blogBody || ''
+                title: singleBlogData.title || '',
+                dateMetaData: singleBlogData.dateMetaData || '',
+                shortTitle: singleBlogData.shortTitle || '',
+                link: singleBlogData.link || '',
+                blogBody: singleBlogData.blogBody || ''
             });
-            setArticleType(singlePressData.link ? 'link' : 'write');
+            setArticleType(singleBlogData.link ? 'link' : 'write');
         }
-    }, [singlePressData, reset]);
+    }, [singleBlogData, reset]);
 
     const onSubmitForm = async (data) => {
         try {
@@ -105,7 +105,7 @@ const UpdateArticle = () => {
         }
     };
 
-    if (!singlePressData) {
+    if (!singleBlogData) {
         return (
             <div className="flex justify-center items-center h-64">
                 <div className="text-gray-600">Loading...</div>
@@ -224,11 +224,11 @@ const UpdateArticle = () => {
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {errors.icon && <p className="mt-1 text-xs text-red-500">{errors.icon.message}</p>}
-                    {singlePressData.icon?.secure_url && (
+                    {singleBlogData.icon?.secure_url && (
                         <div className="mt-2">
                             <p className="text-sm text-gray-600">Current icon:</p>
                             <img
-                                src={singlePressData.icon.secure_url}
+                                src={singleBlogData.icon.secure_url}
                                 alt="Current icon"
                                 className="mt-1 h-20 w-20 object-cover rounded"
                             />

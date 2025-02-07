@@ -8,7 +8,7 @@ const initialState = {
     isLoading: false,
     isError:false,
     isSuccess:false,
-    singlePressData:{}
+    singleBlogData:{}
 }
 
 const pressSlice= createSlice({
@@ -26,14 +26,14 @@ const pressSlice= createSlice({
             state.isSuccess= false
             state.isError= true
             state.isLoading=false
-            state.singlePressData= {}
+            state.singleBlogData= {}
             toast.error(action.payload,{position:"top-center"})
         })
         .addCase(getBlogsById.fulfilled, (state, action) => {
             state.isSuccess= true
             state.isError= false
             state.isLoading= false
-            state.singlePressData= action.payload.data;
+            state.singleBlogData= action.payload.data;
             toast.success("Press fetched successfully",{position:"top-right"})
         })
     }
