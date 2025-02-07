@@ -77,6 +77,28 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/",
+    name: "Insights",
+    icon: <FaAmazonPay />,
+    subRoutes: [
+      {
+        path: "/press",
+        name: "Press",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/articles",
+        name: "Articles",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/podcast",
+        name: "Podcast",
+        icon: <LuWallpaper />,
+      },
+    ],
+  },
 ];
 
 // const userVendorRoutes = [
