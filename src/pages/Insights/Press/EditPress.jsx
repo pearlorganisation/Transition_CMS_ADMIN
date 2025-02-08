@@ -280,13 +280,13 @@ const UpdatePress = () => {
                         name='blogBody'
                         rules={{required:"Body is required"}}
                         render={({field})=>(
-                            <JoditEditor
-                                //   ref={editorRef}
-                                value={field.value}
-                                config={config}
-                                onBlur={field.onBlur}
-                                onChange={(content) => field.onChange(content)}
-                            />
+                               <JoditEditor
+                        //   ref={editorRef}
+                            value={field.value}
+                            config={config}
+                            onBlur={field.onBlur}
+                            onChange={(content) => field.onChange(content)}
+                        />
                         )}
                         />
                     </div>
