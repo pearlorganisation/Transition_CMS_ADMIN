@@ -98,6 +98,38 @@ const Routes = createBrowserRouter([
         path: "/add_press",
         element: <AddPress />,
       },
+      {
+        path: "/focusarea",
+        element: <FocusArea />,
+      },
+      {
+        path: "/focusarea/add-focusarea",
+        element: <AddFocusArea />,
+      },
+      {
+        path: "/focusarea/edit-focusarea/:id",
+        element: <EditFocusArea />,
+      },
+      {
+        path: "/focusarea/view-focusarea/:id",
+        element: <ViewFocusArea />,
+      },
+      {
+        path: "/focusareafeature",
+        element: <FocusAreaFeature />,
+      },
+      {
+        path: "/focusarea/add-focusareafeature",
+        element: <AddFocusAreaFeature />,
+      },
+      {
+        path: "/focusarea/edit-focusareafeature/:id",
+        element: <EditFocusAreaFeature />,
+      },
+      {
+        path: "/focusarea/view-focusareafeature/:id",
+        element: <ViewFocusAreaFeature />,
+      },
     ],
   },
 ]);

@@ -3,14 +3,6 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
-// import authReducer from "../features/Slices/authSlice";
-// import contactsReducer from "../features/Slices/ContactSlice/ContactsSlice";
-// import busCruiseReducer from "../features/Slices/BusCruise/busCruiseSlice";
-// import partnerTypeReducer from "../features/Slices/Partner/partnerTypeSlice";
-// import userReducer from "../features/Slices/Users/getAllUsersSlice";
-// import partnerReducer from "../features/Slices/Partner/getAllPartnerSlice";
-// import packageReducer from "../features/Slices/TripPackageSlice/packageSlice";
-// import vehicleReducer from "../features/Slices/VehicleSlice/vehicleSlice";
 
 import teamsReducer from "../features/slices/teamsSlice";
 import focusAreaReducer from "../features/slices/focusAreaSlice";
@@ -36,8 +28,8 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
-  blogs: blogsReducer
-  
+  blogs: blogsReducer,
+
   focusArea: focusAreaReducer,
 });
 
