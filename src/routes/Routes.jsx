@@ -16,6 +16,10 @@ import Articles from "../pages/Insights/Articles/Articles";
 import AddArticle from "../pages/Insights/Articles/AddArticle";
 import AddPress from "../pages/Insights/Press/AddPress";
 import AddPodcast from "../pages/Insights/Podcast/AddPodcast";
+import UpdateArticle from "../pages/Insights/Press/EditPress";
+import EditPodcast from "../pages/Insights/Podcast/EditPodcast";
+import EditArticle from "../pages/Insights/Articles/EditArticle";
+import UpdatePress from "../pages/Insights/Press/EditPress";
 
 import FocusArea from "../pages/FocusArea/FocusArea";
 import AddFocusArea from "../pages/FocusArea/AddFocusArea";
@@ -93,42 +97,6 @@ const Routes = createBrowserRouter([
       {
         path: "/add_press",
         element: <AddPress />,
-      },
-
-      {
-        path: "/focusarea",
-        element: <FocusArea />,
-      },
-
-      {
-        path: "/focusarea/add-focusarea",
-        element: <AddFocusArea />,
-      },
-      {
-        path: "/focusarea/edit-focusarea/:id",
-        element: <EditFocusArea />,
-      },
-      {
-        path: "/focusarea/view-focusarea/:id",
-        element: <ViewFocusArea />,
-      },
-
-      {
-        path: "/focusareafeature",
-        element: <FocusAreaFeature />,
-      },
-
-      {
-        path: "/focusarea/add-focusareafeature",
-        element: <AddFocusAreaFeature />,
-      },
-      {
-        path: "/focusarea/edit-focusareafeature/:id",
-        element: <EditFocusAreaFeature />,
-      },
-      {
-        path: "/focusarea/view-focusareafeature/:id",
-        element: <ViewFocusAreaFeature />,
       },
     ],
   },
