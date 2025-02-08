@@ -2,16 +2,77 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getBlogsById } from '../../../features/actions/Blogs/blogsAction'
-import { useForm } from 'react-hook-form'
+import { useForm , Controller} from 'react-hook-form'
 import axiosInstance from '../../../axiosInstance'
 import { toast } from 'react-toastify';
+import JoditEditor from 'jodit-react'
+const config = {
+    readonly: false,
+    height: 400,
+    toolbar: true,
+    buttons: [
+        "source",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "|",
+        "superscript",
+        "subscript",
+        "|",
+        "ul",
+        "ol",
+        "|",
+        "outdent",
+        "indent",
+        "|",
+        "font",
+        "fontsize",
+        "brush",
+        "paragraph",
+        "|",
+        "image",
+        "video",
+        "file",
+        "table",
+        "link",
+        "|",
+        "align",
+        "undo",
+        "redo",
+        "|",
+        "hr",
+        "eraser",
+        "copyformat",
+        "selectall",
+        "|",
+        "print",
+        "about",
+    ],
+    uploader: {
+        insertImageAsBase64URI: true,
+        url: "your-upload-url", // If you have a file upload URL
+        format: "json",
+    },
+    placeholder: "Start typing here...",
+    showCharsCounter: true,
+    showWordsCounter: true,
+    showXPathInStatusbar: false,
+    spellcheck: true,
+    allowResizeY: true,
+    allowResizeX: false,
+    language: "en",
+    askBeforePasteHTML: true,
+    askBeforePasteFromWord: true,
+};
 const EditArticle = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [articleType, setArticleType] = useState('link');
     const { singleBlogData } = useSelector(state=> state.blogs)
-    const { handleSubmit,register, formState:{errors}, reset } = useForm(
+    const { handleSubmit,register, formState:{errors}, control, reset } = useForm(
         {
             defaultValues:{
                 title: '',
@@ -180,7 +241,7 @@ const EditArticle = () => {
                   </div>
               ) : (
                   <div>
-                      <label htmlFor="blogBody" className="block text-sm font-medium text-gray-700 mb-1">
+                      {/* <label htmlFor="blogBody" className="block text-sm font-medium text-gray-700 mb-1">
                           Article Body
                       </label>
                       <textarea
@@ -189,7 +250,24 @@ const EditArticle = () => {
                           rows="6"
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       ></textarea>
-                      {errors.blogBody && <p className="mt-1 text-xs text-red-500">{errors.blogBody.message}</p>}
+                      {errors.blogBody && <p className="mt-1 text-xs text-red-500">{errors.blogBody.message}</p>} */}
+                          <label htmlFor='blogBody' className='block text-sm font-medium text-gray-700 mb-1'>
+                              Body
+                          </label>
+                          <Controller
+                              control={control}
+                              name='blogBody'
+                              rules={{ required: "Body is required" }}
+                              render={({ field }) => (
+                                  <JoditEditor
+                                      //   ref={editorRef}
+                                      value={field.value}
+                                      config={config}
+                                      onBlur={field.onBlur}
+                                      onChange={(content) => field.onChange(content)}
+                                  />
+                              )}
+                          />
                   </div>
               )}
 
