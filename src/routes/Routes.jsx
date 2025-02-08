@@ -10,6 +10,13 @@ import AddTeam from "../pages/Team/AddTeam";
 import EditTeam from "../pages/Team/EditTeam";
 import ViewNews from "../pages/News/ViewNews";
 import Viewteam from "../pages/Team/ViewTeam";
+import Press from "../pages/Insights/Press/Press";
+import Podcast from "../pages/Insights/Podcast/Podcast";
+import Articles from "../pages/Insights/Articles/Articles";
+import AddArticle from "../pages/Insights/Articles/AddArticle";
+import AddPress from "../pages/Insights/Press/AddPress";
+import AddPodcast from "../pages/Insights/Podcast/AddPodcast";
+
 import FocusArea from "../pages/FocusArea/FocusArea";
 import AddFocusArea from "../pages/FocusArea/AddFocusArea";
 import EditFocusArea from "../pages/FocusArea/EditFocusArea";
@@ -61,6 +68,31 @@ const Routes = createBrowserRouter([
       {
         path: "/team/view-team/:id",
         element: <Viewteam />,
+      },
+
+      {
+        path: "/press",
+        element: <Press />,
+      },
+      {
+        path: "/podcast",
+        element: <Podcast />,
+      },
+      {
+        path: "/articles",
+        element: <Articles />,
+      },
+      {
+        path: "/add_article",
+        element: <AddArticle />,
+      },
+      {
+        path: "/add_podcast",
+        element: <AddPodcast />,
+      },
+      {
+        path: "/add_press",
+        element: <AddPress />,
       },
 
       {
