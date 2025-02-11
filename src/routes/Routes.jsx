@@ -16,7 +16,7 @@ import Articles from "../pages/Insights/Articles/Articles";
 import AddArticle from "../pages/Insights/Articles/AddArticle";
 import AddPress from "../pages/Insights/Press/AddPress";
 import AddPodcast from "../pages/Insights/Podcast/AddPodcast";
-import UpdateArticle from "../pages/Insights/Press/EditPress";
+// import UpdateArticle from "../pages/Insights/Press/EditPress";
 import EditPodcast from "../pages/Insights/Podcast/EditPodcast";
 import EditArticle from "../pages/Insights/Articles/EditArticle";
 import UpdatePress from "../pages/Insights/Press/EditPress";
@@ -29,6 +29,19 @@ import FocusAreaFeature from "../pages/FocusArea/FocusAreaFeature";
 import AddFocusAreaFeature from "../pages/FocusArea/AddFocusAreaFeature";
 import EditFocusAreaFeature from "../pages/FocusArea/EditFocusAreaFeature";
 import ViewFocusAreaFeature from "../pages/FocusArea/ViewFocusAreaFeature";
+import Portfolio from "../pages/Portfolio/Portfolio";
+import ViewPortfolio from "../pages/Portfolio/ViewPortfolio";
+import ListPortfolioCards from "../pages/Portfolio/ListPortfolioCards";
+import ListInvestmentTimeline from "../pages/Portfolio/ListInvestmentTimeline";
+import ListInvestmentCards from "../pages/Portfolio/ListInvestmentCards";
+import ViewPortfolioCard from "../pages/Portfolio/ViewPortfolioCard";
+import EditPortfolioCard from "../pages/Portfolio/EditPortfolioCard";
+import ViewInvestmentCard from "../pages/Portfolio/ViewInvestmentCard";
+import EditInvestmentCard from "../pages/Portfolio/EditInvestmentCard";
+import AddPortfolioCard from "../pages/Portfolio/AddPortfolioCard";
+import AddInvestmentTimelineCard from "../pages/Portfolio/AddInvestmentTimelineCard";
+import AddInvestmentTimeline from "../pages/Portfolio/AddInvestmentTimeline";
+import AddCoinvestor from "../pages/Portfolio/AddUpdateListCoinvestor";
 
 const Routes = createBrowserRouter([
   {
@@ -129,6 +142,81 @@ const Routes = createBrowserRouter([
       {
         path: "/focusarea/view-focusareafeature/:id",
         element: <ViewFocusAreaFeature />,
+      },
+
+      {
+        path: "/edit-press/:id",
+        element: <UpdatePress />,
+      },
+      {
+        path: "/edit-article/:id",
+        element: <EditArticle />,
+      },
+      {
+        path: "/edit-podcast/:id",
+        element: <EditPodcast />,
+      },
+      {
+        path: "/portfolios",
+        element: <Portfolio />,
+      },
+
+      {
+        path: "/portfolio/view-portfolio/:id",
+        element: <ViewPortfolio />,
+      },
+
+      {
+        path: "/portfolios/portfolio-cards",
+        element: <ListPortfolioCards />,
+      },
+
+      {
+        path: "/portfolios/invest-timeline-cards",
+        element: <ListInvestmentCards />,
+      },
+
+      {
+        path: "/portfolios/invest-timelines",
+        element: <ListInvestmentTimeline />,
+      },
+
+      {
+        path: "/portfolios/view-portfolio-cards/:id",
+        element: <ViewPortfolioCard />,
+      },
+
+      {
+        path: "/portfolios/edit-portfolio-cards/:id",
+        element: <EditPortfolioCard />,
+      },
+
+      {
+        path: "/portfolios/view-invest-timeline-cards/:id",
+        element: <ViewInvestmentCard />,
+      },
+
+      {
+        path: "/portfolios/edit-invest-timeline-cards/:id",
+        element: <EditInvestmentCard />,
+      },
+
+      {
+        path: "/portfolios/add-portfolio-card",
+        element: <AddPortfolioCard />,
+      },
+
+      {
+        path: "/portfolios/add-investment-timeline-card",
+        element: <AddInvestmentTimelineCard />,
+      },
+      {
+        path: "/portfolios/add-investment-timeline",
+        element: <AddInvestmentTimeline />,
+      },
+      {
+        path: "/portfolios/add-coinvestor",
+        element: <AddCoinvestor />,
       },
     ],
   },

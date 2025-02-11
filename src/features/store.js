@@ -6,6 +6,10 @@ import persistStore from "redux-persist/es/persistStore";
 
 import teamsReducer from "../features/slices/teamsSlice";
 import focusAreaReducer from "../features/slices/focusAreaSlice";
+import portfolioReducer from "../features/slices/Portfolio/portfolioSlice";
+import portFolioCardsReducer from "../features/slices/Portfolio/portfolioCardsSlice";
+import investmentTimelineCardsReducer from "../features/slices/Portfolio/investmentTimelineCardsSlice";
+import investerReducer from "../features/slices/coInvestorSlice";
 // import newsReducer from "../features/slices/newsSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice";
 
@@ -31,6 +35,10 @@ const reducer = combineReducers({
   blogs: blogsReducer,
 
   focusArea: focusAreaReducer,
+  portfolioCards: portFolioCardsReducer,
+  portfolios: portfolioReducer,
+  investmentTimelineCards: investmentTimelineCardsReducer,
+  coInvestors: investerReducer,
 });
 
 const rootReducer = (state, action) => {
