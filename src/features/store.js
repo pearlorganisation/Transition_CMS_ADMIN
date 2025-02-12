@@ -3,17 +3,16 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
-// import authReducer from "../features/Slices/authSlice";
-// import contactsReducer from "../features/Slices/ContactSlice/ContactsSlice";
-// import busCruiseReducer from "../features/Slices/BusCruise/busCruiseSlice";
-// import partnerTypeReducer from "../features/Slices/Partner/partnerTypeSlice";
-// import userReducer from "../features/Slices/Users/getAllUsersSlice";
-// import partnerReducer from "../features/Slices/Partner/getAllPartnerSlice";
-// import packageReducer from "../features/Slices/TripPackageSlice/packageSlice";
-// import vehicleReducer from "../features/Slices/VehicleSlice/vehicleSlice";
-import investerReducer from "../features/slices/CoInvester"
+
 import teamsReducer from "../features/slices/teamsSlice";
+import teamDetailsReducer from "../features/slices/teamDetailsSlice";
+import focusAreaReducer from "../features/slices/focusAreaSlice";
+import portfolioReducer from "../features/slices/Portfolio/portfolioSlice";
+import portFolioCardsReducer from "../features/slices/Portfolio/portfolioCardsSlice";
+import investmentTimelineCardsReducer from "../features/slices/Portfolio/investmentTimelineCardsSlice";
+import investerReducer from "../features/slices/coInvestorSlice";
 // import newsReducer from "../features/slices/newsSlice";
+import blogsReducer from "../features/slices/Blogs/blogsSlice";
 
 const persistConfig = {
   key: "Transition_CMS_Admin",
@@ -34,7 +33,14 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
-  coInvestors:investerReducer,
+  teamDetails: teamDetailsReducer,
+  blogs: blogsReducer,
+
+  focusArea: focusAreaReducer,
+  portfolioCards: portFolioCardsReducer,
+  portfolios: portfolioReducer,
+  investmentTimelineCards: investmentTimelineCardsReducer,
+  coInvestors: investerReducer,
 });
 
 const rootReducer = (state, action) => {

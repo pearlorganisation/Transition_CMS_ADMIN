@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../axiosInstance";
-import { toast } from "sonner";
+import axiosInstance from "../../../axiosInstance";
+import { toast } from "react-toastify";
 
-export const getAllTeams = createAsyncThunk(
-  "get/teams",
+export const getPortfolioCards = createAsyncThunk(
+  "get/getPortfolioCards",
   async (_, { rejectWithValue }) => {
     try {
       const config = {
@@ -11,8 +11,10 @@ export const getAllTeams = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/teams`, config);
-      console.log("-------------destination data", data);
+      const { data } = await axiosInstance.get(
+        `/api/v1/portfolio-cards`,
+        config
+      );
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -24,8 +26,8 @@ export const getAllTeams = createAsyncThunk(
   }
 );
 
-export const getSingleTeam = createAsyncThunk(
-  "get-single/team",
+export const getSinglePortfolioCard = createAsyncThunk(
+  "get/getSinglePortfolioCard",
   async (id, { rejectWithValue }) => {
     try {
       const config = {
@@ -33,9 +35,11 @@ export const getSingleTeam = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/teams/${id}`, config);
-      console.log("-------------destination data", data);
-      return data;
+      const { data } = await axiosInstance.get(
+        `/api/v1/portfolio-cards/${id}`,
+        config
+      );
+      return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -46,8 +50,8 @@ export const getSingleTeam = createAsyncThunk(
   }
 );
 
-export const deleteTeam = createAsyncThunk(
-  "delete/teammate",
+export const deletePortfolioCard = createAsyncThunk(
+  "delete/portfolio-card",
   async (id, { rejectWithValue }) => {
     try {
       const config = {
@@ -56,10 +60,10 @@ export const deleteTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/teams/${id}`,
+        `/api/v1/portfolio-cards/${id}`,
         config
       );
-      console.log("delete team data", data);
+      console.log("delete portfolio cards data", data);
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -71,15 +75,15 @@ export const deleteTeam = createAsyncThunk(
   }
 );
 
-export const addTeam = createAsyncThunk(
-  "team/addTeam",
+export const addPortfolioCard = createAsyncThunk(
+  "team/addPortfolioCard",
   async (userData, { rejectWithValue }) => {
     try {
       const formData = new FormData();
-      formData.append("image", userData.image[0]);
+      formData.append("icon", userData.icon[0]);
 
       for (const key in userData) {
-        if (key !== "image") {
+        if (key !== "icon") {
           if (typeof userData[key] === "object" && userData[key] !== null) {
             formData.append(key, JSON.stringify(userData[key]));
           } else {
@@ -93,13 +97,19 @@ export const addTeam = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await axiosInstance.post(`/api/v1/teams`, formData, {
-        config,
-      });
+      const { data } = await axiosInstance.post(
+        `/api/v1/portfolio-cards`,
+        formData,
+        {
+          config,
+        }
+      );
 
       console.log(data, "create team response data");
 
-      toast.success("Team created Successfully", { position: "top-right" });
+      toast.success("Portfolio Card created Successfully", {
+        position: "top-right",
+      });
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -113,15 +123,15 @@ export const addTeam = createAsyncThunk(
   }
 );
 
-export const updateTeam = createAsyncThunk(
-  "update/team",
+export const updatePortfolioCard = createAsyncThunk(
+  "update/PortfolioCard",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
-      formData.append("image", updatedData.image[0]);
+      formData.append("icon", updatedData.icon[0]);
 
       for (const key in updatedData) {
-        if (key !== "image") {
+        if (key !== "icon") {
           if (
             typeof updatedData[key] === "object" &&
             updatedData[key] !== null
@@ -138,7 +148,7 @@ export const updateTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/teams/${id}`,
+        `/api/v1/portfolio-cards/${id}`,
         formData,
         config
       );

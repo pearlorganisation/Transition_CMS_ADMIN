@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleTeam, updateTeam } from "../../features/actions/teamsAction";
 import { useForm } from "react-hook-form";
+import {
+  getSinglePortfolioCard,
+  updatePortfolioCard,
+} from "../../features/actions/Portfolio/portfolioCardsAction";
 
-const EditTeam = () => {
+const EditPortfolioCard = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { team } = useSelector((state) => state.teams);
+  const { singlePortfolioCard } = useSelector((state) => state.portfolioCards);
 
   useEffect(() => {
-    dispatch(getSingleTeam(id));
+    dispatch(getSinglePortfolioCard(id));
   }, [dispatch, id]);
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -24,23 +27,24 @@ const EditTeam = () => {
   } = useForm();
 
   useEffect(() => {
-    if (team) {
+    if (singlePortfolioCard) {
       reset({
-        name: team.name || "",
-        bio: team.bio || "",
-        link: team.link || "",
+        title: singlePortfolioCard.title || "",
+        description: singlePortfolioCard.description || "",
       });
-      if (team.image) {
-        setImagePreview(team.image.secure_url);
+      if (singlePortfolioCard.icon) {
+        setImagePreview(singlePortfolioCard.icon.secure_url);
       }
     }
-  }, [team, reset]);
+  }, [singlePortfolioCard, reset]);
 
   // Handle form submission
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    dispatch(updateTeam({ id: team._id, updatedData: data }));
-    alert("Team edited successfully!");
+    dispatch(
+      updatePortfolioCard({ id: singlePortfolioCard._id, updatedData: data })
+    );
+    alert("Portfolio Card edited successfully!");
     reset();
     setImagePreview(null);
   };
@@ -53,92 +57,71 @@ const EditTeam = () => {
     }
   };
 
-  console.log(team, "Single Team");
+  console.log(singlePortfolioCard, "Single portfolio card");
   return (
     <div className="max-w-2xl mx-auto px-6 bg-gray-400 shadow-lg rounded-lg h-full mt-2 pb-6">
-      <h1 className="text-2xl font-bold mb-6">Edit Team </h1>
+      <h1 className="text-2xl font-bold mb-6">Edit Portfolio Card </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
         {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block font-medium mb-1">
-            Name
+          <label htmlFor="title" className="block font-medium mb-1">
+            Title
           </label>
           <input
             type="text"
-            id="name"
-            {...register("name", { required: "Name is required" })}
+            id="title"
+            {...register("title", { required: "Title is required" })}
             className="w-full border border-gray-300 rounded px-3 py-2"
             placeholder="Enter name"
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
           )}
         </div>
 
         {/* Designation Field */}
         <div>
           <label htmlFor="bio" className="block font-medium mb-1">
-            Designation
+            Description
           </label>
           <input
             type="text"
-            id="bio"
-            {...register("bio", {
-              required: "Designation is required",
+            id="description"
+            {...register("description", {
+              required: "Description is required",
             })}
             className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter designation"
+            placeholder="Enter description"
           />
-          {errors.bio && (
-            <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>
-          )}
-        </div>
-
-        {/* LinkedIn Link Field */}
-        <div>
-          <label htmlFor="link" className="block font-medium mb-1">
-            LinkedIn Link
-          </label>
-          <input
-            type="url"
-            id="linkedinLink"
-            {...register("link", {
-              required: "LinkedIn link is required",
-              pattern: {
-                value: /^https?:\/\/(www\.)?linkedin\.com\/.+$/,
-                message: "Please enter a valid LinkedIn URL",
-              },
-            })}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter LinkedIn profile link"
-          />
-          {errors.link && (
-            <p className="text-red-500 text-sm mt-1">{errors.link.message}</p>
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.description.message}
+            </p>
           )}
         </div>
 
         {/* Image Upload Field */}
         <div>
-          <label htmlFor="image" className="block font-medium mb-1">
+          <label htmlFor="icon" className="block font-medium mb-1">
             Upload Image
           </label>
           <input
             type="file"
-            id="image"
+            id="icon"
             accept="image/*"
-            {...register("image")}
+            {...register("icon")}
             className="w-full border border-gray-300 rounded px-3 py-2"
             onChange={handleImageChange}
           />
-          {errors.image && (
-            <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
+          {errors.icon && (
+            <p className="text-red-500 text-sm mt-1">{errors.icon.message}</p>
           )}
         </div>
 
         {/* Image Preview */}
         {imagePreview && (
           <div className="mt-4">
-            <p className="font-medium mb-1">Image Preview:</p>
+            <p className="font-medium mb-1">Icon Preview:</p>
             <img
               src={imagePreview}
               alt="Preview"
@@ -152,11 +135,11 @@ const EditTeam = () => {
           type="submit"
           className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
         >
-          Edit Team Mate
+          Edit Profile Card
         </button>
       </form>
     </div>
   );
 };
 
-export default EditTeam;
+export default EditPortfolioCard;

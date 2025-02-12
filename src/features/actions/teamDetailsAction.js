@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../axiosInstance";
 import { toast } from "sonner";
 
-export const getAllTeams = createAsyncThunk(
-  "get/teams",
+export const getAllTeamDetails = createAsyncThunk(
+  "get/team-details",
   async (_, { rejectWithValue }) => {
     try {
       const config = {
@@ -11,8 +11,8 @@ export const getAllTeams = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/teams`, config);
-      console.log("-------------destination data", data);
+      const { data } = await axiosInstance.get(`/api/v1/team-details`, config);
+      console.log("-------------team details data", data);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -24,8 +24,8 @@ export const getAllTeams = createAsyncThunk(
   }
 );
 
-export const getSingleTeam = createAsyncThunk(
-  "get-single/team",
+export const getSingleTeamDetails = createAsyncThunk(
+  "get-single/teamDetails",
   async (id, { rejectWithValue }) => {
     try {
       const config = {
@@ -33,8 +33,11 @@ export const getSingleTeam = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/teams/${id}`, config);
-      console.log("-------------destination data", data);
+      const { data } = await axiosInstance.get(
+        `/api/v1/team-details/${id}`,
+        config
+      );
+      console.log("-------------single team details data", data);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -46,8 +49,8 @@ export const getSingleTeam = createAsyncThunk(
   }
 );
 
-export const deleteTeam = createAsyncThunk(
-  "delete/teammate",
+export const deleteTeamDetails = createAsyncThunk(
+  "delete/team-details",
   async (id, { rejectWithValue }) => {
     try {
       const config = {
@@ -56,10 +59,10 @@ export const deleteTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/teams/${id}`,
+        `/api/v1/team-details/${id}`,
         config
       );
-      console.log("delete team data", data);
+      console.log("delete team details data", data);
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -71,8 +74,8 @@ export const deleteTeam = createAsyncThunk(
   }
 );
 
-export const addTeam = createAsyncThunk(
-  "team/addTeam",
+export const addTeamDetails = createAsyncThunk(
+  "team/addTeamDetails",
   async (userData, { rejectWithValue }) => {
     try {
       const formData = new FormData();
@@ -93,13 +96,19 @@ export const addTeam = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await axiosInstance.post(`/api/v1/teams`, formData, {
-        config,
+      const { data } = await axiosInstance.post(
+        `/api/v1/team-details`,
+        formData,
+        {
+          config,
+        }
+      );
+
+      console.log(data, "create team details response data");
+
+      toast.success("Team details created Successfully", {
+        position: "top-right",
       });
-
-      console.log(data, "create team response data");
-
-      toast.success("Team created Successfully", { position: "top-right" });
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -113,8 +122,8 @@ export const addTeam = createAsyncThunk(
   }
 );
 
-export const updateTeam = createAsyncThunk(
-  "update/team",
+export const updateTeamDetails = createAsyncThunk(
+  "update/teamDetails",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
@@ -138,7 +147,7 @@ export const updateTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/teams/${id}`,
+        `/api/v1/team-details/${id}`,
         formData,
         config
       );

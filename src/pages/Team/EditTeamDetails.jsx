@@ -3,16 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSingleTeam, updateTeam } from "../../features/actions/teamsAction";
 import { useForm } from "react-hook-form";
+import {
+  getSingleTeamDetails,
+  updateTeamDetails,
+} from "../../features/actions/teamDetailsAction";
+import { toast } from "sonner";
 
-const EditTeam = () => {
+const EditTeamDetails = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { team } = useSelector((state) => state.teams);
+  const { teamDetails } = useSelector((state) => state.teamDetails);
 
   useEffect(() => {
-    dispatch(getSingleTeam(id));
+    dispatch(getSingleTeamDetails(id));
   }, [dispatch, id]);
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -24,23 +29,22 @@ const EditTeam = () => {
   } = useForm();
 
   useEffect(() => {
-    if (team) {
+    if (teamDetails) {
       reset({
-        name: team.name || "",
-        bio: team.bio || "",
-        link: team.link || "",
+        title: teamDetails.title || "",
+        description: teamDetails.description || "",
       });
-      if (team.image) {
-        setImagePreview(team.image.secure_url);
+      if (teamDetails.image) {
+        setImagePreview(teamDetails.image.secure_url);
       }
     }
-  }, [team, reset]);
+  }, [teamDetails, reset]);
 
   // Handle form submission
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    dispatch(updateTeam({ id: team._id, updatedData: data }));
-    alert("Team edited successfully!");
+    dispatch(updateTeamDetails({ id: teamDetails._id, updatedData: data }));
+    toast.success("Team Details edited successfully!");
     reset();
     setImagePreview(null);
   };
@@ -53,67 +57,46 @@ const EditTeam = () => {
     }
   };
 
-  console.log(team, "Single Team");
+  console.log(teamDetails, "Single Team Details");
   return (
     <div className="max-w-2xl mx-auto px-6 bg-gray-400 shadow-lg rounded-lg h-full mt-2 pb-6">
-      <h1 className="text-2xl font-bold mb-6">Edit Team </h1>
+      <h1 className="text-2xl font-bold mb-6">Edit Team Details </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
         {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block font-medium mb-1">
-            Name
+          <label htmlFor="title" className="block font-medium mb-1">
+            Title
           </label>
           <input
             type="text"
-            id="name"
-            {...register("name", { required: "Name is required" })}
+            id="title"
+            {...register("title", { required: "Name is required" })}
             className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter name"
+            placeholder="Enter Title"
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
           )}
         </div>
 
-        {/* Designation Field */}
+        {/* Description Field */}
         <div>
-          <label htmlFor="bio" className="block font-medium mb-1">
-            Designation
+          <label htmlFor="description" className="block font-medium mb-1">
+            Description
           </label>
           <input
             type="text"
-            id="bio"
-            {...register("bio", {
+            id="description"
+            {...register("description", {
               required: "Designation is required",
             })}
             className="w-full border border-gray-300 rounded px-3 py-2"
             placeholder="Enter designation"
           />
-          {errors.bio && (
-            <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>
-          )}
-        </div>
-
-        {/* LinkedIn Link Field */}
-        <div>
-          <label htmlFor="link" className="block font-medium mb-1">
-            LinkedIn Link
-          </label>
-          <input
-            type="url"
-            id="linkedinLink"
-            {...register("link", {
-              required: "LinkedIn link is required",
-              pattern: {
-                value: /^https?:\/\/(www\.)?linkedin\.com\/.+$/,
-                message: "Please enter a valid LinkedIn URL",
-              },
-            })}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter LinkedIn profile link"
-          />
-          {errors.link && (
-            <p className="text-red-500 text-sm mt-1">{errors.link.message}</p>
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.description.message}
+            </p>
           )}
         </div>
 
@@ -152,11 +135,11 @@ const EditTeam = () => {
           type="submit"
           className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
         >
-          Edit Team Mate
+          Edit Team Details
         </button>
       </form>
     </div>
   );
 };
 
-export default EditTeam;
+export default EditTeamDetails;

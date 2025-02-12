@@ -1,11 +1,3 @@
-// import React from "react";
-
-// const Header = () => {
-//   return <div>Header</div>;
-// };
-
-// export default Header;
-
 import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { HiOutlineChevronDown } from "react-icons/hi";
