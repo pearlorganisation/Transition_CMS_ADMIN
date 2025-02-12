@@ -42,6 +42,7 @@ import AddPortfolioCard from "../pages/Portfolio/AddPortfolioCard";
 import AddInvestmentTimelineCard from "../pages/Portfolio/AddInvestmentTimelineCard";
 import AddInvestmentTimeline from "../pages/Portfolio/AddInvestmentTimeline";
 import AddCoinvestor from "../pages/Portfolio/AddUpdateListCoinvestor";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 const Routes = createBrowserRouter([
   {
@@ -217,6 +218,10 @@ const Routes = createBrowserRouter([
       {
         path: "/portfolios/add-coinvestor",
         element: <AddCoinvestor />,
+      },
+      {
+        path: "/contactUs",
+        element: <ContactUs />,
       },
     ],
   },

@@ -178,7 +178,14 @@ const routes = [
         name: "Edit Investment Timeline Card",
         icon: <LuWallpaper />,
       },
+
     ],
+
+  },
+  {
+    path: "/contactUs",
+    name: "Contact Us",
+    icon: <LuWallpaper />,
   },
 ];
 

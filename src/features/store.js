@@ -12,6 +12,7 @@ import investmentTimelineCardsReducer from "../features/slices/Portfolio/investm
 import investerReducer from "../features/slices/coInvestorSlice";
 // import newsReducer from "../features/slices/newsSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice";
+import contactsReducer from "../features/slices/contactSlice";
 
 const persistConfig = {
   key: "Transition_CMS_Admin",
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
   blogs: blogsReducer,
+  contacts: contactsReducer,
 
   focusArea: focusAreaReducer,
   portfolioCards: portFolioCardsReducer,
