@@ -68,6 +68,16 @@ const routes = [
         name: "Add Team",
         icon: <LuWallpaper />,
       },
+      {
+        path: "/teamDetails",
+        name: "List Team Details",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/teamDetails/add-teamDetails",
+        name: "Add Team Details",
+        icon: <LuWallpaper />,
+      },
     ],
   },
   {

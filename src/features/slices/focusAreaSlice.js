@@ -3,12 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 import {
   addFocusArea,
+  addFocusAreaFeature,
   deleteFocusArea,
+  deleteFocusFeature,
   getFocusAreaById,
   getFocusAreaFeatures,
   getFocusAreas,
   getFocusFeatureById,
   updateFocusArea,
+  updateFocusAreaFeature,
 } from "../actions/focusAreaAction";
 
 const initialState = {
@@ -16,9 +19,9 @@ const initialState = {
   isError: false,
   isSuccess: false,
   focusAreaInfo: [],
+  focusArea: {},
   focusAreaFeatureInfo: [],
   focusAreaFeature: {},
-  focusArea: {},
   pagination: {},
 };
 
@@ -126,7 +129,25 @@ const focusAreaSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.isLoading = false;
-        toast.success("Team created Successfully", {
+        toast.success("Focus Area created Successfully", {
+          position: "top-right",
+        });
+      })
+
+      .addCase(addFocusAreaFeature.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addFocusAreaFeature.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        toast.error(action.payload, { position: "top-right" });
+      })
+      .addCase(addFocusAreaFeature.fulfilled, (state) => {
+        state.isError = false;
+        state.isSuccess = true;
+        state.isLoading = false;
+        toast.success("Focus Area Feature created Successfully", {
           position: "top-right",
         });
       })
@@ -154,6 +175,29 @@ const focusAreaSlice = createSlice({
         });
       })
 
+      // delete focus Area Feature
+      .addCase(deleteFocusFeature.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteFocusFeature.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        toast.error(action.payload, { position: "top-right" });
+      })
+      .addCase(deleteFocusFeature.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isSuccess = true;
+        state.isLoading = false;
+
+        state.focusAreaFeatureInfo = state.focusAreaFeatureInfo.filter(
+          (focusArea) => focusArea._id !== action.meta.arg
+        );
+        toast.success("Focus Area Feature deleted Successfully", {
+          position: "top-right",
+        });
+      })
+
       // update focus Area
 
       .addCase(updateFocusArea.pending, (state) => {
@@ -173,6 +217,29 @@ const focusAreaSlice = createSlice({
         state.focusArea = action.payload;
 
         toast.success("Focus Area updated successfully", {
+          position: "top-right",
+        });
+      })
+
+      // update focus Area feature
+
+      .addCase(updateFocusAreaFeature.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateFocusAreaFeature.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        toast.error(action.payload, { position: "top-right" });
+      })
+      .addCase(updateFocusAreaFeature.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+
+        state.focusAreaFeature = action.payload;
+
+        toast.success("Focus Area Feature updated successfully", {
           position: "top-right",
         });
       });

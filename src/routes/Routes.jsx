@@ -42,6 +42,10 @@ import AddPortfolioCard from "../pages/Portfolio/AddPortfolioCard";
 import AddInvestmentTimelineCard from "../pages/Portfolio/AddInvestmentTimelineCard";
 import AddInvestmentTimeline from "../pages/Portfolio/AddInvestmentTimeline";
 import AddCoinvestor from "../pages/Portfolio/AddUpdateListCoinvestor";
+import TeamDetails from "../pages/Team/TeamDetails";
+import AddTeamDetails from "../pages/Team/AddTeamDetails";
+import ViewTeamDetails from "../pages/Team/ViewTeamDetails";
+import EditTeamDetails from "../pages/Team/EditTeamDetails";
 
 const Routes = createBrowserRouter([
   {
@@ -85,6 +89,24 @@ const Routes = createBrowserRouter([
       {
         path: "/team/view-team/:id",
         element: <Viewteam />,
+      },
+
+      {
+        path: "/teamDetails",
+        element: <TeamDetails />,
+      },
+
+      {
+        path: "/teamDetails/add-teamDetails",
+        element: <AddTeamDetails />,
+      },
+      {
+        path: "/teamDetails/edit-teamDetails/:id",
+        element: <EditTeamDetails />,
+      },
+      {
+        path: "/teamDetails/view-teamDetails/:id",
+        element: <ViewTeamDetails />,
       },
 
       {

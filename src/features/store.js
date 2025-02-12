@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
 
 import teamsReducer from "../features/slices/teamsSlice";
+import teamDetailsReducer from "../features/slices/teamDetailsSlice";
 import focusAreaReducer from "../features/slices/focusAreaSlice";
 import portfolioReducer from "../features/slices/Portfolio/portfolioSlice";
 import portFolioCardsReducer from "../features/slices/Portfolio/portfolioCardsSlice";
@@ -32,6 +33,7 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
+  teamDetails: teamDetailsReducer,
   blogs: blogsReducer,
 
   focusArea: focusAreaReducer,
