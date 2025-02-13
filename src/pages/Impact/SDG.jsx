@@ -46,7 +46,7 @@ const SDG = () => {
                                 </td>
                                 <td className="px-6 py-4 flex gap-4">
                                     <button className="text-blue-400 hover:text-blue-500">View</button>
-                                    <Link to={`/edit-sdg/${el?._id}`}>
+                                    <Link to={`/edit-sdg/${el?._id}`} state={{data: el}}>
                                         <button className="text-green-400 hover:text-green-500">Edit</button>
                                     </Link>
                                 </td>

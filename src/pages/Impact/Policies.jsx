@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getImpact } from '../../features/actions/Impact/ImapctAction'
 import { Link } from 'react-router-dom'
+import { data } from 'autoprefixer'
 
 const Policies = () => {
     const dispatch = useDispatch()
@@ -46,7 +47,7 @@ const Policies = () => {
                                 </td>
                                 <td className="px-6 py-4 flex gap-4">
                                     {/* <button className="text-blue-400 hover:text-blue-500">View</button> */}
-                                    <Link to={`/edit-policies/${el?._id}`}>
+                                    <Link to={`/edit-policies/${el?._id}`} state={{data: el}}>
                                         <button className="text-green-400 hover:text-green-500">Edit</button>
                                     </Link>
                                 </td>
