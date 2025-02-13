@@ -14,7 +14,6 @@ const AddFocusArea = () => {
   } = useForm();
 
   const [options, setOptions] = useState([]);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,10 +32,16 @@ const AddFocusArea = () => {
   const onSubmit = (data) => {
     console.log("Submitted Data:", data);
 
-    dispatch(addFocusArea(data));
-  };
+    const formattedData = {
+      title: data.title,
+      focusAreas: data.focusAreas.map((id) => {
+        const selectedFeature = options.find((option) => option.value === id);
+        return { _id: selectedFeature.value, title: selectedFeature.label };
+      }),
+    };
 
-  console.log(options, "my options ");
+    dispatch(addFocusArea(formattedData));
+  };
 
   return (
     <form
@@ -56,6 +61,7 @@ const AddFocusArea = () => {
         )}
       </div>
 
+      {/* Focus Areas Multi-Select */}
       <div className="mb-4">
         <label className="block text-gray-700">Select Focus Areas</label>
 
@@ -74,9 +80,9 @@ const AddFocusArea = () => {
               getOptionValue={(e) => e.value}
               value={options.filter((option) =>
                 field.value?.includes(option.value)
-              )} // Sync selected values
+              )}
               onChange={(selectedOptions) => {
-                field.onChange(selectedOptions.map((option) => option.value)); // Extract only values
+                field.onChange(selectedOptions.map((option) => option.value));
               }}
             />
           )}

@@ -13,29 +13,7 @@ const routes = [
     name: "Dashboard",
     icon: <FaHome />,
   },
-  {
-    path: "/client",
-    name: "Client Panel",
-    icon: <Fa42Group />,
-    subRoutes: [
-      {
-        path: "/client/homeBanners",
-        name: "Home Banner",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/eventBanners",
-        name: "Shows/Events Banner",
-        icon: <LuWallpaper />,
-      },
-      { path: "/client/faqs", name: "FAQs", icon: <FaQuestion /> },
-      {
-        path: "/client/listYourEvent",
-        name: "List Your Event",
-        icon: <FaQuestion />,
-      },
-    ],
-  },
+
   {
     path: "/news",
     name: "News",

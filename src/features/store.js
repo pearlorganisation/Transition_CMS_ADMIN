@@ -13,6 +13,7 @@ import investmentTimelineCardsReducer from "../features/slices/Portfolio/investm
 import investerReducer from "../features/slices/coInvestorSlice";
 // import newsReducer from "../features/slices/newsSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice";
+import investmentTimelineRedcuer from "../features/slices/Portfolio/investmentTimelineSlice";
 
 const persistConfig = {
   key: "Transition_CMS_Admin",
@@ -41,6 +42,7 @@ const reducer = combineReducers({
   portfolios: portfolioReducer,
   investmentTimelineCards: investmentTimelineCardsReducer,
   coInvestors: investerReducer,
+  listInvestTime: investmentTimelineRedcuer,
 });
 
 const rootReducer = (state, action) => {

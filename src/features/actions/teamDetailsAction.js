@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../axiosInstance";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 export const getAllTeamDetails = createAsyncThunk(
   "get/team-details",
@@ -16,8 +16,10 @@ export const getAllTeamDetails = createAsyncThunk(
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -41,8 +43,10 @@ export const getSingleTeamDetails = createAsyncThunk(
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -63,11 +67,17 @@ export const deleteTeamDetails = createAsyncThunk(
         config
       );
       console.log("delete team details data", data);
+
+      toast.success("Team Details deleted Successfully", {
+        position: "top-right",
+      });
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -151,11 +161,17 @@ export const updateTeamDetails = createAsyncThunk(
         formData,
         config
       );
+
+      toast.success("Team Details Updated Successfully", {
+        position: "top-right",
+      });
       return data; // Return the updated destination
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }

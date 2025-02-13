@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleTeam, updateTeam } from "../../features/actions/teamsAction";
 import { useForm } from "react-hook-form";
 import {
   getSingleTeamDetails,

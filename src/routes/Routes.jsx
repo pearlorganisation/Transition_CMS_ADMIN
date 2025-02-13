@@ -46,6 +46,8 @@ import TeamDetails from "../pages/Team/TeamDetails";
 import AddTeamDetails from "../pages/Team/AddTeamDetails";
 import ViewTeamDetails from "../pages/Team/ViewTeamDetails";
 import EditTeamDetails from "../pages/Team/EditTeamDetails";
+import EditInvestmentTimeline from "../pages/Portfolio/EditInvestmentTimeline";
+import ViewInvestmentTimeline from "../pages/Portfolio/ViewInvestmentTimeline";
 
 const Routes = createBrowserRouter([
   {
@@ -221,6 +223,16 @@ const Routes = createBrowserRouter([
       {
         path: "/portfolios/edit-invest-timeline-cards/:id",
         element: <EditInvestmentCard />,
+      },
+
+      {
+        path: "/portfolios/edit-invest-timeline/:id",
+        element: <EditInvestmentTimeline />,
+      },
+
+      {
+        path: "/portfolios/view-invest-timeline/:id",
+        element: <ViewInvestmentTimeline />,
       },
 
       {

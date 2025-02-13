@@ -18,8 +18,10 @@ export const getInvestmentTimelineCards = createAsyncThunk(
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-right" });
         return rejectWithValue(error.message);
       }
     }
@@ -42,8 +44,10 @@ export const getSingleInvestmentTimelineCard = createAsyncThunk(
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-right" });
         return rejectWithValue(error.message);
       }
     }
@@ -63,11 +67,17 @@ export const deleteInvestmentTimelineCard = createAsyncThunk(
         `/api/v1/investment-timeline-cards/${id}`,
         config
       );
+
+      toast.success("Investment Timeline Card deleted Successfully", {
+        position: "top-right",
+      });
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-right" });
         return rejectWithValue(error.message);
       }
     }
@@ -110,10 +120,10 @@ export const addInvestmentTimelineCard = createAsyncThunk(
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
-        toast.error(error.response.data.message, { position: "top-right" });
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
-        toast.error(error.message, { position: "top-right" });
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -149,11 +159,17 @@ export const updateInvestmentTimelineCard = createAsyncThunk(
         formData,
         config
       );
+
+      toast.success("Investment Timeline Card updated Successfully", {
+        position: "top-right",
+      });
       return data; // Return the updated destination
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axiosInstance from "../../axiosInstance";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 export const CreateCoInvester = createAsyncThunk(
   "coInvestors/create",
@@ -18,8 +18,14 @@ export const CreateCoInvester = createAsyncThunk(
         coInvestorData,
         { config }
       );
+
+      toast.success("Coinvestor Created Successfully", {
+        position: "top-right",
+      });
+
       return response.data;
     } catch (error) {
+      toast.error(error.response?.data, { position: "top-center" });
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
@@ -67,7 +73,9 @@ export const updateInvestor = createAsyncThunk(
         }
       );
 
-      toast.success("Co-Investor updated successfully!");
+      toast.success("Co-Investor updated successfully!", {
+        position: "top-center",
+      });
       return response.data;
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -82,7 +90,9 @@ export const deleteInvestor = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       await axiosInstance.delete(`/api/v1/co-investors/${id}`);
-      toast.success("Co-Investor deleted successfully!");
+      toast.success("Co-Investor deleted successfully!", {
+        position: "top-center",
+      });
       return id;
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");

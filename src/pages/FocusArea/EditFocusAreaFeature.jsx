@@ -125,6 +125,7 @@ const EditFocusAreaFeature = () => {
           </label>
           <input
             type="file"
+            {...register("image")}
             id="image"
             accept="image/*"
             className="w-full border border-gray-300 rounded px-3 py-2"

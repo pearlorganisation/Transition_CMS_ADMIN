@@ -15,11 +15,14 @@ export const getPortfolioCards = createAsyncThunk(
         `/api/v1/portfolio-cards`,
         config
       );
+
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -42,8 +45,10 @@ export const getSinglePortfolioCard = createAsyncThunk(
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -64,11 +69,16 @@ export const deletePortfolioCard = createAsyncThunk(
         config
       );
       console.log("delete portfolio cards data", data);
+      toast.success("Portfolio Card deleted Successfully", {
+        position: "top-right",
+      });
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -152,11 +162,17 @@ export const updatePortfolioCard = createAsyncThunk(
         formData,
         config
       );
+
+      toast.success("Portofolio Card updated Successfully", {
+        position: "top-right",
+      });
       return data; // Return the updated destination
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-right" });
         return rejectWithValue(error.message);
       }
     }
