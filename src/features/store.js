@@ -15,7 +15,7 @@ import persistStore from "redux-persist/es/persistStore";
 import teamsReducer from "../features/slices/teamsSlice";
 // import newsReducer from "../features/slices/newsSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice"
-
+import impactReducer from "../features/slices/Impact/impactSlice"
 const persistConfig = {
   key: "Transition_CMS_Admin",
   version: 1,
@@ -35,7 +35,8 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
-  blogs: blogsReducer
+  blogs: blogsReducer,
+  impacts: impactReducer
   
 });
 

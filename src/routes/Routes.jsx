@@ -20,7 +20,16 @@ import UpdateArticle from "../pages/Insights/Press/EditPress";
 import EditPodcast from "../pages/Insights/Podcast/EditPodcast";
 import EditArticle from "../pages/Insights/Articles/EditArticle";
 import UpdatePress from "../pages/Insights/Press/EditPress";
-
+import ESG from "../pages/Impact/ESG";
+import Mission from "../pages/Impact/Mission";
+import SDG from "../pages/Impact/SDG";
+import Policies from "../pages/Impact/Policies";
+import AddPolicies from "../pages/Impact/AddPolicies";
+import EditEsg from "../pages/Impact/EditEsg";
+import EditSdg from "../pages/Impact/EditSdg";
+import EditPolicies from "../pages/Impact/EditPolicies";
+import EditMission from "../pages/Impact/EditMission";
+ 
 
 const Routes = createBrowserRouter([
   {
@@ -101,8 +110,43 @@ const Routes = createBrowserRouter([
       {
         path:"/edit-article/:id",
         element:<EditArticle />
+      },
+      {
+        path:"/esg",
+        element:<ESG />
+      },
+      {
+        path: "/mission",
+        element: <Mission />
+      },
+      {
+        path: "/sdg",
+        element: <SDG />
+      },
+      {
+        path: "/policies",
+        element: <Policies />
+      },
+      {
+        path:"/add-policies",
+        element:<AddPolicies />
+      },
+      {
+        path:"/edit-esg/:id",
+        element:<EditEsg />
+      },
+      {
+        path:"/edit-sdg/:id",
+        element:<EditSdg />
+      },
+      {
+        path:"/edit-policies/:id",
+        element:<EditPolicies />
+      },
+      {
+        path:"/edit-mission/:id",
+        element:<EditMission />
       }
-      
     ],
   },
 ]);

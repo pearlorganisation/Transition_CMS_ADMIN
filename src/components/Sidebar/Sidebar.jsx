@@ -96,9 +96,39 @@ const routes = [
         path: "/podcast",
         name: "Podcast",
         icon: <LuWallpaper />,
-      },
+      }
+    
     ],
   },
+  {
+   path:"/",
+   name:"Impact",
+   icon: <FaAmazonPay />,
+    subRoutes: [
+      {
+        path: "/esg",
+        name: "ESGs",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/mission",
+        name: "Mission",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/sdg",
+        name: "SDGs",
+        icon: <LuWallpaper />,
+      },
+      {
+
+        path: "/policies",
+        name: "Policies",
+        icon: <LuWallpaper />,
+
+      }
+    ], 
+  }
 ];
 
 // const userVendorRoutes = [
