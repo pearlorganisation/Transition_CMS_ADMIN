@@ -20,6 +20,15 @@ import AddPodcast from "../pages/Insights/Podcast/AddPodcast";
 import EditPodcast from "../pages/Insights/Podcast/EditPodcast";
 import EditArticle from "../pages/Insights/Articles/EditArticle";
 import UpdatePress from "../pages/Insights/Press/EditPress";
+import ESG from "../pages/Impact/ESG";
+import Mission from "../pages/Impact/Mission";
+import SDG from "../pages/Impact/SDG";
+import Policies from "../pages/Impact/Policies";
+import AddPolicies from "../pages/Impact/AddPolicies";
+import EditEsg from "../pages/Impact/EditEsg";
+import EditSdg from "../pages/Impact/EditSdg";
+import EditPolicies from "../pages/Impact/EditPolicies";
+import EditMission from "../pages/Impact/EditMission";
 
 import FocusArea from "../pages/FocusArea/FocusArea";
 import AddFocusArea from "../pages/FocusArea/AddFocusArea";
