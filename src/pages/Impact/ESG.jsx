@@ -34,7 +34,7 @@ const ESG = () => {
         </thead>
 
         <tbody>
-          {impactData &&
+          { Array.isArray(impactData) &&
             impactData
               ?.filter((el) => el?.impactDataType == "ESGS")
               .map((el) => (

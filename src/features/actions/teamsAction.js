@@ -11,7 +11,7 @@ export const getAllTeams = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/teams`, config);
+      const { data } = await axiosInstance.get(`/teams`, config);
       console.log("-------------destination data", data);
       return data;
     } catch (error) {
@@ -35,7 +35,7 @@ export const getSingleTeam = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/teams/${id}`, config);
+      const { data } = await axiosInstance.get(`/teams/${id}`, config);
       console.log("-------------destination data", data);
       return data;
     } catch (error) {
@@ -60,7 +60,7 @@ export const deleteTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/teams/${id}`,
+        `/teams/${id}`,
         config
       );
       console.log("delete team data", data);
@@ -103,7 +103,7 @@ export const addTeam = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await axiosInstance.post(`/api/v1/teams`, formData, {
+      const { data } = await axiosInstance.post(`/teams`, formData, {
         config,
       });
 
@@ -148,7 +148,7 @@ export const updateTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/teams/${id}`,
+        `/teams/${id}`,
         formData,
         config
       );

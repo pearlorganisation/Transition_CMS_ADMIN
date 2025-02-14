@@ -11,7 +11,7 @@ export const getPortfolios = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/portfolio`, config);
+      const { data } = await axiosInstance.get(`/portfolio`, config);
       toast.success("Fetched Portfolios Successfully", {
         position: "top-right",
       });
@@ -78,7 +78,7 @@ export const addPortfolio = createAsyncThunk(
       };
 
       const { data } = await axiosInstance.post(
-        "/api/v1/portfolio",
+        "/portfolio",
         formData,
         config
       );

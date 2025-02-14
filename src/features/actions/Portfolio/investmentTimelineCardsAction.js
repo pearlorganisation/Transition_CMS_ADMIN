@@ -12,7 +12,7 @@ export const getInvestmentTimelineCards = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/investment-timeline-cards`,
+        `/investment-timeline-cards`,
         config
       );
       return data;
@@ -38,7 +38,7 @@ export const getSingleInvestmentTimelineCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/investment-timeline-cards/${id}`,
+        `/investment-timeline-cards/${id}`,
         config
       );
       return data.data;
@@ -64,7 +64,7 @@ export const deleteInvestmentTimelineCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/investment-timeline-cards/${id}`,
+        `/investment-timeline-cards/${id}`,
         config
       );
 
@@ -107,7 +107,7 @@ export const addInvestmentTimelineCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/investment-timeline-cards`,
+        `/investment-timeline-cards`,
         formData,
         {
           config,
@@ -155,7 +155,7 @@ export const updateInvestmentTimelineCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/investment-timeline-cards/${id}`,
+        `/investment-timeline-cards/${id}`,
         formData,
         config
       );

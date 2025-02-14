@@ -7,7 +7,7 @@ export const getListInvest = createAsyncThunk(
   "investmentTimeline/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get("/api/v1/investment-timeline");
+      const { data } = await axiosInstance.get("/investment-timeline");
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -26,7 +26,7 @@ export const getSingleInvest = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `/api/v1/investment-timeline/${id}`
+        `/investment-timeline/${id}`
       );
       return data;
     } catch (error) {
@@ -54,7 +54,7 @@ export const createListInvest = createAsyncThunk(
       formData.append("cards", JSON.stringify(newInvestment.cards));
 
       const response = await axiosInstance.post(
-        "/api/v1/investment-timeline",
+        "/investment-timeline",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -83,7 +83,7 @@ export const updateListInvest = createAsyncThunk(
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.patch(
-        `/api/v1/investment-timeline/${id}`,
+        `/investment-timeline/${id}`,
         updatedData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -116,7 +116,7 @@ export const deleteListInvest = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/investment-timeline/${id}`,
+        `/investment-timeline/${id}`,
         config
       );
       console.log("delete focus area data", data);

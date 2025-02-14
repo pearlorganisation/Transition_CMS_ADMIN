@@ -14,7 +14,7 @@ export const CreateCoInvester = createAsyncThunk(
       };
 
       const response = await axiosInstance.post(
-        "/api/v1/co-investors",
+        "/co-investors",
         coInvestorData,
         { config }
       );
@@ -40,7 +40,7 @@ export const getInvestors = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const response = await axiosInstance.get("/api/v1/co-investors", {
+      const response = await axiosInstance.get("/co-investors", {
         config,
       });
       return response.data;
@@ -66,7 +66,7 @@ export const updateInvestor = createAsyncThunk(
 
     try {
       const response = await axiosInstance.patch(
-        `/api/v1/co-investors/${id}`,
+        `/co-investors/${id}`,
         updatedData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -89,7 +89,7 @@ export const deleteInvestor = createAsyncThunk(
   "coInvestors/delete",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/api/v1/co-investors/${id}`);
+      await axiosInstance.delete(`/co-investors/${id}`);
       toast.success("Co-Investor deleted successfully!", {
         position: "top-center",
       });

@@ -11,7 +11,7 @@ export const getFocusAreas = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/focusArea`, config);
+      const { data } = await axiosInstance.get(`/focusArea`, config);
 
       return data;
     } catch (error) {
@@ -36,7 +36,7 @@ export const getFocusAreaFeatures = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/focus-features`,
+        `/focus-features`,
         config
       );
 
@@ -63,7 +63,7 @@ export const getFocusAreaById = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/focusArea/${id}`,
+        `/focusArea/${id}`,
         config
       );
 
@@ -90,7 +90,7 @@ export const getFocusFeatureById = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/focus-features/${id}`,
+        `/focus-features/${id}`,
         config
       );
 
@@ -117,7 +117,7 @@ export const deleteFocusArea = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/focusarea/${id}`,
+        `/focusarea/${id}`,
         config
       );
       console.log("delete focus area data", data);
@@ -147,7 +147,7 @@ export const deleteFocusFeature = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/focus-features/${id}`,
+        `/focus-features/${id}`,
         config
       );
       console.log("delete focus area feature data", data);
@@ -178,7 +178,7 @@ export const addFocusArea = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/focusarea`,
+        `/focusarea`,
         userData,
         config
       );
@@ -222,7 +222,7 @@ export const addFocusAreaFeature = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/focus-features`,
+        `/focus-features`,
         formData,
 
         config
@@ -254,7 +254,7 @@ export const updateFocusArea = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/focusarea/${id}`,
+        `/focusarea/${id}`,
         updatedData,
         config
       );
@@ -297,7 +297,7 @@ export const updateFocusAreaFeature = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/focus-features/${id}`,
+        `/focus-features/${id}`,
         formData,
         config
       );

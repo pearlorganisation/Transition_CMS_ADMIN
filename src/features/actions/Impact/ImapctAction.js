@@ -10,7 +10,7 @@ export const getImpact = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/impact`, config);
+      const { data } = await axiosInstance.get(`/impact`, config);
       console.log(data);
       return data?.data;
     } catch (error) {
@@ -36,7 +36,7 @@ export const updateImpactById = createAsyncThunk(
         //    }
       };
       const { data } = await axiosInstance.put(
-        `/api/v1/impact/${id}`,
+        `/impact/${id}`,
         impactData,
         config
       );

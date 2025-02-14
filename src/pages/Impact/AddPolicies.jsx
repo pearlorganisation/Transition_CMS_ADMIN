@@ -15,7 +15,7 @@ const AddPolicies = () => {
     formData.append("icon", data.icon[0]); // File input
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/impact", {
+      const response = await fetch("https://transition-cms-backend.onrender.com/api/v1/impact", {
         method: "POST",
         body: formData,
       });

@@ -12,7 +12,7 @@ export const getPortfolioCards = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/portfolio-cards`,
+        `/portfolio-cards`,
         config
       );
 
@@ -39,7 +39,7 @@ export const getSinglePortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/portfolio-cards/${id}`,
+        `/portfolio-cards/${id}`,
         config
       );
       return data.data;
@@ -65,7 +65,7 @@ export const deletePortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/portfolio-cards/${id}`,
+        `/portfolio-cards/${id}`,
         config
       );
       console.log("delete portfolio cards data", data);
@@ -108,7 +108,7 @@ export const addPortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/portfolio-cards`,
+        `/portfolio-cards`,
         formData,
         {
           config,
@@ -158,7 +158,7 @@ export const updatePortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/portfolio-cards/${id}`,
+        `/portfolio-cards/${id}`,
         formData,
         config
       );
