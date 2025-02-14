@@ -17,7 +17,7 @@ const AddPodcast = () => {
       formData.append('shortTitle', data.link);
 
 
-      const response = await axiosInstance.post('/api/v1/blogs', formData, {
+      const response = await axiosInstance.post('/blogs', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

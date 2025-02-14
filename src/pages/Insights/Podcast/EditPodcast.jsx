@@ -58,7 +58,7 @@ const EditPodcast = () => {
       }
 
       const response = await axiosInstance.put(
-        `/api/v1/blogs/${id}`,
+        `/blogs/${id}`,
         formData,
         {
           headers: {

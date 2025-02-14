@@ -11,7 +11,7 @@ const Press = () => {
         try {
           setLoading(true);
           setError(null);
-          const response = await axiosInstance.get(`api/v1/blogs?press=true`);
+          const response = await axiosInstance.get(`/blogs?press=true`);
           console.log(response?.data?.data)
           setPressData(response?.data?.data);
         } catch (err) {
@@ -31,7 +31,7 @@ const Press = () => {
                 setLoading(true);
                 setError(null);
         
-                const response = await axiosInstance.delete(`api/v1/blogs/${id}`);
+                const response = await axiosInstance.delete(`/blogs/${id}`);
         
                
         
