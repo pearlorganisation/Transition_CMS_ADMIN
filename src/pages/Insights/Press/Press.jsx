@@ -11,11 +11,7 @@ const Press = () => {
         try {
           setLoading(true);
           setError(null);
-  
           const response = await axiosInstance.get(`api/v1/blogs?press=true`);
-  
-
-  
           console.log(response?.data?.data)
           setPressData(response?.data?.data);
         } catch (err) {
@@ -90,9 +86,11 @@ const Press = () => {
                     <button className='text-blue-400 hover:text-blue-500'>
                         View
                     </button>
-                    <button  className='text-green-400 hover:text-green-500'>
-                        Edit
-                    </button>
+                    <Link to={`/edit-press/${el?._id}`}>
+                        <button className='text-green-400 hover:text-green-500'>
+                            Edit
+                        </button>
+                    </Link>                     
                     <button  onClick={()=>deletePress(el?._id)} className='text-red-400 hover:text-red-500'>
                         Delete
                     </button>

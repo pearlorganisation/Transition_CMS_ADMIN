@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addTeam } from "../../features/actions/teamsAction";
@@ -18,7 +18,6 @@ const AddTeam = () => {
     console.log("Form Data:", data);
 
     dispatch(addTeam(data));
-    // alert("Team added successfully!");
     reset();
     setImagePreview(null);
   };

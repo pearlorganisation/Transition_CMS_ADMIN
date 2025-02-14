@@ -1,17 +1,10 @@
 /* eslint-disable react/prop-types */
 import { NavLink } from "react-router-dom";
 import { FaAmazonPay, FaBars, FaHome } from "react-icons/fa";
-import { BiSolidCategory } from "react-icons/bi";
-import { BsShop, BsPeopleFill } from "react-icons/bs";
-import { MdEventAvailable } from "react-icons/md";
-import { TbBuildingCommunity } from "react-icons/tb";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
-// import { FiUsers } from "react-icons/fi";
-// import useAuth from "../../../hooks/useAuth";
 import { LuWallpaper } from "react-icons/lu";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { Fa42Group, FaAddressBook, FaQuestion } from "react-icons/fa6";
 
 const routes = [
@@ -20,46 +13,7 @@ const routes = [
     name: "Dashboard",
     icon: <FaHome />,
   },
-  {
-    path: "/client",
-    name: "Client Panel",
-    icon: <Fa42Group />,
-    subRoutes: [
-      {
-        path: "/client/homeBanners",
-        name: "Home Banner",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/eventBanners",
-        name: "Shows/Events Banner",
-        icon: <LuWallpaper />,
-      },
-      { path: "/client/faqs", name: "FAQs", icon: <FaQuestion /> },
-      {
-        path: "/client/listYourEvent",
-        name: "List Your Event",
-        icon: <FaQuestion />,
-      },
-    ],
-  },
-  {
-    path: "/news",
-    name: "News",
-    icon: <FaAddressBook />,
-    subRoutes: [
-      {
-        path: "/news",
-        name: "List News",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/news/add-news",
-        name: "Add News",
-        icon: <LuWallpaper />,
-      },
-    ],
-  },
+
   {
     path: "/team",
     name: "Team",
@@ -73,6 +27,16 @@ const routes = [
       {
         path: "/team/add-team",
         name: "Add Team",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/teamDetails",
+        name: "List Team Details",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/teamDetails/add-teamDetails",
+        name: "Add Team Details",
         icon: <LuWallpaper />,
       },
     ],
@@ -99,6 +63,116 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/focusarea",
+    name: "Focus Area",
+    icon: <FaAmazonPay />,
+    subRoutes: [
+      {
+        path: "/focusareafeature",
+        name: "List Focus Area Features",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/focusarea/add-focusareafeature",
+        name: "Add Focus Area Feature",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/focusarea",
+        name: "List Focus Areas",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/focusarea/add-focusarea",
+        name: "Add Focus Area",
+        icon: <LuWallpaper />,
+      },
+    ],
+  },
+
+  {
+    path: "/portfolios",
+    name: "Portfolios",
+    icon: <FaAmazonPay />,
+    subRoutes: [
+      {
+        path: "/portfolios",
+        name: "List All Portfolios",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/portfolios/add-portfolio",
+        name: "Add Portfolio",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/portfolios/portfolio-cards",
+        name: "List All Portfolio Cards",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/portfolios/add-portfolio-card",
+        name: "Add Portfolio Card",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/portfolios/invest-timeline-cards",
+        name: "List All Investment Timeline Cards",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/portfolios/add-investment-timeline-card",
+        name: "Add Investment Timeline Card",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/portfolios/invest-timelines",
+        name: "List Investment Timelines",
+        icon: <LuWallpaper />,
+      },
+
+      {
+        path: "/portfolios/add-investment-timeline",
+        name: "Add Investment Timeline",
+        icon: <LuWallpaper />,
+      },
+
+      {
+        path: "/portfolios/add-coinvestor",
+        name: "List Co Investors",
+        icon: <LuWallpaper />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    name: "Impact",
+    icon: <FaAmazonPay />,
+    subRoutes: [
+      {
+        path: "/esg",
+        name: "ESGs",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/mission",
+        name: "Mission",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/sdg",
+        name: "SDGs",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/policies",
+        name: "Policies",
+        icon: <LuWallpaper />,
+      },
+    ],
+  },
 ];
 
 // const userVendorRoutes = [
@@ -120,10 +194,10 @@ const SideBar = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className=" flex min-h-screen ">
       <motion.div
         animate={{ width: isOpen ? "200px" : "60px" }}
-        className="h-screen bg-red-800 text-white transition-all duration-50 flex flex-col"
+        className=" bg-red-800 text-white transition-all duration-50 flex flex-col "
       >
         <div className="flex items-center justify-between px-4 py-3 ">
           {isOpen && <h1 className="text-xl font-bold"> Sidebar </h1>}
