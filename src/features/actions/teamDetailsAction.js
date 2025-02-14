@@ -13,7 +13,7 @@ export const getAllTeamDetails = createAsyncThunk(
       };
       const { data } = await axiosInstance.get(`/api/v1/team-details`, config);
       console.log("-------------team details data", data);
-      return data;
+      return data?.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message, { position: "top-center" });
@@ -40,7 +40,7 @@ export const getSingleTeamDetails = createAsyncThunk(
         config
       );
       console.log("-------------single team details data", data);
-      return data;
+      return data?.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message, { position: "top-center" });

@@ -266,6 +266,42 @@ const Routes = createBrowserRouter([
         path: "/portfolios/add-portfolio",
         element: <AddPortfolio />,
       },
+      {
+        path: "/esg",
+        element: <ESG />,
+      },
+      {
+        path: "/mission",
+        element: <Mission />,
+      },
+      {
+        path: "/sdg",
+        element: <SDG />,
+      },
+      {
+        path: "/policies",
+        element: <Policies />,
+      },
+      {
+        path: "/add-policies",
+        element: <AddPolicies />,
+      },
+      {
+        path: "/edit-esg/:id",
+        element: <EditEsg />,
+      },
+      {
+        path: "/edit-sdg/:id",
+        element: <EditSdg />,
+      },
+      {
+        path: "/edit-policies/:id",
+        element: <EditPolicies />,
+      },
+      {
+        path: "/edit-mission/:id",
+        element: <EditMission />,
+      },
     ],
   },
 ]);

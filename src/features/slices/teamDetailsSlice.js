@@ -40,7 +40,7 @@ const teamDetailsSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.isLoading = false;
-        state.teamDetailsInfo = action.payload.data;
+        state.teamDetailsInfo = action.payload;
         state.pagination = action.payload.pagination;
         toast.success("All Teams recieved", { position: "top-right" });
       })
@@ -60,7 +60,7 @@ const teamDetailsSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.isLoading = false;
-        state.teamDetails = action.payload.data;
+        state.teamDetails = action.payload;
         toast.success("Single Team Details recieved", {
           position: "top-right",
         });

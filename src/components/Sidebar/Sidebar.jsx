@@ -15,23 +15,6 @@ const routes = [
   },
 
   {
-    path: "/news",
-    name: "News",
-    icon: <FaAddressBook />,
-    subRoutes: [
-      {
-        path: "/news",
-        name: "List News",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/news/add-news",
-        name: "Add News",
-        icon: <LuWallpaper />,
-      },
-    ],
-  },
-  {
     path: "/team",
     name: "Team",
     icon: <FaAmazonPay />,
@@ -121,7 +104,7 @@ const routes = [
       },
       {
         path: "/portfolios/add-portfolio",
-        name: "All Portfolio",
+        name: "Add Portfolio",
         icon: <LuWallpaper />,
       },
       {
@@ -159,16 +142,6 @@ const routes = [
       {
         path: "/portfolios/add-coinvestor",
         name: "List Co Investors",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/portfolios/view-invest-timeline-cards/:id",
-        name: "View Investment Timeline Card ",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/portfolios/edit-invest-timeline-cards/:id",
-        name: "Edit Investment Timeline Card",
         icon: <LuWallpaper />,
       },
     ],

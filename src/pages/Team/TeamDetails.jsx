@@ -10,10 +10,11 @@ const TeamDetails = () => {
   const dispatch = useDispatch();
 
   const { teamDetailsInfo } = useSelector((state) => state.teamDetails);
+  console.log(teamDetailsInfo, "rhwekrj");
 
   useEffect(() => {
     dispatch(getAllTeamDetails());
-  }, [dispatch]);
+  }, []);
 
   // const [data, setData] = useState(teamsData);
   const navigate = useNavigate();

@@ -3,6 +3,7 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
+import investmentTimelineRedcuer from "../features/slices/Portfolio/investmentTimelineSlice";
 
 import teamsReducer from "../features/slices/teamsSlice";
 import teamDetailsReducer from "../features/slices/teamDetailsSlice";
@@ -13,6 +14,7 @@ import investmentTimelineCardsReducer from "../features/slices/Portfolio/investm
 import investerReducer from "../features/slices/coInvestorSlice";
 // import newsReducer from "../features/slices/newsSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice";
+import impactReducer from "../features/slices/Impact/impactSlice";
 
 const persistConfig = {
   key: "Transition_CMS_Admin",
@@ -33,7 +35,15 @@ const persistConfig = {
 const reducer = combineReducers({
   //   news: newsReducer,
   teams: teamsReducer,
+  teamDetails: teamDetailsReducer,
   blogs: blogsReducer,
+  impacts: impactReducer,
+  focusArea: focusAreaReducer,
+  portfolioCards: portFolioCardsReducer,
+  portfolios: portfolioReducer,
+  investmentTimelineCards: investmentTimelineCardsReducer,
+  coInvestors: investerReducer,
+  listInvestTime: investmentTimelineRedcuer,
 });
 
 const rootReducer = (state, action) => {
