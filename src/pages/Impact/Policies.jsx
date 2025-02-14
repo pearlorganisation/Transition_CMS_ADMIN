@@ -1,16 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getImpact } from '../../features/actions/Impact/ImapctAction'
 import { Link } from 'react-router-dom'
 import { data } from 'autoprefixer'
+import axiosInstance from '../../axiosInstance'
 
 const Policies = () => {
     const dispatch = useDispatch()
+    const [loading,setLoading] = useState(true)
+    const [error, setError] = useState(null)
     const { impactData } = useSelector(state => state.impacts)
     useEffect(() => {
         dispatch(getImpact())
     }, [])
-
+    let data = impactData?.filter(el => el?.impactDataType === "POLICIES")
+    console.log("the filtered data is", data)
+    async function deletePolicies(id)
+        {
+            try {
+                setLoading(true);
+                setError(null);
+                const response = await axiosInstance.delete(`api/v1/impact/${id}`);
+                fetchData();
+              } catch (err) {
+                setError(err instanceof Error ? err.message : "Something went wrong");
+              } finally {
+                setLoading(false);
+              }
+        }
+    
     return (
 
         <div class="relative overflow-x-auto p-2 bg-slate-300">
@@ -50,6 +68,7 @@ const Policies = () => {
                                     <Link to={`/edit-policies/${el?._id}`} state={{data: el}}>
                                         <button className="text-green-400 hover:text-green-500">Edit</button>
                                     </Link>
+                                    <button onClick={()=> deletePolicies(el?._id)} className="text-green-400 hover:text-green-500">Delete</button>
                                 </td>
                             </tr>
                         ))

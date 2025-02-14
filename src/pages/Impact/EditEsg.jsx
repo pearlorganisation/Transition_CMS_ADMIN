@@ -70,7 +70,7 @@ const EditEsg = () => {
   const dispatch = useDispatch()
   const { data } = location.state ?? {}
   const { _id } = data || {};
-console.log(data)
+  console.log("the data is",data)
   const {
     control,
     handleSubmit,
