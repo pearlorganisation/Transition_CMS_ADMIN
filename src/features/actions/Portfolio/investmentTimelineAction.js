@@ -10,7 +10,13 @@ export const getListInvest = createAsyncThunk(
       const { data } = await axiosInstance.get("/api/v1/investment-timeline");
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
+        return rejectWithValue(error.response.data.message);
+      } else {
+        toast.error(error.message, { position: "top-right" });
+        return rejectWithValue(error.message);
+      }
     }
   }
 );
@@ -24,7 +30,13 @@ export const getSingleInvest = createAsyncThunk(
       );
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
+        return rejectWithValue(error.response.data.message);
+      } else {
+        toast.error(error.message, { position: "top-right" });
+        return rejectWithValue(error.message);
+      }
     }
   }
 );
@@ -41,7 +53,6 @@ export const createListInvest = createAsyncThunk(
       formData.append("description", newInvestment.description);
       formData.append("cards", JSON.stringify(newInvestment.cards));
 
-      console.log(formData, "firo data");
       const response = await axiosInstance.post(
         "/api/v1/investment-timeline",
         formData,
@@ -50,10 +61,19 @@ export const createListInvest = createAsyncThunk(
         }
       );
 
-      console.log(response.data, "qwerty");
+      toast.success("Investment Timeline  added Successfully", {
+        position: "top-right",
+      });
+
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
+        return rejectWithValue(error.response.data.message);
+      } else {
+        toast.error(error.message, { position: "top-right" });
+        return rejectWithValue(error.message);
+      }
     }
   }
 );
@@ -69,9 +89,19 @@ export const updateListInvest = createAsyncThunk(
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+
+      toast.success("Investment Timeline  updated Successfully", {
+        position: "top-right",
+      });
       return data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
+        return rejectWithValue(error.response.data.message);
+      } else {
+        toast.error(error.message, { position: "top-right" });
+        return rejectWithValue(error.message);
+      }
     }
   }
 );

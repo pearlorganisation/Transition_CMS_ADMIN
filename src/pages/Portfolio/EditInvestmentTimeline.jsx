@@ -29,7 +29,7 @@ const EditInvestmentTimeline = () => {
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
-          label: feature.title,
+          label: feature.body,
         }));
         setOptions(formattedOptions);
       })
@@ -48,7 +48,7 @@ const EditInvestmentTimeline = () => {
         setValue("image", []);
         setValue(
           "cards",
-          cards.map((card) => ({ value: card._id, label: card.title }))
+          cards.map((card) => ({ value: card._id, label: card.body }))
         );
         setLoading(false);
       })
@@ -67,13 +67,9 @@ const EditInvestmentTimeline = () => {
       formData.append(
         "cards",
         JSON.stringify(
-          data.cards.map((card) => ({ _id: card.value, title: card.label }))
+          data.cards.map((card) => ({ _id: card.value, body: card.label }))
         )
       );
-
-      // await axiosInstance.patch("/api/v1/investment-timeline", formData, {
-      //   headers: { "Content-Type": "multipart/form-data" },
-      // });
 
       dispatch(updateListInvest({ id: id, updatedData: formData }));
     } catch (error) {

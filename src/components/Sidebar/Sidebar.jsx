@@ -120,6 +120,11 @@ const routes = [
         icon: <LuWallpaper />,
       },
       {
+        path: "/portfolios/add-portfolio",
+        name: "All Portfolio",
+        icon: <LuWallpaper />,
+      },
+      {
         path: "/portfolios/portfolio-cards",
         name: "List All Portfolio Cards",
         icon: <LuWallpaper />,

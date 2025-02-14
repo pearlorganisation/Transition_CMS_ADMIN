@@ -11,11 +11,13 @@ const ViewPortfolio = () => {
     );
   }
 
+  console.log(portfolio, "portfolio 1234546");
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">View portfolio Page</h1>
       <h1 className="text-lg"> LOGO</h1>
-      <div className="bg-white rounded-lg p-6">
+      {/* <div className="bg-white rounded-lg p-6">
         <img
           src={portfolio.image.secure_url}
           alt={portfolio.name}
@@ -76,16 +78,16 @@ const ViewPortfolio = () => {
           <h1 className="mt-6"> INVESTMENT TIMELINE</h1>
 
           <img
-            src={portfolio?.investmentTimeline?.image.secure_url}
+            src={portfolio?.investmentTimeline?.image?.secure_url}
             alt={portfolio?.name}
             className="w-32 h-32 rounded-full mx-auto mb-4"
           />
 
           <h1 className="mt-6"> Description </h1>
-          <p>{parse(portfolio.investmentTimeline.description)}</p>
+          <p>{parse(portfolio?.investmentTimeline?.description)}</p>
 
           <h1 className="mt-6"> Investment Year </h1>
-          <p>{portfolio?.investmentTimeline.investmentYear}</p>
+          <p>{portfolio?.investmentTimeline?.investmentYear}</p>
 
           <h1 className="mt-6 mb-6"> INVESTMENT CARDS</h1>
 
@@ -100,7 +102,7 @@ const ViewPortfolio = () => {
               ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
