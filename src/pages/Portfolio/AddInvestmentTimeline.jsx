@@ -17,7 +17,7 @@ const AddInvestmentTimeline = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/investment-timeline-cards")
+      .get("/investment-timeline-cards")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
@@ -42,7 +42,7 @@ const AddInvestmentTimeline = () => {
         )
       );
 
-      await axiosInstance.post("/api/v1/investment-timeline", formData, {
+      await axiosInstance.post("/investment-timeline", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

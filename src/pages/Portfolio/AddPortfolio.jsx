@@ -30,7 +30,7 @@ export default function AddPortfolio() {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/portfolio-cards")
+      .get("/portfolio-cards")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
@@ -45,7 +45,7 @@ export default function AddPortfolio() {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/investment-timeline")
+      .get("/investment-timeline")
       .then((response) => {
         setInvestmentTimelines(response.data.data);
       })
@@ -56,7 +56,7 @@ export default function AddPortfolio() {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/co-investors")
+      .get("/co-investors")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
