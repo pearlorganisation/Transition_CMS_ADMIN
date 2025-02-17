@@ -83,6 +83,20 @@ const ViewPortfolio = () => {
         </div>
 
         <div className="">
+          <h1 className="mt-6"> List of Co Investors </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.isArray(portfolio?.coInvestedBy) &&
+              portfolio?.coInvestedBy?.map((pCard, index) => (
+                <div className="" key={pCard?._id}>
+                  <h1 className="mt-2">
+                    {index + 1} . {pCard?.coInvestorname}
+                  </h1>
+                </div>
+              ))}
+          </div>
+        </div>
+
+        <div className="">
           <h1 className="mt-6"> INVESTMENT TIMELINE</h1>
 
           <img
