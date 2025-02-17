@@ -1,151 +1,352 @@
-import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../axiosInstance";
-import { useParams } from "react-router-dom";
+import { editPortfolio } from "../../features/actions/Portfolio/portfolio";
 import { useDispatch } from "react-redux";
-import { updateListInvest } from "../../features/actions/Portfolio/investmentTimelineAction";
+import { useParams } from "react-router-dom";
 
-const EditPortfolio = () => {
+export default function EditPortfolio() {
   const { id } = useParams();
-
-  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    setValue,
     control,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm();
+  const dispatch = useDispatch();
 
   const [imagePreview, setImagePreview] = useState(null);
+  const [bgPreview, setBgPreview] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
   const [options, setOptions] = useState([]);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [coInvestors, setCoInvestors] = useState([]);
+  const [investmentTimelines, setInvestmentTimelines] = useState([]);
+  const [selectedInvestment, setSelectedInvestment] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  //   const [imageUrl, setImageUrl] = useState(null);
+  //   const [bgUrl, setBgUrl] = useState(null);
+  //   const [bottomSectionUrl, setBottomSectionUrl] = useState(null);
+
+  //   useEffect(() => {
+  //     axiosInstance.get("/portfolio-cards").then((response) => {
+  //       const formattedOptions = response.data.data.map((feature) => ({
+  //         value: feature._id,
+  //         label: feature.title,
+  //       }));
+  //       setOptions(formattedOptions);
+  //     });
+  //   }, []);
+
+  //   useEffect(() => {
+  //     axiosInstance.get("/investment-timeline").then((response) => {
+  //       setInvestmentTimelines(response.data.data);
+  //     });
+  //   }, []);
+
+  //   useEffect(() => {
+  //     axiosInstance.get("/co-investors").then((response) => {
+  //       const formattedOptions = response.data.data.map((feature) => ({
+  //         value: feature._id,
+  //         label: feature.name,
+  //       }));
+  //       setCoInvestors(formattedOptions);
+  //     });
+  //   }, []);
+
+  //   useEffect(() => {
+  //     axiosInstance
+  //       .get(`/portfolio/${id}`)
+  //       .then((response) => {
+  //         const {
+  //           cards,
+  //           coInvestedBy,
+  //           mainDescription,
+  //           image,
+  //           bg,
+  //           bottomSectionIcon,
+  //           name,
+  //           title,
+  //           link,
+  //           overview,
+  //           bottomSectionContent,
+  //         } = response.data.data;
+  //         setValue("name", name);
+  //         setValue("mainDescription", mainDescription);
+  //         setValue("title", title);
+  //         setValue("link", link);
+  //         setValue("overview", overview);
+  //         setValue("bottomSectionContent", bottomSectionContent);
+  //         setImagePreview(image?.secure_url);
+  //         setValue("image", []);
+  //         setBgPreview(bg?.secure_url);
+  //         setValue("bg", []);
+  //         setIconPreview(bottomSectionIcon?.secure_url);
+  //         setValue("bottomSectionIcon", []);
+  //         setValue(
+  //           "cards",
+  //           cards.map((card) => ({
+  //             value: card._id,
+  //             label: card.portfoliocardname,
+  //           }))
+  //         );
+  //         setValue(
+  //           "coInvestedBy",
+  //           coInvestedBy.map((card) => ({
+  //             value: card._id,
+  //             label: card.coInvestorname,
+  //           }))
+  //         );
+  //       })
+  //       .catch((error) => console.error("Error fetching focus area:", error));
+  //   }, [id, setValue]);
 
   useEffect(() => {
-    axiosInstance
-      .get("/coinvestors")
-      .then((response) => {
-        const formattedOptions = response.data.data.map((feature) => ({
-          value: feature._id,
-          label: feature.body,
-        }));
-        setOptions(formattedOptions);
-      })
-      .catch((error) => console.error("Error fetching features:", error));
-  }, []);
+    const fetchData = async () => {
+      try {
+        const [portfolioCardsRes, timelineRes, coInvestorsRes, portfolioRes] =
+          await Promise.all([
+            axiosInstance.get("/portfolio-cards"),
+            axiosInstance.get("/investment-timeline"),
+            axiosInstance.get("/co-investors"),
+            axiosInstance.get(`/portfolio/${id}`),
+          ]);
 
-  useEffect(() => {
-    axiosInstance
-      .get(`/portfolio/${id}`)
-      .then((response) => {
-        const { cards, description, image, investmentYear } =
-          response.data.data;
-        setValue("description", description);
-        setValue("investmentYear", investmentYear);
-        setImageUrl(image);
-        setValue("image", []);
-        setValue(
-          "cards",
-          cards.map((card) => ({ value: card._id, label: card.body }))
+        setOptions(
+          portfolioCardsRes.data.data.map((feature) => ({
+            value: feature._id,
+            label: feature.title,
+          }))
         );
-        setLoading(false);
-      })
-      .catch((error) => console.error("Error fetching focus area:", error));
-  }, [id, setValue]);
 
-  const onSubmit = async (data) => {
-    try {
-      const formData = new FormData();
-      formData.append("description", data.description);
-      formData.append("investmentYear", data.investmentYear);
-      if (data.image.length > 0) {
-        formData.append("image", data.image[0]);
+        setInvestmentTimelines(timelineRes.data.data);
+
+        setCoInvestors(
+          coInvestorsRes.data.data.map((feature) => ({
+            value: feature._id,
+            label: feature.name,
+          }))
+        );
+
+        const {
+          cards,
+          coInvestedBy,
+          mainDescription,
+          image,
+          bg,
+          bottomSectionIcon,
+          name,
+          title,
+          investmentTimeline,
+          link,
+          overview,
+          bottomSectionContent,
+        } = portfolioRes.data.data;
+
+        reset({
+          name,
+          mainDescription,
+          title,
+          link,
+          overview,
+          investmentTimeline,
+          bottomSectionContent,
+          cards: cards.map((card) => ({
+            value: card._id,
+            label: card.portfoliocardname,
+          })),
+          coInvestedBy: coInvestedBy.map((card) => ({
+            value: card._id,
+            label: card.coInvestorname,
+          })),
+        });
+
+        setImagePreview(image?.secure_url);
+        setBgPreview(bg?.secure_url);
+        setIconPreview(bottomSectionIcon?.secure_url);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
+    };
 
-      formData.append(
-        "cards",
-        JSON.stringify(
-          data.cards.map((card) => ({ _id: card.value, body: card.label }))
-        )
-      );
+    fetchData();
+  }, [id, reset]);
 
-      dispatch(updateListInvest({ id: id, updatedData: formData }));
-    } catch (error) {
-      console.error("Error submitting form:", error);
+  //   const handleImageChange = (e) => {
+  //     const file = e.target.files[0];
+  //     console.log(e.target.files);
+  //     console.log(e.target.name);
+  //     if (file) {
+
+  //       setValue(e.target.name, file);
+  //     }
+  //   };
+
+  const handleImageChange = (e, setPreview) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file));
     }
   };
 
+  console.log(options, "options for portfolio cards");
+
+  console.log(coInvestors, "my coinvestors");
+
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("mainDescription", data.mainDescription);
+
+    formData.append("title", data.title);
+    formData.append("overview", data.overview);
+    formData.append("bottomSectionContent", data.bottomSectionContent);
+    formData.append("link", data.link);
+
+    // formData.append(
+    //   "investmentTimeline",
+    //   JSON.stringify(data.selectedInvestment?._id)
+    // );
+
+    if (data.selectedInvestment?._id) {
+      formData.append("investmentTimeline", data.selectedInvestment._id);
+    }
+
+    if (data.image && data.image[0]) {
+      formData.append("image", data.image[0]);
+    }
+    if (data.bg && data.bg[0]) {
+      formData.append("bg", data.bg[0]);
+    }
+    if (data.bottomSectionIcon && data.bottomSectionIcon[0]) {
+      formData.append("bottomSectionIcon", data.bottomSectionIcon[0]);
+    }
+
+    formData.append(
+      "cards",
+      JSON.stringify(
+        data.cards.map((card) => ({
+          _id: card.value,
+          portfoliocardname: card.label,
+        }))
+      )
+    );
+    formData.append(
+      "coInvestedBy",
+      JSON.stringify(
+        data.coInvestedBy.map((card) => ({
+          _id: card.value,
+          coInvestorname: card.label,
+        }))
+      )
+    );
+
+    dispatch(editPortfolio({ id, portfolioData: formData }));
+  };
+
   return (
-    <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">EDIT Portfolio</h2>
-
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md">
+      <h2 className="text-2xl font-semibold mb-4">Edit Portfolio</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Description */}
-        <div>
-          <label className="block text-gray-700">Description</label>
-          <textarea
-            {...register("description", {
-              required: "Description is required",
-            })}
-            className="w-full p-2 border rounded"
-          />
-          {errors.description && (
-            <p className="text-red-500">{errors.description.message}</p>
-          )}
-        </div>
+        <h1 className="">Name </h1>
+        <input
+          {...register("name", { required: true })}
+          placeholder="Name"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
 
-        {/* Investment Year */}
-        <div>
-          <label className="block text-gray-700">Investment Year</label>
-          <input
-            type="number"
-            {...register("investmentYear", {
-              required: "Investment Year is required",
-            })}
-            className="w-full p-2 border rounded"
-          />
-          {errors.investmentYear && (
-            <p className="text-red-500">{errors.investmentYear.message}</p>
-          )}
-        </div>
+        <h1 className="">Title </h1>
+        <input
+          {...register("title", { required: true })}
+          placeholder="Title"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
 
-        {imageUrl && !imagePreview && (
-          <img
-            src={imageUrl.secure_url}
-            alt="Current"
-            className="mt-2 w-32 h-32 object-cover rounded"
-          />
+        <h1 className=""> Link (Optional) </h1>
+        <input
+          {...register("link")}
+          placeholder="Portfolio Link (Optional)"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+
+        <h1> Add Image</h1>
+        <input
+          type="file"
+          {...register(
+            "image"
+            // {
+            // onChange: (e) => {
+            //   console.log(e.target.files);
+            //   setValue("image", e.target.files);
+            //   handleImageChange(e);
+            // },
+            //}
+          )}
+          onChange={(e) => handleImageChange(e, setImagePreview)}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        {imagePreview && (
+          <img src={imagePreview} alt="Preview" className="h-20" />
         )}
 
-        {/* Image Upload */}
-        <div>
-          <label className="block text-gray-700">Image</label>
-          <input
-            type="file"
-            {...register("image")}
-            className="w-full p-2 border rounded"
-            accept="image/*"
-            onChange={(e) =>
-              setImagePreview(URL.createObjectURL(e.target.files[0]))
-            }
-          />
-          {errors.image && (
-            <p className="text-red-500">{errors.image.message}</p>
-          )}
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="mt-2 w-32 h-32 object-cover rounded"
-            />
-          )}
-        </div>
+        <h1> Add Background Image</h1>
+        <input
+          type="file"
+          {...register("bg")}
+          onChange={(e) => handleImageChange(e, setBgPreview)}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        {bgPreview && (
+          <img src={bgPreview} alt="Background Preview" className="h-20" />
+        )}
 
-        {/* Cards Multi-Select */}
+        <h1> Add Bottom Section Image</h1>
+        <input
+          type="file"
+          {...register("bottomSectionIcon")}
+          onChange={(e) => handleImageChange(e, setIconPreview)}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        {iconPreview && (
+          <img src={iconPreview} alt="Icon Preview" className="h-20" />
+        )}
+
+        <h1> Overview </h1>
+        <textarea
+          {...register("overview", { required: true })}
+          placeholder="Overview"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        <h1> Main Description </h1>
+        <textarea
+          {...register("mainDescription", { required: true })}
+          placeholder="Main Description"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+
+        <h1 className=""> Bottom Section Content </h1>
+        <textarea
+          {...register("bottomSectionContent", { required: true })}
+          placeholder="Bottom Section Content"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+
+        <h2 className="font-semibold">Investment Timeline</h2>
+        <button
+          type="button"
+          className="w-full p-2 border border-gray-300 rounded bg-gray-100 text-left"
+          onClick={() => setIsModalOpen(true)}
+        >
+          {selectedInvestment
+            ? `Description: ${selectedInvestment.description}`
+            : "Select Investment Timeline"}
+        </button>
+
         <div>
-          <label className="block text-gray-700">Select Cards</label>
+          <label className="block text-gray-700">Select Portfolio Cards</label>
           <Controller
             name="cards"
             control={control}
@@ -165,16 +366,70 @@ const EditPortfolio = () => {
           )}
         </div>
 
-        {/* Submit Button */}
+        <div>
+          <label className="block text-gray-700">Select Co Investors </label>
+          <Controller
+            name="coInvestedBy"
+            control={control}
+            rules={{ required: "At least one card must be selected" }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={coInvestors}
+                isMulti
+                className="basic-multi-select"
+                classNamePrefix="select"
+              />
+            )}
+          />
+          {errors.coInvestedBy && (
+            <p className="text-red-500">{errors.coInvestedBy.message}</p>
+          )}
+        </div>
+
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-md shadow-lg max-w-lg w-full">
+              <h2 className="text-xl font-bold mb-4">
+                Select Investment Timeline
+              </h2>
+              <div className="space-y-4 max-h-96 overflow-auto flex flex-row gap-3">
+                {investmentTimelines.map((timeline) => (
+                  <div
+                    key={timeline._id}
+                    className="p-4 border rounded cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      setSelectedInvestment(timeline);
+                      setIsModalOpen(false);
+                    }}
+                  >
+                    <img
+                      src={timeline.image.secure_url}
+                      alt="Timeline"
+                      className="h-20 w-full object-cover rounded-md mb-2"
+                    />
+                    <p className="font-semibold">{timeline.investmentYear}</p>
+                    <p className="text-gray-600">{timeline.description}</p>
+                  </div>
+                ))}
+              </div>
+              <button
+                className="mt-4 w-full bg-red-500 text-white p-2 rounded"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded"
+          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
-          Submit
+          Update
         </button>
       </form>
     </div>
   );
-};
-
-export default EditPortfolio;
+}
