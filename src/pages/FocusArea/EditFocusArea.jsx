@@ -1,108 +1,124 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleTeam, updateTeam } from "../../features/actions/teamsAction";
-import { useForm } from "react-hook-form";
+import axiosInstance from "../../axiosInstance";
+import Select from "react-select";
+import { useDispatch } from "react-redux";
+import { updateFocusArea } from "../../features/actions/focusAreaAction";
 
 const EditFocusArea = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-
-  const { team } = useSelector((state) => state.teams);
-
-  useEffect(() => {
-    dispatch(getSingleTeam(id));
-  }, [dispatch, id]);
-
-  const [imagePreview, setImagePreview] = useState(null);
   const {
     register,
     handleSubmit,
-    reset,
+    control,
+    setValue,
     formState: { errors },
   } = useForm();
 
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (team) {
-      reset({
-        name: team.name || "",
-        bio: team.bio || "",
-        link: team.link || "",
-      });
-      if (team.image) {
-        setImagePreview(team.image.secure_url);
-      }
-    }
-  }, [team, reset]);
+    axiosInstance
+      .get("/api/v1/focus-features")
+      .then((response) => {
+        const formattedOptions = response.data.data.map((feature) => ({
+          value: feature._id,
+          label: feature.title,
+        }));
+        setOptions(formattedOptions);
+      })
+      .catch((error) => console.error("Error fetching features:", error));
+  }, []);
 
-  // Handle form submission
+  useEffect(() => {
+    axiosInstance
+      .get(`/api/v1/focusarea/${id}`)
+      .then((response) => {
+        const { title, focusAreas } = response.data.data;
+        setValue("title", title);
+        setValue(
+          "focusAreas",
+          focusAreas.map((area) => area._id)
+        );
+        setLoading(false);
+      })
+      .catch((error) => console.error("Error fetching focus area:", error));
+  }, [id, setValue]);
+
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    dispatch(updateTeam({ id: team._id, updatedData: data }));
-    alert("Team edited successfully!");
-    reset();
-    setImagePreview(null);
+    const formattedData = {
+      title: data.title,
+      focusAreas: data.focusAreas.map((id) => {
+        const selectedFeature = options.find((option) => option.value === id);
+        return { _id: selectedFeature.value, title: selectedFeature.label };
+      }),
+    };
+
+    dispatch(updateFocusArea({ id, updatedData: formattedData }));
   };
 
-  // Handle image preview
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
+  if (loading) return <p>Loading...</p>;
 
-  console.log(team, "Single Team");
   return (
-    <div className="max-w-2xl mx-auto px-6 bg-gray-400 shadow-lg rounded-lg h-full mt-2 pb-6">
-      <h1 className="text-2xl font-bold mb-6">Edit Focus Area </h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
-        {/* Name Field */}
-        <div>
-          <label htmlFor="name" className="block font-medium mb-1">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            {...register("title", { required: "Name is required" })}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter name"
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-          )}
-        </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
+    >
+      {/* Title Field */}
+      <div className="mb-4">
+        <label className="block text-gray-700">Title</label>
+        <input
+          {...register("title", { required: "Title is required" })}
+          className="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300"
+          placeholder="Enter Focus Area Title"
+        />
+        {errors.title && (
+          <p className="text-red-500 text-sm">{errors.title.message}</p>
+        )}
+      </div>
 
-        {/* Designation Field */}
-        <div>
-          <label htmlFor="bio" className="block font-medium mb-1">
-            Designation
-          </label>
-          <input
-            type="text"
-            id="bio"
-            {...register("bio", {
-              required: "Designation is required",
-            })}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter designation"
-          />
-          {errors.bio && (
-            <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>
+      {/* Focus Areas Multi-Select */}
+      <div className="mb-4">
+        <label className="block text-gray-700">Select Focus Areas</label>
+        <Controller
+          name="focusAreas"
+          control={control}
+          rules={{ required: "At least one focus area is required" }}
+          render={({ field }) => (
+            <Select
+              {...field}
+              options={options}
+              isMulti
+              className="mt-1"
+              classNamePrefix="react-select"
+              getOptionLabel={(e) => e.label}
+              getOptionValue={(e) => e.value}
+              value={options.filter((option) =>
+                field.value?.includes(option.value)
+              )}
+              onChange={(selectedOptions) => {
+                field.onChange(selectedOptions.map((option) => option.value));
+              }}
+            />
           )}
-        </div>
+        />
+        {errors.focusAreas && (
+          <p className="text-red-500 text-sm">{errors.focusAreas.message}</p>
+        )}
+      </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
-        >
-          Edit Focus Area
-        </button>
-      </form>
-    </div>
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+      >
+        Update Focus Area
+      </button>
+    </form>
   );
 };
 

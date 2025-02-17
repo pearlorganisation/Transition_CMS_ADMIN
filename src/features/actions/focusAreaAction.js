@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../axiosInstance";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 export const getFocusAreas = createAsyncThunk(
   "get/focusArea",
@@ -11,13 +11,15 @@ export const getFocusAreas = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/api/v1/focusArea`, config);
+      const { data } = await axiosInstance.get(`/focusArea`, config);
 
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -34,15 +36,17 @@ export const getFocusAreaFeatures = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/focus-features`,
+        `/focus-features`,
         config
       );
 
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -59,15 +63,17 @@ export const getFocusAreaById = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/focusArea/${id}`,
+        `/focusArea/${id}`,
         config
       );
 
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -84,15 +90,17 @@ export const getFocusFeatureById = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/focus-features/${id}`,
+        `/focus-features/${id}`,
         config
       );
 
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -109,15 +117,20 @@ export const deleteFocusArea = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/focusarea/${id}`,
+        `/focusarea/${id}`,
         config
       );
       console.log("delete focus area data", data);
+      toast.success("Focus Area deleted Successfully", {
+        position: "top-right",
+      });
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -134,15 +147,21 @@ export const deleteFocusFeature = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/focus-features/${id}`,
+        `/focus-features/${id}`,
         config
       );
       console.log("delete focus area feature data", data);
+
+      toast.success("Focus Area Feature deleted Successfully", {
+        position: "top-right",
+      });
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -158,9 +177,11 @@ export const addFocusArea = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.post(`/api/v1/focusarea`, userData, {
-        config,
-      });
+      const { data } = await axiosInstance.post(
+        `/focusarea`,
+        userData,
+        config
+      );
 
       console.log(data, "create  focus area response data");
 
@@ -201,11 +222,10 @@ export const addFocusAreaFeature = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/focus-features`,
+        `/focus-features`,
         formData,
-        {
-          config,
-        }
+
+        config
       );
 
       toast.success("Focus Area Feature created Successfully", {
@@ -234,15 +254,21 @@ export const updateFocusArea = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/focusarea/${id}`,
+        `/focusarea/${id}`,
         updatedData,
         config
       );
+
+      toast.success("Focus Area Updated Successfully", {
+        position: "top-right",
+      });
       return data; // Return the updated destination
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -252,14 +278,17 @@ export const updateFocusArea = createAsyncThunk(
 export const updateFocusAreaFeature = createAsyncThunk(
   "update/focusAreaFeature",
   async ({ id, updatedData }, { rejectWithValue }) => {
-    console.log(updatedData, "update focus area feature data");
+    console.log(updatedData, "minus");
     try {
       const formData = new FormData();
-      formData.append("image", updatedData.image[0]);
+      if (updatedData.image) {
+        formData.append("image", updatedData.image[0]);
+      }
+
       formData.append("title", updatedData.title);
       formData.append(
         "features",
-        JSON.stringify(updatedData.features?.map((item) => item.value))
+        JSON.stringify(updatedData?.features?.map((item) => item.value))
       );
 
       const config = {
@@ -268,15 +297,21 @@ export const updateFocusAreaFeature = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/focus-features/${id}`,
+        `/focus-features/${id}`,
         formData,
         config
       );
+
+      toast.success("Focus Area Feature Updated Successfully", {
+        position: "top-right",
+      });
       return data; // Return the updated destination
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }

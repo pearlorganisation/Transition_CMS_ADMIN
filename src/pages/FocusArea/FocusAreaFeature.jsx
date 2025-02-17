@@ -13,9 +13,8 @@ const FocusAreaFeature = () => {
 
   useEffect(() => {
     dispatch(getFocusAreaFeatures());
-  }, []);
+  }, [dispatch]);
 
-  // const [data, setData] = useState(teamsData);
   const navigate = useNavigate();
 
   const handleDelete = (id) => {

@@ -4,6 +4,8 @@ const ViewFocusArea = () => {
 
   const { focusarea } = location.state || {};
 
+  console.log(focusarea, "location state focus Area");
+
   if (!focusarea) {
     return (
       <div className="text-center text-red-500">Focus Area not found!</div>
@@ -31,19 +33,6 @@ const ViewFocusArea = () => {
               </div>
 
               <h1 className="text-2xl font-bold"> {item.title}</h1>
-
-              <img src={item.image.secure_url} className="w-16 h-16" />
-
-              <h1 className="text-3xl font-bold text-blue-400 mt-3 mb-3">
-                Features
-              </h1>
-
-              {Array.isArray(item.features) &&
-                item.features.map((feature, index) => (
-                  <div className="" key={index}>
-                    <h1> . {feature}</h1>
-                  </div>
-                ))}
             </div>
           ))}
       </div>

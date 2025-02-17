@@ -12,7 +12,7 @@ const Articles = () => {
         setLoading(true);
         setError(null);
 
-        const response = await axiosInstance.get(`api/v1/blogs?articles=true`);
+        const response = await axiosInstance.get(`/blogs?articles=true`);
 
 
 

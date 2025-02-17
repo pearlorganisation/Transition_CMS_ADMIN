@@ -20,6 +20,15 @@ import AddPodcast from "../pages/Insights/Podcast/AddPodcast";
 import EditPodcast from "../pages/Insights/Podcast/EditPodcast";
 import EditArticle from "../pages/Insights/Articles/EditArticle";
 import UpdatePress from "../pages/Insights/Press/EditPress";
+import ESG from "../pages/Impact/ESG";
+import Mission from "../pages/Impact/Mission";
+import SDG from "../pages/Impact/SDG";
+import Policies from "../pages/Impact/Policies";
+import AddPolicies from "../pages/Impact/AddPolicies";
+import EditEsg from "../pages/Impact/EditEsg";
+import EditSdg from "../pages/Impact/EditSdg";
+import EditPolicies from "../pages/Impact/EditPolicies";
+import EditMission from "../pages/Impact/EditMission";
 
 import FocusArea from "../pages/FocusArea/FocusArea";
 import AddFocusArea from "../pages/FocusArea/AddFocusArea";
@@ -43,6 +52,13 @@ import AddInvestmentTimelineCard from "../pages/Portfolio/AddInvestmentTimelineC
 import AddInvestmentTimeline from "../pages/Portfolio/AddInvestmentTimeline";
 import AddCoinvestor from "../pages/Portfolio/AddUpdateListCoinvestor";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import TeamDetails from "../pages/Team/TeamDetails";
+import AddTeamDetails from "../pages/Team/AddTeamDetails";
+import ViewTeamDetails from "../pages/Team/ViewTeamDetails";
+import EditTeamDetails from "../pages/Team/EditTeamDetails";
+import EditInvestmentTimeline from "../pages/Portfolio/EditInvestmentTimeline";
+import ViewInvestmentTimeline from "../pages/Portfolio/ViewInvestmentTimeline";
+import AddPortfolio from "../pages/Portfolio/AddPortfolio";
 
 const Routes = createBrowserRouter([
   {
@@ -86,6 +102,24 @@ const Routes = createBrowserRouter([
       {
         path: "/team/view-team/:id",
         element: <Viewteam />,
+      },
+
+      {
+        path: "/teamDetails",
+        element: <TeamDetails />,
+      },
+
+      {
+        path: "/teamDetails/add-teamDetails",
+        element: <AddTeamDetails />,
+      },
+      {
+        path: "/teamDetails/edit-teamDetails/:id",
+        element: <EditTeamDetails />,
+      },
+      {
+        path: "/teamDetails/view-teamDetails/:id",
+        element: <ViewTeamDetails />,
       },
 
       {
@@ -203,6 +237,16 @@ const Routes = createBrowserRouter([
       },
 
       {
+        path: "/portfolios/edit-invest-timeline/:id",
+        element: <EditInvestmentTimeline />,
+      },
+
+      {
+        path: "/portfolios/view-invest-timeline/:id",
+        element: <ViewInvestmentTimeline />,
+      },
+
+      {
         path: "/portfolios/add-portfolio-card",
         element: <AddPortfolioCard />,
       },
@@ -221,7 +265,47 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/contactUs",
-        element: <ContactUs />,
+        element: <ContactUs />
+      },
+      {
+        path: "/portfolios/add-portfolio",
+        element: <AddPortfolio />,
+      },
+      {
+        path: "/esg",
+        element: <ESG />,
+      },
+      {
+        path: "/mission",
+        element: <Mission />,
+      },
+      {
+        path: "/sdg",
+        element: <SDG />,
+      },
+      {
+        path: "/policies",
+        element: <Policies />,
+      },
+      {
+        path: "/add-policies",
+        element: <AddPolicies />,
+      },
+      {
+        path: "/edit-esg/:id",
+        element: <EditEsg />,
+      },
+      {
+        path: "/edit-sdg/:id",
+        element: <EditSdg />,
+      },
+      {
+        path: "/edit-policies/:id",
+        element: <EditPolicies />,
+      },
+      {
+        path: "/edit-mission/:id",
+        element: <EditMission />,
       },
     ],
   },

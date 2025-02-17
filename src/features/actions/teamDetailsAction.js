@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../axiosInstance";
 import { toast } from "react-toastify";
 
-export const getAllTeams = createAsyncThunk(
-  "get/teams",
+export const getAllTeamDetails = createAsyncThunk(
+  "get/team-details",
   async (_, { rejectWithValue }) => {
     try {
       const config = {
@@ -11,9 +11,9 @@ export const getAllTeams = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/teams`, config);
-      console.log("-------------destination data", data);
-      return data;
+      const { data } = await axiosInstance.get(`/team-details`, config);
+      console.log("-------------team details data", data);
+      return data?.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message, { position: "top-center" });
@@ -26,8 +26,8 @@ export const getAllTeams = createAsyncThunk(
   }
 );
 
-export const getSingleTeam = createAsyncThunk(
-  "get-single/team",
+export const getSingleTeamDetails = createAsyncThunk(
+  "get-single/teamDetails",
   async (id, { rejectWithValue }) => {
     try {
       const config = {
@@ -35,9 +35,12 @@ export const getSingleTeam = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(`/teams/${id}`, config);
-      console.log("-------------destination data", data);
-      return data;
+      const { data } = await axiosInstance.get(
+        `/team-details/${id}`,
+        config
+      );
+      console.log("-------------single team details data", data);
+      return data?.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message, { position: "top-center" });
@@ -50,8 +53,8 @@ export const getSingleTeam = createAsyncThunk(
   }
 );
 
-export const deleteTeam = createAsyncThunk(
-  "delete/teammate",
+export const deleteTeamDetails = createAsyncThunk(
+  "delete/team-details",
   async (id, { rejectWithValue }) => {
     try {
       const config = {
@@ -60,12 +63,12 @@ export const deleteTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/teams/${id}`,
+        `/team-details/${id}`,
         config
       );
-      console.log("delete team data", data);
+      console.log("delete team details data", data);
 
-      toast.success("Team data deleted Successfully", {
+      toast.success("Team Details deleted Successfully", {
         position: "top-right",
       });
       return id;
@@ -81,8 +84,8 @@ export const deleteTeam = createAsyncThunk(
   }
 );
 
-export const addTeam = createAsyncThunk(
-  "team/addTeam",
+export const addTeamDetails = createAsyncThunk(
+  "team/addTeamDetails",
   async (userData, { rejectWithValue }) => {
     try {
       const formData = new FormData();
@@ -103,13 +106,19 @@ export const addTeam = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await axiosInstance.post(`/teams`, formData, {
-        config,
+      const { data } = await axiosInstance.post(
+        `/team-details`,
+        formData,
+        {
+          config,
+        }
+      );
+
+      console.log(data, "create team details response data");
+
+      toast.success("Team details created Successfully", {
+        position: "top-right",
       });
-
-      console.log(data, "create team response data");
-
-      toast.success("Team created Successfully", { position: "top-right" });
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -123,8 +132,8 @@ export const addTeam = createAsyncThunk(
   }
 );
 
-export const updateTeam = createAsyncThunk(
-  "update/team",
+export const updateTeamDetails = createAsyncThunk(
+  "update/teamDetails",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
@@ -148,12 +157,12 @@ export const updateTeam = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/teams/${id}`,
+        `/team-details/${id}`,
         formData,
         config
       );
 
-      toast.success("Team data updated Successfully", {
+      toast.success("Team Details Updated Successfully", {
         position: "top-right",
       });
       return data; // Return the updated destination

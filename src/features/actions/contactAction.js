@@ -51,3 +51,53 @@ export const postContactData = createAsyncThunk(
     }
   }
 );
+
+export const deleteContact = createAsyncThunk(
+  "delete-contact",
+  async (id, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axiosInstance.delete(
+        `/api/v1/contact-us-page/${id}`,
+        config
+      );
+      console.log("-------------destination data", data?.data);
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+export const updateContact = createAsyncThunk(
+  "update-contact",
+  async (data, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await axiosInstance.patch(
+        `/api/v1/contact-us-page/${data?._id}`,
+        data,
+        config
+      );
+      console.log("-------------destination data", response?.data);
+      return response?.data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

@@ -80,7 +80,7 @@ const AddArticle = () => {
       } else {
         formData.append('blogBody', data.blogBody);
       }
-      const response = await axiosInstance.post('/api/v1/blogs', formData, {
+      const response = await axiosInstance.post('/blogs', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

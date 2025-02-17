@@ -12,7 +12,7 @@ const Podcast = () => {
           setLoading(true);
           setError(null);
   
-          const response = await axiosInstance.get(`api/v1/blogs?podcast=true`);
+          const response = await axiosInstance.get(`/blogs?podcast=true`);
   
 
   
@@ -35,7 +35,7 @@ const Podcast = () => {
                 setLoading(true);
                 setError(null);
         
-                const response = await axiosInstance.delete(`api/v1/blogs/${id}`);
+                const response = await axiosInstance.delete(`/blogs/${id}`);
         
                
         

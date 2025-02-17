@@ -129,7 +129,7 @@ const UpdatePress = () => {
                 if (data.blogBody) formData.append('blogBody', data.blogBody);
             }
 
-            const response = await axiosInstance.put(`/api/v1/blogs/${id}`, formData, {
+            const response = await axiosInstance.put(`/blogs/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }

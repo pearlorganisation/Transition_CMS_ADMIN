@@ -12,14 +12,17 @@ export const getPortfolioCards = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/portfolio-cards`,
+        `/portfolio-cards`,
         config
       );
+
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -36,14 +39,16 @@ export const getSinglePortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.get(
-        `/api/v1/portfolio-cards/${id}`,
+        `/portfolio-cards/${id}`,
         config
       );
       return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -60,15 +65,20 @@ export const deletePortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/portfolio-cards/${id}`,
+        `/portfolio-cards/${id}`,
         config
       );
       console.log("delete portfolio cards data", data);
+      toast.success("Portfolio Card deleted Successfully", {
+        position: "top-right",
+      });
       return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -98,7 +108,7 @@ export const addPortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/portfolio-cards`,
+        `/portfolio-cards`,
         formData,
         {
           config,
@@ -148,15 +158,21 @@ export const updatePortfolioCard = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.patch(
-        `/api/v1/portfolio-cards/${id}`,
+        `/portfolio-cards/${id}`,
         formData,
         config
       );
+
+      toast.success("Portofolio Card updated Successfully", {
+        position: "top-right",
+      });
       return data; // Return the updated destination
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-right" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.message, { position: "top-right" });
         return rejectWithValue(error.message);
       }
     }

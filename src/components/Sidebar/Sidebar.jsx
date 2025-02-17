@@ -13,46 +13,7 @@ const routes = [
     name: "Dashboard",
     icon: <FaHome />,
   },
-  {
-    path: "/client",
-    name: "Client Panel",
-    icon: <Fa42Group />,
-    subRoutes: [
-      {
-        path: "/client/homeBanners",
-        name: "Home Banner",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/eventBanners",
-        name: "Shows/Events Banner",
-        icon: <LuWallpaper />,
-      },
-      { path: "/client/faqs", name: "FAQs", icon: <FaQuestion /> },
-      {
-        path: "/client/listYourEvent",
-        name: "List Your Event",
-        icon: <FaQuestion />,
-      },
-    ],
-  },
-  {
-    path: "/news",
-    name: "News",
-    icon: <FaAddressBook />,
-    subRoutes: [
-      {
-        path: "/news",
-        name: "List News",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/news/add-news",
-        name: "Add News",
-        icon: <LuWallpaper />,
-      },
-    ],
-  },
+
   {
     path: "/team",
     name: "Team",
@@ -66,6 +27,16 @@ const routes = [
       {
         path: "/team/add-team",
         name: "Add Team",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/teamDetails",
+        name: "List Team Details",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/teamDetails/add-teamDetails",
+        name: "Add Team Details",
         icon: <LuWallpaper />,
       },
     ],
@@ -132,6 +103,11 @@ const routes = [
         icon: <LuWallpaper />,
       },
       {
+        path: "/portfolios/add-portfolio",
+        name: "Add Portfolio",
+        icon: <LuWallpaper />,
+      },
+      {
         path: "/portfolios/portfolio-cards",
         name: "List All Portfolio Cards",
         icon: <LuWallpaper />,
@@ -168,14 +144,31 @@ const routes = [
         name: "List Co Investors",
         icon: <LuWallpaper />,
       },
+    ],
+  },
+  {
+    path: "/",
+    name: "Impact",
+    icon: <FaAmazonPay />,
+    subRoutes: [
       {
-        path: "/portfolios/view-invest-timeline-cards/:id",
-        name: "View Investment Timeline Card ",
+        path: "/esg",
+        name: "ESGs",
         icon: <LuWallpaper />,
       },
       {
-        path: "/portfolios/edit-invest-timeline-cards/:id",
-        name: "Edit Investment Timeline Card",
+        path: "/mission",
+        name: "Mission",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/sdg",
+        name: "SDGs",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/policies",
+        name: "Policies",
         icon: <LuWallpaper />,
       },
 

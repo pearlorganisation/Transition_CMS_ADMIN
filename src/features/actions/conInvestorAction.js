@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axiosInstance from "../../axiosInstance";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 export const CreateCoInvester = createAsyncThunk(
   "coInvestors/create",
@@ -14,12 +14,18 @@ export const CreateCoInvester = createAsyncThunk(
       };
 
       const response = await axiosInstance.post(
-        "/api/v1/co-investors",
+        "/co-investors",
         coInvestorData,
         { config }
       );
+
+      toast.success("Coinvestor Created Successfully", {
+        position: "top-right",
+      });
+
       return response.data;
     } catch (error) {
+      toast.error(error.response?.data, { position: "top-center" });
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
@@ -34,7 +40,7 @@ export const getInvestors = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const response = await axiosInstance.get("/api/v1/co-investors", {
+      const response = await axiosInstance.get("/co-investors", {
         config,
       });
       return response.data;
@@ -60,14 +66,16 @@ export const updateInvestor = createAsyncThunk(
 
     try {
       const response = await axiosInstance.patch(
-        `/api/v1/co-investors/${id}`,
+        `/co-investors/${id}`,
         updatedData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
-      toast.success("Co-Investor updated successfully!");
+      toast.success("Co-Investor updated successfully!", {
+        position: "top-center",
+      });
       return response.data;
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -81,8 +89,10 @@ export const deleteInvestor = createAsyncThunk(
   "coInvestors/delete",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/api/v1/co-investors/${id}`);
-      toast.success("Co-Investor deleted successfully!");
+      await axiosInstance.delete(`/co-investors/${id}`);
+      toast.success("Co-Investor deleted successfully!", {
+        position: "top-center",
+      });
       return id;
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");

@@ -81,7 +81,7 @@ const Portfolio = () => {
                     >
                       View
                     </button>
-                    <button
+                    {/* <button
                       onClick={() => navigate(`/team/edit-team/${item._id}`)}
                       className="bg-green-500 text-white px-3 py-1 rounded mr-2"
                     >
@@ -92,7 +92,7 @@ const Portfolio = () => {
                       className="bg-red-500 text-white px-3 py-1 rounded"
                     >
                       Delete
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               ))}

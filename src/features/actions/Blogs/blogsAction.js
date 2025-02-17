@@ -9,7 +9,7 @@ export const getBlogsById = createAsyncThunk(
                     "Content-Type":"application/json"
                 }
             }
-            const { data } = await axiosInstance.get(`api/v1/blogs/${id}`,config)
+            const { data } = await axiosInstance.get(`/blogs/${id}`,config)
             return data
         } catch (error) {
           if(error.response && error.response.data.message){
