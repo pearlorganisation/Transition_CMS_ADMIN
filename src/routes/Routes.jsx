@@ -59,6 +59,7 @@ import EditTeamDetails from "../pages/Team/EditTeamDetails";
 import EditInvestmentTimeline from "../pages/Portfolio/EditInvestmentTimeline";
 import ViewInvestmentTimeline from "../pages/Portfolio/ViewInvestmentTimeline";
 import AddPortfolio from "../pages/Portfolio/AddPortfolio";
+import EditPortfolio from "../pages/Portfolio/EditPortfolio";
 
 const Routes = createBrowserRouter([
   {
@@ -270,6 +271,10 @@ const Routes = createBrowserRouter([
       {
         path: "/portfolios/add-portfolio",
         element: <AddPortfolio />,
+      },
+      {
+        path: "/portfolio/edit-portfolio/:id",
+        element: <EditPortfolio />,
       },
       {
         path: "/esg",

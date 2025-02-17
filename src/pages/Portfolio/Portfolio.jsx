@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPortfolios } from "../../features/actions/Portfolio/portfolio";
+import {
+  deletePortfolio,
+  getPortfolios,
+} from "../../features/actions/Portfolio/portfolio";
 import { useNavigate } from "react-router-dom";
 
 const Portfolio = () => {
@@ -16,12 +19,12 @@ const Portfolio = () => {
 
   const navigate = useNavigate();
 
-  // const handleDelete = (id) => {
-  //   const confirmDelete = window.confirm("Are you sure you want to delete?");
-  //   if (confirmDelete) {
-  //     dispatch(deleteTeam(id));
-  //   }
-  // };
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    if (confirmDelete) {
+      dispatch(deletePortfolio(id));
+    }
+  };
 
   return (
     <div className="px-6 max-w-6xl mx-auto">
@@ -81,18 +84,20 @@ const Portfolio = () => {
                     >
                       View
                     </button>
-                    {/* <button
-                      onClick={() => navigate(`/team/edit-team/${item._id}`)}
+                    <button
+                      onClick={() =>
+                        navigate(`/portfolio/edit-portfolio/${item._id}`)
+                      }
                       className="bg-green-500 text-white px-3 py-1 rounded mr-2"
                     >
                       Edit
                     </button>
                     <button
-                      // onClick={() => handleDelete(item._id)}
+                      onClick={() => handleDelete(item._id)}
                       className="bg-red-500 text-white px-3 py-1 rounded"
                     >
                       Delete
-                    </button> */}
+                    </button>
                   </td>
                 </tr>
               ))}

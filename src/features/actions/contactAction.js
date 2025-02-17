@@ -10,10 +10,7 @@ export const getContactData = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axiosInstance.get(
-        `/api/v1/contact-us-page`,
-        config
-      );
+      const { data } = await axiosInstance.get(`/contact-us-page`, config);
       console.log("-------------destination data", data?.data);
       return data?.data;
     } catch (error) {
@@ -36,7 +33,7 @@ export const postContactData = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.post(
-        `/api/v1/contact-us-page`,
+        `/contact-us-page`,
         payload,
         config
       );
@@ -62,7 +59,7 @@ export const deleteContact = createAsyncThunk(
         },
       };
       const { data } = await axiosInstance.delete(
-        `/api/v1/contact-us-page/${id}`,
+        `/contact-us-page/${id}`,
         config
       );
       console.log("-------------destination data", data?.data);
@@ -86,7 +83,7 @@ export const updateContact = createAsyncThunk(
         },
       };
       const response = await axiosInstance.patch(
-        `/api/v1/contact-us-page/${data?._id}`,
+        `/contact-us-page/${data?._id}`,
         data,
         config
       );
