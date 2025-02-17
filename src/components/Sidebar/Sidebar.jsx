@@ -171,7 +171,14 @@ const routes = [
         name: "Policies",
         icon: <LuWallpaper />,
       },
+
     ],
+
+  },
+  {
+    path: "/contactUs",
+    name: "Contact Us",
+    icon: <LuWallpaper />,
   },
 ];
 

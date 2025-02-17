@@ -51,6 +51,7 @@ import AddPortfolioCard from "../pages/Portfolio/AddPortfolioCard";
 import AddInvestmentTimelineCard from "../pages/Portfolio/AddInvestmentTimelineCard";
 import AddInvestmentTimeline from "../pages/Portfolio/AddInvestmentTimeline";
 import AddCoinvestor from "../pages/Portfolio/AddUpdateListCoinvestor";
+import ContactUs from "../pages/ContactUs/ContactUs";
 import TeamDetails from "../pages/Team/TeamDetails";
 import AddTeamDetails from "../pages/Team/AddTeamDetails";
 import ViewTeamDetails from "../pages/Team/ViewTeamDetails";
@@ -58,6 +59,7 @@ import EditTeamDetails from "../pages/Team/EditTeamDetails";
 import EditInvestmentTimeline from "../pages/Portfolio/EditInvestmentTimeline";
 import ViewInvestmentTimeline from "../pages/Portfolio/ViewInvestmentTimeline";
 import AddPortfolio from "../pages/Portfolio/AddPortfolio";
+import EditPortfolio from "../pages/Portfolio/EditPortfolio";
 
 const Routes = createBrowserRouter([
   {
@@ -263,8 +265,16 @@ const Routes = createBrowserRouter([
         element: <AddCoinvestor />,
       },
       {
+        path: "/contactUs",
+        element: <ContactUs />
+      },
+      {
         path: "/portfolios/add-portfolio",
         element: <AddPortfolio />,
+      },
+      {
+        path: "/portfolio/edit-portfolio/:id",
+        element: <EditPortfolio />,
       },
       {
         path: "/esg",

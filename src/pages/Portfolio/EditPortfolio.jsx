@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateListInvest } from "../../features/actions/Portfolio/investmentTimelineAction";
 
-const EditInvestmentTimeline = () => {
+const EditPortfolio = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const EditInvestmentTimeline = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/investment-timeline-cards")
+      .get("/coinvestors")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
@@ -38,7 +38,7 @@ const EditInvestmentTimeline = () => {
 
   useEffect(() => {
     axiosInstance
-      .get(`/investment-timeline/${id}`)
+      .get(`/portfolio/${id}`)
       .then((response) => {
         const { cards, description, image, investmentYear } =
           response.data.data;
@@ -79,7 +79,7 @@ const EditInvestmentTimeline = () => {
 
   return (
     <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">EDIT Investment Timeline</h2>
+      <h2 className="text-2xl font-semibold mb-4">EDIT Portfolio</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Description */}
@@ -177,4 +177,4 @@ const EditInvestmentTimeline = () => {
   );
 };
 
-export default EditInvestmentTimeline;
+export default EditPortfolio;

@@ -1,6 +1,6 @@
+import parse from "html-react-parser";
 import { useLocation } from "react-router-dom";
 
-import parse from "html-react-parser";
 const ViewPortfolio = () => {
   const location = useLocation();
   const { portfolio } = location.state || {};
@@ -16,10 +16,18 @@ const ViewPortfolio = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">View portfolio Page</h1>
-      <h1 className="text-lg"> LOGO</h1>
-      {/* <div className="bg-white rounded-lg p-6">
+
+      <div className="bg-white rounded-lg p-6">
+        <h1 className="text-lg"> Image </h1>
         <img
-          src={portfolio.image.secure_url}
+          src={portfolio?.image?.secure_url}
+          alt={portfolio.name}
+          className="w-32 h-32 rounded-full mx-auto mb-4"
+        />
+
+        <h1 className="text-lg"> Background Image </h1>
+        <img
+          src={portfolio?.bg?.secure_url}
           alt={portfolio.name}
           className="w-32 h-32 rounded-full mx-auto mb-4"
         />
@@ -30,7 +38,10 @@ const ViewPortfolio = () => {
         <h2 className="text-xl font-semibold text-center mt-6"> TITLE</h2>
         <p className="text-gray-600 text-center">{parse(portfolio.title)}</p>
 
-        <h2 className="text-xl font-semibold text-center mt-6"> DESCRIPTION</h2>
+        <h2 className="text-xl font-semibold text-center mt-6">
+          {" "}
+          MAIN DESCRIPTION
+        </h2>
         <p className="text-gray-600 text-center">
           {parse(portfolio.mainDescription)}
         </p>
@@ -41,7 +52,7 @@ const ViewPortfolio = () => {
         </h2>
 
         <img
-          src={portfolio.bottomSectionIcon.secure_url}
+          src={portfolio?.bottomSectionIcon?.secure_url}
           alt={portfolio.name}
           className="w-32 h-32 rounded-full mx-auto mb-4"
         />
@@ -58,17 +69,14 @@ const ViewPortfolio = () => {
         </a>
 
         <div className="">
-          <h1 className="mt-6"> NORMAL CARDS </h1>
+          <h1 className="mt-6"> List of CARDS </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Array.isArray(portfolio?.cards) &&
-              portfolio?.cards?.map((pCard) => (
+              portfolio?.cards?.map((pCard, index) => (
                 <div className="" key={pCard?._id}>
-                  <img src={pCard?.icon?.secure_url} className="w-12 h-12" />
-                  <h1> {pCard?.title}</h1>
-
-                  <p> {pCard?.description}</p>
-
-                  <p></p>
+                  <h1 className="mt-2">
+                    {index + 1} . {pCard?.portfoliocardname}
+                  </h1>
                 </div>
               ))}
           </div>
@@ -91,18 +99,18 @@ const ViewPortfolio = () => {
 
           <h1 className="mt-6 mb-6"> INVESTMENT CARDS</h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-6 mb-6">
+          <div className="grid grid-cols-1  gap-3 mt-6 mb-6">
             {Array.isArray(portfolio?.investmentTimeline?.cards) &&
-              portfolio?.investmentTimeline?.cards.map((card) => (
+              portfolio?.investmentTimeline?.cards.map((card, index) => (
                 <div className="" key={card._id}>
-                  <h1 className="">{card.title} </h1>
-                  <h1 className="">{card.body} </h1>
-                  <img src={card?.icon?.secure_url} className="w-16 h-16" />
+                  <h1 className="">
+                    {index + 1} . {card.body}{" "}
+                  </h1>
                 </div>
               ))}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

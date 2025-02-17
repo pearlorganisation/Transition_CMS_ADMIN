@@ -23,7 +23,7 @@ const EditFocusArea = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/focus-features")
+      .get("/focus-features")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
@@ -36,7 +36,7 @@ const EditFocusArea = () => {
 
   useEffect(() => {
     axiosInstance
-      .get(`/api/v1/focusarea/${id}`)
+      .get(`/focusarea/${id}`)
       .then((response) => {
         const { title, focusAreas } = response.data.data;
         setValue("title", title);

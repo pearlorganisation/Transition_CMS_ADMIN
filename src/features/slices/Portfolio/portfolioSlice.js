@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { toast } from "sonner";
-import { getPortfolios } from "../../actions/Portfolio/portfolio";
+import {
+  deletePortfolio,
+  getPortfolios,
+} from "../../actions/Portfolio/portfolio";
 
 const initialState = {
   isLoading: false,
@@ -37,69 +40,69 @@ const portfoliosSlice = createSlice({
         state.portfolios = action.payload.data;
         state.pagination = action.payload.pagination;
         toast.success("All Portfolios recieved", { position: "top-right" });
+      })
+
+      // get single destination
+
+      //   .addCase(getSingleTeam.pending, (state) => {
+      //     state.isLoading = true;
+      //   })
+      //   .addCase(getSingleTeam.rejected, (state, action) => {
+      //     state.isLoading = false;
+      //     state.isError = true;
+      //     state.isSuccess = false;
+      //     toast.error(action.payload, { position: "top-right" });
+      //   })
+      //   .addCase(getSingleTeam.fulfilled, (state, action) => {
+      //     state.isError = false;
+      //     state.isSuccess = true;
+      //     state.isLoading = false;
+      //     state.team = action.payload.data;
+      //     toast.success("Single Team Mate recieved", { position: "top-right" });
+      //   })
+
+      // add team
+
+      //   .addCase(addTeam.pending, (state) => {
+      //     state.isLoading = true;
+      //   })
+      //   .addCase(addTeam.rejected, (state, action) => {
+      //     state.isLoading = false;
+      //     state.isError = true;
+      //     state.isSuccess = false;
+      //     toast.error(action.payload, { position: "top-right" });
+      //   })
+      //   .addCase(addTeam.fulfilled, (state) => {
+      //     state.isError = false;
+      //     state.isSuccess = true;
+      //     state.isLoading = false;
+      //     toast.success("Team created Successfully", {
+      //       position: "top-right",
+      //     });
+      //   })
+
+      // delete team
+      .addCase(deletePortfolio.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deletePortfolio.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        toast.error(action.payload, { position: "top-right" });
+      })
+      .addCase(deletePortfolio.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isSuccess = true;
+        state.isLoading = false;
+
+        state.portfolios = state.portfolios.filter(
+          (portfolio) => portfolio._id !== action.meta.arg
+        );
+        toast.success("Portfolio  deleted Successfully", {
+          position: "top-right",
+        });
       });
-
-    // get single destination
-
-    //   .addCase(getSingleTeam.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(getSingleTeam.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = true;
-    //     state.isSuccess = false;
-    //     toast.error(action.payload, { position: "top-right" });
-    //   })
-    //   .addCase(getSingleTeam.fulfilled, (state, action) => {
-    //     state.isError = false;
-    //     state.isSuccess = true;
-    //     state.isLoading = false;
-    //     state.team = action.payload.data;
-    //     toast.success("Single Team Mate recieved", { position: "top-right" });
-    //   })
-
-    // add team
-
-    //   .addCase(addTeam.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(addTeam.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = true;
-    //     state.isSuccess = false;
-    //     toast.error(action.payload, { position: "top-right" });
-    //   })
-    //   .addCase(addTeam.fulfilled, (state) => {
-    //     state.isError = false;
-    //     state.isSuccess = true;
-    //     state.isLoading = false;
-    //     toast.success("Team created Successfully", {
-    //       position: "top-right",
-    //     });
-    //   })
-
-    // delete team
-    //   .addCase(deleteTeam.pending, (state) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(deleteTeam.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //     state.isError = true;
-    //     state.isSuccess = false;
-    //     toast.error(action.payload, { position: "top-right" });
-    //   })
-    //   .addCase(deleteTeam.fulfilled, (state, action) => {
-    //     state.isError = false;
-    //     state.isSuccess = true;
-    //     state.isLoading = false;
-
-    //     state.teamInfo = state.teamInfo.filter(
-    //       (team) => team._id !== action.meta.arg
-    //     );
-    //     toast.success("Team deleted Successfully", {
-    //       position: "top-right",
-    //     });
-    //   })
 
     // update team
 
