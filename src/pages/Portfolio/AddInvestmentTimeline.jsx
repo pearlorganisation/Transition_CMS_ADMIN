@@ -2,13 +2,72 @@ import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import axiosInstance from "../../axiosInstance";
-
+import JoditEditor from 'jodit-react'
+const config = {
+  readonly: false,
+  height: 400,
+  toolbar: true,
+  buttons: [
+    "source",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "|",
+    "superscript",
+    "subscript",
+    "|",
+    "ul",
+    "ol",
+    "|",
+    "outdent",
+    "indent",
+    "|",
+    "font",
+    "fontsize",
+    "brush",
+    "paragraph",
+    "|",
+    "image",
+    "video",
+    "file",
+    "table",
+    "link",
+    "|",
+    "align",
+    "undo",
+    "redo",
+    "|",
+    "hr",
+    "eraser",
+    "copyformat",
+    "selectall",
+    "|",
+    "print",
+    "about",
+  ],
+  uploader: {
+    insertImageAsBase64URI: true,
+    url: "your-upload-url", // If you have a file upload URL
+    format: "json",
+  },
+  placeholder: "Start typing here...",
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  spellcheck: true,
+  allowResizeY: true,
+  allowResizeX: false,
+  language: "en",
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+};
 const AddInvestmentTimeline = () => {
   const {
     register,
     handleSubmit,
     control,
-
     formState: { errors },
   } = useForm();
 
@@ -59,18 +118,24 @@ const AddInvestmentTimeline = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Description */}
         <div>
-          <label className="block text-gray-700">Description</label>
-          <textarea
-            {...register("description", {
-              required: "Description is required",
-            })}
-            className="w-full p-2 border rounded"
+          <label htmlFor='blogBody' className='block text-sm font-medium text-gray-700 mb-1'>
+            Description
+          </label>
+          <Controller
+            control={control}
+            name='description'
+            rules={{ required: "Body is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
           />
-          {errors.description && (
-            <p className="text-red-500">{errors.description.message}</p>
-          )}
         </div>
-
         {/* Investment Year */}
         <div>
           <label className="block text-gray-700">Investment Year</label>
