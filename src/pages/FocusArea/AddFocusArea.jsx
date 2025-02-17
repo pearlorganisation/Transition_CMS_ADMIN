@@ -18,7 +18,7 @@ const AddFocusArea = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/focus-features")
+      .get("/focus-features")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,

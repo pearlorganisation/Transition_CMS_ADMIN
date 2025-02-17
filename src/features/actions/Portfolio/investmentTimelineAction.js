@@ -25,9 +25,7 @@ export const getSingleInvest = createAsyncThunk(
   "investmentSingleTimeline/fetch",
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get(
-        `/investment-timeline/${id}`
-      );
+      const { data } = await axiosInstance.get(`/investment-timeline/${id}`);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {

@@ -77,14 +77,38 @@ export const addPortfolio = createAsyncThunk(
         },
       };
 
-      const { data } = await axiosInstance.post(
-        "/portfolio",
-        formData,
-        config
-      );
+      const { data } = await axiosInstance.post("/portfolio", formData, config);
       toast.success("Portfolio added successfully!", { position: "top-right" });
 
       return data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
+        return rejectWithValue(error.response.data.message);
+      } else {
+        toast.error(error.message, { position: "top-center" });
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const deletePortfolio = createAsyncThunk(
+  "delete/portfolio",
+  async (id, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axiosInstance.delete(`/portfolio/${id}`, config);
+      console.log("delete portfolio data", data);
+
+      toast.success("Portfolio data deleted Successfully", {
+        position: "top-right",
+      });
+      return id;
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message, { position: "top-center" });

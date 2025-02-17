@@ -25,7 +25,7 @@ const EditInvestmentTimeline = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/v1/investment-timeline-cards")
+      .get("/investment-timeline-cards")
       .then((response) => {
         const formattedOptions = response.data.data.map((feature) => ({
           value: feature._id,
@@ -38,7 +38,7 @@ const EditInvestmentTimeline = () => {
 
   useEffect(() => {
     axiosInstance
-      .get(`/api/v1/investment-timeline/${id}`)
+      .get(`/investment-timeline/${id}`)
       .then((response) => {
         const { cards, description, image, investmentYear } =
           response.data.data;
