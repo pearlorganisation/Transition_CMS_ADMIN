@@ -275,16 +275,7 @@ export default function EditPortfolio() {
         <h1> Add Image</h1>
         <input
           type="file"
-          {...register(
-            "image"
-            // {
-            // onChange: (e) => {
-            //   console.log(e.target.files);
-            //   setValue("image", e.target.files);
-            //   handleImageChange(e);
-            // },
-            //}
-          )}
+          {...register("image")}
           onChange={(e) => handleImageChange(e, setImagePreview)}
           className="w-full p-2 border border-gray-300 rounded"
         />
