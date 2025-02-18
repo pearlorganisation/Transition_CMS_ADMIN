@@ -71,6 +71,7 @@ const AddPortfolioCard = () => {
     handleSubmit,
     reset,
     formState: { errors },
+    control
   } = useForm();
 
   // Handle form submission
