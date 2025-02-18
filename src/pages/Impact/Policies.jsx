@@ -20,7 +20,12 @@ const Policies = () => {
             try {
                 setLoading(true);
                 setError(null);
-                const response = await axiosInstance.delete(`api/v1/impact/${id}`);
+                const response = await axiosInstance.delete(`/impact/${id}`);
+                console.log("the response is", response)
+                if(response.status ===200){
+                    dispatch(getImpact())
+                };
+                
                 fetchData();
               } catch (err) {
                 setError(err instanceof Error ? err.message : "Something went wrong");

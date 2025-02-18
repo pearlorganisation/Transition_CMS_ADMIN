@@ -53,7 +53,7 @@ const EditPolicies = () => {
         },
       };
 
-      await axiosInstance.put(`/api/v1/impact/${_id}`, updatedData, config);
+      await axiosInstance.put(`/impact/${_id}`, updatedData, config);
 
       // Show success toast
       toast.success("Policy updated successfully!", {

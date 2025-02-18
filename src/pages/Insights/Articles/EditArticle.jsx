@@ -241,16 +241,7 @@ const EditArticle = () => {
                   </div>
               ) : (
                   <div>
-                      {/* <label htmlFor="blogBody" className="block text-sm font-medium text-gray-700 mb-1">
-                          Article Body
-                      </label>
-                      <textarea
-                          id="blogBody"
-                          {...register('blogBody', registerOptions.blogBody)}
-                          rows="6"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      ></textarea>
-                      {errors.blogBody && <p className="mt-1 text-xs text-red-500">{errors.blogBody.message}</p>} */}
+                     
                           <label htmlFor='blogBody' className='block text-sm font-medium text-gray-700 mb-1'>
                               Body
                           </label>
