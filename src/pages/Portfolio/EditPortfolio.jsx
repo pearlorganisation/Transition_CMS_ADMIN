@@ -5,7 +5,7 @@ import axiosInstance from "../../axiosInstance";
 import { editPortfolio } from "../../features/actions/Portfolio/portfolio";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import JoditEditor from 'jodit-react';
+import JoditEditor from "jodit-react";
 const config = {
   readonly: false,
   height: 400,
@@ -320,12 +320,15 @@ export default function EditPortfolio() {
         />
 
         <div>
-          <label htmlFor='title' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Title
           </label>
           <Controller
             control={control}
-            name='title'
+            name="title"
             rules={{ required: "Title is required" }}
             render={({ field }) => (
               <JoditEditor
@@ -379,15 +382,18 @@ export default function EditPortfolio() {
           <img src={iconPreview} alt="Icon Preview" className="h-20" />
         )}
 
-{/** editio section */}
+        {/** editio section */}
         {/**overview */}
         <div>
-          <label htmlFor='overview' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="overview"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Overview
           </label>
           <Controller
             control={control}
-            name='overview'
+            name="overview"
             rules={{ required: "Overview is required" }}
             render={({ field }) => (
               <JoditEditor
@@ -401,12 +407,15 @@ export default function EditPortfolio() {
           />
         </div>
         <div>
-          <label htmlFor='mainDescription' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="mainDescription"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Main Description
           </label>
           <Controller
             control={control}
-            name='mainDescription'
+            name="mainDescription"
             rules={{ required: "Overview is required" }}
             render={({ field }) => (
               <JoditEditor
@@ -464,7 +473,6 @@ export default function EditPortfolio() {
           <Controller
             name="coInvestedBy"
             control={control}
-            rules={{ required: "At least one card must be selected" }}
             render={({ field }) => (
               <Select
                 {...field}
