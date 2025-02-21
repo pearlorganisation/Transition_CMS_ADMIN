@@ -13,8 +13,8 @@ const Policies = () => {
     useEffect(() => {
         dispatch(getImpact())
     }, [])
-    let data = impactData?.filter(el => el?.impactDataType === "POLICIES")
-    console.log("the filtered data is", data)
+    // let data = impactData && impactData?.filter(el => el?.impactDataType === "POLICIES")
+    // console.log("the filtered data is", data)
     async function deletePolicies(id)
         {
             try {
