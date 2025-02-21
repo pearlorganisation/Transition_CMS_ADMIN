@@ -120,7 +120,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#12BAAA] text-white shadow-md border-b-4 border-[#ADE9E4]">
+    <header className="bg-[#f4fdfc] text-black shadow-md border-b-4 border-[#ADE9E4]">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Logo Section */}
         <div className="text-2xl font-semibold tracking-wide">
@@ -134,7 +134,7 @@ const Header = () => {
             className="flex items-center space-x-2 text-base font-medium hover:text-[#BFF7F2] focus:outline-none"
           >
             <IoPersonCircleOutline className="text-3xl" />
-            <span className="hidden sm:inline">Shubham Mamgain</span>
+            <span className="hidden sm:inline">Admin</span>
             <HiOutlineChevronDown className="text-lg" />
           </button>
 

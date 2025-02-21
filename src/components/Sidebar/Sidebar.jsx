@@ -148,13 +148,13 @@ const SideBar = ({ children }) => {
     <div className="flex min-h-screen">
       <motion.div
         animate={{ width: isOpen ? "250px" : "60px" }}
-        className="bg-[#12baaa] text-white transition-all duration-50 flex flex-col"
+        className="bg-[#f4fdfc] text-black transition-all duration-50 flex flex-col"
       >
         <div className="flex items-center justify-between px-4 py-3">
           {isOpen && <h1 className="text-xl font-bold">Sidebar</h1>}
           <button
             onClick={toggleSidebar}
-            className="text-lg focus:outline-none hover:text-gray-200"
+            className="text-lg focus:outline-none hover:text-black/20"
           >
             <FaBars />
           </button>
@@ -171,7 +171,7 @@ const SideBar = ({ children }) => {
               ) : (
                 <NavLink
                   to={route.path}
-                  className="flex items-center px-4 py-2 text-white font-medium hover:bg-black/20 hover:text-white"
+                  className="flex items-center px-4 py-2 bg-[#f4fdfc] text-black font-medium hover:bg-black/20 "
                 >
                   <div className="mr-3">{route.icon}</div>
                   {isOpen && <span>{route.name}</span>}

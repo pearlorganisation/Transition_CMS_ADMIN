@@ -22,7 +22,7 @@ const SidebarMenu = ({ route, isOpen, showAnimation }) => {
     <div>
       <button
         onClick={toggleMenu}
-        className="flex items-center justify-between w-full px-4 py-2 text-white font-medium hover:bg-black/20"
+        className="flex items-center justify-between bg-[#f4fdfc] w-full px-4 py-2 text-black font-medium hover:bg-black/20"
       >
         <div className="flex items-center">
           <div className="mr-3">{route.icon}</div>
@@ -50,7 +50,7 @@ const SidebarMenu = ({ route, isOpen, showAnimation }) => {
               <NavLink
                 to={subRoute.path}
                 key={index}
-                className="flex items-center px-4 py-2 text-sm font-medium text-white hover:bg-black/20 pl-10"
+                className="flex items-center px-4 py-2 text-sm font-medium text-black hover:hover:bg-black/20 pl-10"
               >
                 {/* <div className="mr-3">{subRoute.icon}</div> */}
                 {isOpen && <span>{subRoute.name}</span>}
