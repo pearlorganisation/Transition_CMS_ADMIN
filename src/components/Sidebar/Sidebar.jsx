@@ -1,11 +1,23 @@
 /* eslint-disable react/prop-types */
 import { NavLink } from "react-router-dom";
-import { FaAmazonPay, FaBars, FaHome } from "react-icons/fa";
+import { FaBars, FaHome, FaBullseye } from "react-icons/fa";
+import {
+  MdPeople,
+  MdWork,
+  MdPublic,
+  MdInsights,
+  MdArticle,
+  MdApartment,
+  MdHandshake,
+  MdPieChart,
+  MdGroup,
+  MdAddBox,
+  MdLibraryBooks,
+  MdMic,
+} from "react-icons/md";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
-import { LuWallpaper } from "react-icons/lu";
-import { Fa42Group, FaAddressBook, FaQuestion } from "react-icons/fa6";
 
 const routes = [
   {
@@ -13,177 +25,116 @@ const routes = [
     name: "Dashboard",
     icon: <FaHome />,
   },
-
   {
     path: "/team",
     name: "Team",
-    icon: <FaAmazonPay />,
+    icon: <MdPeople />,
     subRoutes: [
-      {
-        path: "/team",
-        name: "List Team",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/team/add-team",
-        name: "Add Team",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/teamDetails",
-        name: "List Team Details",
-        icon: <LuWallpaper />,
-      },
+      { path: "/team", name: "List Team", icon: <MdGroup /> },
+      { path: "/team/add-team", name: "Add Team", icon: <MdAddBox /> },
+      { path: "/teamDetails", name: "List Team Details", icon: <MdGroup /> },
       {
         path: "/teamDetails/add-teamDetails",
         name: "Add Team Details",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
     ],
   },
   {
-    path: "/",
+    path: "/insights",
     name: "Insights",
-    icon: <FaAmazonPay />,
+    icon: <MdInsights />,
     subRoutes: [
-      {
-        path: "/press",
-        name: "Press",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/articles",
-        name: "Articles",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/podcast",
-        name: "Podcast",
-        icon: <LuWallpaper />,
-      },
+      { path: "/press", name: "Press", icon: <MdLibraryBooks /> },
+      { path: "/articles", name: "Articles", icon: <MdArticle /> },
+      { path: "/podcast", name: "Podcast", icon: <MdMic /> },
     ],
   },
-
   {
     path: "/focusarea",
     name: "Focus Area",
-    icon: <FaAmazonPay />,
+    icon: <FaBullseye />,
     subRoutes: [
       {
         path: "/focusareafeature",
         name: "List Focus Area Features",
-        icon: <LuWallpaper />,
+        icon: <MdInsights />,
       },
       {
         path: "/focusarea/add-focusareafeature",
         name: "Add Focus Area Feature",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
-      {
-        path: "/focusarea",
-        name: "List Focus Areas",
-        icon: <LuWallpaper />,
-      },
+      { path: "/focusarea", name: "List Focus Areas", icon: <MdInsights /> },
       {
         path: "/focusarea/add-focusarea",
         name: "Add Focus Area",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
     ],
   },
-
   {
     path: "/portfolios",
     name: "Portfolios",
-    icon: <FaAmazonPay />,
+    icon: <MdWork />,
     subRoutes: [
-      {
-        path: "/portfolios",
-        name: "List All Portfolios",
-        icon: <LuWallpaper />,
-      },
+      { path: "/portfolios", name: "List All Portfolios", icon: <MdWork /> },
       {
         path: "/portfolios/add-portfolio",
         name: "Add Portfolio",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
       {
         path: "/portfolios/portfolio-cards",
         name: "List All Portfolio Cards",
-        icon: <LuWallpaper />,
+        icon: <MdWork />,
       },
       {
         path: "/portfolios/add-portfolio-card",
         name: "Add Portfolio Card",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
       {
         path: "/portfolios/invest-timeline-cards",
         name: "List All Investment Timeline Cards",
-        icon: <LuWallpaper />,
+        icon: <MdWork />,
       },
       {
         path: "/portfolios/add-investment-timeline-card",
         name: "Add Investment Timeline Card",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
       {
         path: "/portfolios/invest-timelines",
         name: "List Investment Timelines",
-        icon: <LuWallpaper />,
+        icon: <MdWork />,
       },
-
       {
         path: "/portfolios/add-investment-timeline",
         name: "Add Investment Timeline",
-        icon: <LuWallpaper />,
+        icon: <MdAddBox />,
       },
-
       {
         path: "/portfolios/add-coinvestor",
         name: "List Co Investors",
-        icon: <LuWallpaper />,
+        icon: <MdWork />,
       },
     ],
   },
   {
-    path: "/",
+    path: "/impact",
     name: "Impact",
-    icon: <FaAmazonPay />,
+    icon: <MdPublic />,
     subRoutes: [
-      {
-        path: "/esg",
-        name: "ESGs",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/mission",
-        name: "Mission",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/sdg",
-        name: "SDGs",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/policies",
-        name: "Policies",
-        icon: <LuWallpaper />,
-      },
+      { path: "/esg", name: "ESGs", icon: <MdHandshake /> },
+      { path: "/mission", name: "Mission", icon: <MdPieChart /> },
+      { path: "/sdg", name: "SDGs", icon: <MdApartment /> },
+      { path: "/policies", name: "Policies", icon: <MdArticle /> },
     ],
   },
 ];
 
-// const userVendorRoutes = [
-//   { path: "/", name: "Dashboard", icon: <FaHome /> },
-//   { path: "/venues", name: "Venue", icon: <TbBuildingCommunity /> },
-//   { path: "/category", name: "Category", icon: <BiSolidCategory /> },
-//   { path: "/organiser", name: "Organiser", icon: <BsPeopleFill /> },
-// ];
-
 const SideBar = ({ children }) => {
-  //   const { isUserLoggedIn, loggedInUserData } = useAuth();
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
@@ -194,16 +145,16 @@ const SideBar = ({ children }) => {
   };
 
   return (
-    <div className=" flex min-h-screen ">
+    <div className="flex min-h-screen">
       <motion.div
-        animate={{ width: isOpen ? "200px" : "60px" }}
-        className=" bg-red-800 text-white transition-all duration-50 flex flex-col "
+        animate={{ width: isOpen ? "250px" : "60px" }}
+        className="bg-[#12baaa] text-white transition-all duration-50 flex flex-col"
       >
-        <div className="flex items-center justify-between px-4 py-3 ">
-          {isOpen && <h1 className="text-xl font-bold"> Sidebar </h1>}
+        <div className="flex items-center justify-between px-4 py-3">
+          {isOpen && <h1 className="text-xl font-bold">Sidebar</h1>}
           <button
             onClick={toggleSidebar}
-            className="text-lg focus:outline-none hover:text-blue-700"
+            className="text-lg focus:outline-none hover:text-gray-200"
           >
             <FaBars />
           </button>
@@ -220,7 +171,7 @@ const SideBar = ({ children }) => {
               ) : (
                 <NavLink
                   to={route.path}
-                  className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className="flex items-center px-4 py-2 text-white font-medium hover:bg-black/20 hover:text-white"
                 >
                   <div className="mr-3">{route.icon}</div>
                   {isOpen && <span>{route.name}</span>}
