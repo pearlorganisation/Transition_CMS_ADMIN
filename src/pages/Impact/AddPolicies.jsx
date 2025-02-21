@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import axiosInstance from "../../axiosInstance";
 
 const AddPolicies = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -15,10 +16,12 @@ const AddPolicies = () => {
     formData.append("icon", data.icon[0]); // File input
 
     try {
-      const response = await fetch("https://transition-cms-backend.onrender.com/api/v1/impact", {
-        method: "POST",
-        body: formData,
-      });
+      const config = {
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+      }
+      const response = await axiosInstance.post(`/impact`, formData,config);
 
       if (!response.ok) {
         throw new Error("Failed to submit data");

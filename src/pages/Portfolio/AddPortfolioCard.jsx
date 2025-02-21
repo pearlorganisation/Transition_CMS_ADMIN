@@ -1,8 +1,68 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addPortfolioCard } from "../../features/actions/Portfolio/portfolioCardsAction";
-
+import JoditEditor from "jodit-react";
+const config = {
+  readonly: false,
+  height: 400,
+  toolbar: true,
+  buttons: [
+    "source",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "|",
+    "superscript",
+    "subscript",
+    "|",
+    "ul",
+    "ol",
+    "|",
+    "outdent",
+    "indent",
+    "|",
+    "font",
+    "fontsize",
+    "brush",
+    "paragraph",
+    "|",
+    "image",
+    "video",
+    "file",
+    "table",
+    "link",
+    "|",
+    "align",
+    "undo",
+    "redo",
+    "|",
+    "hr",
+    "eraser",
+    "copyformat",
+    "selectall",
+    "|",
+    "print",
+    "about",
+  ],
+  uploader: {
+    insertImageAsBase64URI: true,
+    url: "your-upload-url", // If you have a file upload URL
+    format: "json",
+  },
+  placeholder: "Start typing here...",
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  spellcheck: true,
+  allowResizeY: true,
+  allowResizeX: false,
+  language: "en",
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+};
 const AddPortfolioCard = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
@@ -11,6 +71,7 @@ const AddPortfolioCard = () => {
     handleSubmit,
     reset,
     formState: { errors },
+    control
   } = useForm();
 
   // Handle form submission
@@ -51,7 +112,7 @@ const AddPortfolioCard = () => {
         </div>
 
         {/* Designation Field */}
-        <div className="w-full">
+        {/* <div className="w-full">
           <label htmlFor="description" className="block font-medium mb-1">
             Description
           </label>
@@ -69,8 +130,28 @@ const AddPortfolioCard = () => {
               {errors.description.message}
             </p>
           )}
-        </div>
+        </div> */}
 
+        {/**overview */}
+        <div>
+          <label htmlFor='description' className='block text-sm font-medium text-gray-700 mb-1'>
+            Overview
+          </label>
+          <Controller
+            control={control}
+            name='description'
+            rules={{ required: "description is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
         {/* Image Upload Field */}
         <div>
           <label htmlFor="icon" className="block font-medium mb-1">

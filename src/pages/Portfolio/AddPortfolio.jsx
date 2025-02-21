@@ -4,7 +4,67 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../axiosInstance";
 import { addPortfolio } from "../../features/actions/Portfolio/portfolio";
 import { useDispatch } from "react-redux";
-
+import JoditEditor from "jodit-react";
+const config = {
+  readonly: false,
+  height: 100,
+  toolbar: true,
+  buttons: [
+    "source",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "|",
+    "superscript",
+    "subscript",
+    "|",
+    "ul",
+    "ol",
+    "|",
+    "outdent",
+    "indent",
+    "|",
+    "font",
+    "fontsize",
+    "brush",
+    "paragraph",
+    "|",
+    "image",
+    "video",
+    "file",
+    "table",
+    "link",
+    "|",
+    "align",
+    "undo",
+    "redo",
+    "|",
+    "hr",
+    "eraser",
+    "copyformat",
+    "selectall",
+    "|",
+    "print",
+    "about",
+  ],
+  uploader: {
+    insertImageAsBase64URI: true,
+    url: "your-upload-url", // If you have a file upload URL
+    format: "json",
+  },
+  placeholder: "Start typing here...",
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  spellcheck: true,
+  allowResizeY: true,
+  allowResizeX: false,
+  language: "en",
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+};
 export default function AddPortfolio() {
   const { register, handleSubmit, control, reset } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
@@ -110,12 +170,31 @@ export default function AddPortfolio() {
           className="w-full p-2 border border-gray-300 rounded"
         />
 
-        <input
+        {/* <input
           {...register("title", { required: true })}
           placeholder="Title"
           className="w-full p-2 border border-gray-300 rounded"
-        />
-
+        /> */}
+        {/**overview */}
+        <div>
+          <label htmlFor='title' className='block text-sm font-medium text-gray-700 mb-1'>
+            Title
+          </label>
+          <Controller
+            control={control}
+            name='title'
+            rules={{ required: "Title is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
         <input
           {...register("link")}
           placeholder="Portfolio Link (Optional)"
@@ -159,19 +238,51 @@ export default function AddPortfolio() {
         {iconPreview && (
           <img src={iconPreview} alt="Icon Preview" className="h-20" />
         )}
-
-        <textarea
-          {...register("overview", { required: true })}
-          placeholder="Overview"
-          className="w-full p-2 border border-gray-300 rounded"
-        />
+        {/**overview */}
+        <div>
+          <label htmlFor='overview' className='block text-sm font-medium text-gray-700 mb-1'>
+            Overview
+          </label>
+          <Controller
+            control={control}
+            name='overview'
+            rules={{ required: "Overview is required"}}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
 
         <textarea
           {...register("mainDescription", { required: true })}
           placeholder="Main Description"
           className="w-full p-2 border border-gray-300 rounded"
         />
-
+        <div>
+          <label htmlFor='mainDescription' className='block text-sm font-medium text-gray-700 mb-1'>
+              Main Description
+          </label>
+          <Controller
+            control={control}
+            name='mainDescription'
+            rules={{ required: "Overview is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
         <textarea
           {...register("bottomSectionContent", { required: true })}
           placeholder="Bottom Section Content"

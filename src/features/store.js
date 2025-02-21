@@ -14,6 +14,7 @@ import investmentTimelineCardsReducer from "../features/slices/Portfolio/investm
 import investerReducer from "../features/slices/coInvestorSlice";
 // import newsReducer from "../features/slices/newsSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice";
+import contactsReducer from "../features/slices/contactSlice";
 import impactReducer from "../features/slices/Impact/impactSlice";
 
 const persistConfig = {
@@ -37,6 +38,8 @@ const reducer = combineReducers({
   teams: teamsReducer,
   teamDetails: teamDetailsReducer,
   blogs: blogsReducer,
+  contacts: contactsReducer,
+
   impacts: impactReducer,
   focusArea: focusAreaReducer,
   portfolioCards: portFolioCardsReducer,

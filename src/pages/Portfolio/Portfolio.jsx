@@ -36,7 +36,7 @@ const Portfolio = () => {
               <th className="border border-gray-300 p-2">#</th>
               <th className="border border-gray-300 p-2">Name</th>
               <th className="border border-gray-300 p-2">Image</th>
-              <th className="border border-gray-300 p-2">BG Image</th>
+              {/* <th className="border border-gray-300 p-2">BG Image</th> */}
               <th className="border border-gray-300 p-2">Link</th>
               <th className="border border-gray-300 p-2">Actions</th>
             </tr>
@@ -56,13 +56,13 @@ const Portfolio = () => {
                     />
                   </td>
 
-                  <td className="border border-gray-300 p-2">
+                  {/* <td className="border border-gray-300 p-2">
                     <img
                       src={item.bg.secure_url}
                       alt={item.name}
                       className="w-16 h-16 rounded-full mx-auto"
                     />
-                  </td>
+                  </td> */}
                   <td className="border border-gray-300 p-2">
                     <a
                       href={item.link}

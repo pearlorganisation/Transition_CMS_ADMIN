@@ -5,6 +5,67 @@ import axiosInstance from "../../axiosInstance";
 import { editPortfolio } from "../../features/actions/Portfolio/portfolio";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import JoditEditor from 'jodit-react';
+const config = {
+  readonly: false,
+  height: 400,
+  toolbar: true,
+  buttons: [
+    "source",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "|",
+    "superscript",
+    "subscript",
+    "|",
+    "ul",
+    "ol",
+    "|",
+    "outdent",
+    "indent",
+    "|",
+    "font",
+    "fontsize",
+    "brush",
+    "paragraph",
+    "|",
+    "image",
+    "video",
+    "file",
+    "table",
+    "link",
+    "|",
+    "align",
+    "undo",
+    "redo",
+    "|",
+    "hr",
+    "eraser",
+    "copyformat",
+    "selectall",
+    "|",
+    "print",
+    "about",
+  ],
+  uploader: {
+    insertImageAsBase64URI: true,
+    url: "your-upload-url",
+    format: "json",
+  },
+  placeholder: "Start typing here...",
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  spellcheck: true,
+  allowResizeY: true,
+  allowResizeX: false,
+  language: "en",
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+};
 
 export default function EditPortfolio() {
   const { id } = useParams();
@@ -258,12 +319,25 @@ export default function EditPortfolio() {
           className="w-full p-2 border border-gray-300 rounded"
         />
 
-        <h1 className="">Title </h1>
-        <input
-          {...register("title", { required: true })}
-          placeholder="Title"
-          className="w-full p-2 border border-gray-300 rounded"
-        />
+        <div>
+          <label htmlFor='title' className='block text-sm font-medium text-gray-700 mb-1'>
+            Title
+          </label>
+          <Controller
+            control={control}
+            name='title'
+            rules={{ required: "Title is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
 
         <h1 className=""> Link (Optional) </h1>
         <input
@@ -305,18 +379,46 @@ export default function EditPortfolio() {
           <img src={iconPreview} alt="Icon Preview" className="h-20" />
         )}
 
-        <h1> Overview </h1>
-        <textarea
-          {...register("overview", { required: true })}
-          placeholder="Overview"
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-        <h1> Main Description </h1>
-        <textarea
-          {...register("mainDescription", { required: true })}
-          placeholder="Main Description"
-          className="w-full p-2 border border-gray-300 rounded"
-        />
+{/** editio section */}
+        {/**overview */}
+        <div>
+          <label htmlFor='overview' className='block text-sm font-medium text-gray-700 mb-1'>
+            Overview
+          </label>
+          <Controller
+            control={control}
+            name='overview'
+            rules={{ required: "Overview is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
+        <div>
+          <label htmlFor='mainDescription' className='block text-sm font-medium text-gray-700 mb-1'>
+            Main Description
+          </label>
+          <Controller
+            control={control}
+            name='mainDescription'
+            rules={{ required: "Overview is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
 
         <h1 className=""> Bottom Section Content </h1>
         <textarea

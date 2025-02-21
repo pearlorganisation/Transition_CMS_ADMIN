@@ -13,14 +13,19 @@ const Policies = () => {
     useEffect(() => {
         dispatch(getImpact())
     }, [])
-    let data = impactData?.filter(el => el?.impactDataType === "POLICIES")
-    console.log("the filtered data is", data)
+    // let data = impactData && impactData?.filter(el => el?.impactDataType === "POLICIES")
+    // console.log("the filtered data is", data)
     async function deletePolicies(id)
         {
             try {
                 setLoading(true);
                 setError(null);
-                const response = await axiosInstance.delete(`api/v1/impact/${id}`);
+                const response = await axiosInstance.delete(`/impact/${id}`);
+                console.log("the response is", response)
+                if(response.status ===200){
+                    dispatch(getImpact())
+                };
+                
                 fetchData();
               } catch (err) {
                 setError(err instanceof Error ? err.message : "Something went wrong");

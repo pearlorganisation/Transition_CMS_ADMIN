@@ -36,11 +36,8 @@ const Articles = () => {
             setLoading(true);
             setError(null);
     
-            const response = await axiosInstance.delete(`api/v1/blogs/${id}`);
-    
-           
-    
-            
+            const response = await axiosInstance.delete(`/blogs/${id}`);
+
             fetchData();
           } catch (err) {
             setError(err instanceof Error ? err.message : "Something went wrong");

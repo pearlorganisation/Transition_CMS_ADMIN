@@ -15,6 +15,8 @@ import {
   MdLibraryBooks,
   MdMic,
 } from "react-icons/md";
+
+import { LuWallpaper } from "react-icons/lu";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
@@ -131,6 +133,11 @@ const routes = [
       { path: "/sdg", name: "SDGs", icon: <MdApartment /> },
       { path: "/policies", name: "Policies", icon: <MdArticle /> },
     ],
+  },
+  {
+    path: "/contactUs",
+    name: "Contact Us",
+    icon: <LuWallpaper />,
   },
 ];
 

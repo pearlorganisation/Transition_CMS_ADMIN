@@ -51,6 +51,7 @@ import AddPortfolioCard from "../pages/Portfolio/AddPortfolioCard";
 import AddInvestmentTimelineCard from "../pages/Portfolio/AddInvestmentTimelineCard";
 import AddInvestmentTimeline from "../pages/Portfolio/AddInvestmentTimeline";
 import AddCoinvestor from "../pages/Portfolio/AddUpdateListCoinvestor";
+import ContactUs from "../pages/ContactUs/ContactUs";
 import TeamDetails from "../pages/Team/TeamDetails";
 import AddTeamDetails from "../pages/Team/AddTeamDetails";
 import ViewTeamDetails from "../pages/Team/ViewTeamDetails";
@@ -262,6 +263,10 @@ const Routes = createBrowserRouter([
       {
         path: "/portfolios/add-coinvestor",
         element: <AddCoinvestor />,
+      },
+      {
+        path: "/contactUs",
+        element: <ContactUs />
       },
       {
         path: "/portfolios/add-portfolio",
