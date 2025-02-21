@@ -5,7 +5,67 @@ import axiosInstance from "../../axiosInstance";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
 import { updateFocusArea } from "../../features/actions/focusAreaAction";
-
+import JoditEditor from "jodit-react";
+const config = {
+  readonly: false,
+  height: 400,
+  toolbar: true,
+  buttons: [
+    "source",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "|",
+    "superscript",
+    "subscript",
+    "|",
+    "ul",
+    "ol",
+    "|",
+    "outdent",
+    "indent",
+    "|",
+    "font",
+    "fontsize",
+    "brush",
+    "paragraph",
+    "|",
+    "image",
+    "video",
+    "file",
+    "table",
+    "link",
+    "|",
+    "align",
+    "undo",
+    "redo",
+    "|",
+    "hr",
+    "eraser",
+    "copyformat",
+    "selectall",
+    "|",
+    "print",
+    "about",
+  ],
+  uploader: {
+    insertImageAsBase64URI: true,
+    url: "your-upload-url",
+    format: "json",
+  },
+  placeholder: "Start typing here...",
+  showCharsCounter: true,
+  showWordsCounter: true,
+  showXPathInStatusbar: false,
+  spellcheck: true,
+  allowResizeY: true,
+  allowResizeX: false,
+  language: "en",
+  askBeforePasteHTML: true,
+  askBeforePasteFromWord: true,
+};
 const EditFocusArea = () => {
   const { id } = useParams();
 
@@ -71,14 +131,21 @@ const EditFocusArea = () => {
       {/* Title Field */}
       <div className="mb-4">
         <label className="block text-gray-700">Title</label>
-        <input
-          {...register("title", { required: "Title is required" })}
-          className="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300"
-          placeholder="Enter Focus Area Title"
+        <Controller
+          control={control}
+          name="title"
+          rules={{ required: "Body is required" }}
+          render={({ field }) => (
+            <JoditEditor
+              value={field.value || ""}
+              config={config}
+              onBlur={field.onBlur}
+              onChange={(content) => {
+                field.onChange(content); // Ensure new content is saved
+              }}
+            />
+          )}
         />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )}
       </div>
 
       {/* Focus Areas Multi-Select */}

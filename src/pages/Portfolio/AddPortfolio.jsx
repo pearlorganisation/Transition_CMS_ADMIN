@@ -258,12 +258,31 @@ export default function AddPortfolio() {
             )}
           />
         </div>
+
         <textarea
           {...register("mainDescription", { required: true })}
           placeholder="Main Description"
           className="w-full p-2 border border-gray-300 rounded"
         />
-
+        <div>
+          <label htmlFor='mainDescription' className='block text-sm font-medium text-gray-700 mb-1'>
+              Main Description
+          </label>
+          <Controller
+            control={control}
+            name='mainDescription'
+            rules={{ required: "Overview is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                //   ref={editorRef}
+                value={field.value}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={(content) => field.onChange(content)}
+              />
+            )}
+          />
+        </div>
         <textarea
           {...register("bottomSectionContent", { required: true })}
           placeholder="Bottom Section Content"
