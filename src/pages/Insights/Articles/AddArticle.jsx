@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
-import axiosInstance from '../../../axiosInstance';
-import JoditEditor from 'jodit-react';
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import axiosInstance from "../../../axiosInstance";
+import JoditEditor from "jodit-react";
 const config = {
   readonly: false,
   height: 400,
@@ -65,71 +65,89 @@ const config = {
   askBeforePasteFromWord: true,
 };
 const AddArticle = () => {
-  const { register, handleSubmit, control,formState: { errors }, reset } = useForm();
-  const [articleType, setArticleType] = useState('link');
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const [articleType, setArticleType] = useState("link");
   const navigate = useNavigate();
-    const onSubmit = async (data) => {
+  const onSubmit = async (data) => {
     try {
       const formData = new FormData();
-      formData.append('title', data.title);
-      formData.append('icon', data?.icon?.[0]);
-      formData.append('blogType',"ARTICLES");
-      formData.append('dateMetaData',data?.dateMetaData);
-      if (articleType == 'link') {
-        formData.append('link', data.link);
+      formData.append("title", data.title);
+      formData.append("icon", data?.icon?.[0]);
+      formData.append("blogType", "ARTICLES");
+      formData.append("dateMetaData", data?.dateMetaData);
+      if (articleType == "link") {
+        formData.append("link", data.link);
       } else {
-        formData.append('blogBody', data.blogBody);
+        formData.append("blogBody", data.blogBody);
       }
-      const response = await axiosInstance.post('/blogs', formData, {
+      const response = await axiosInstance.post("/blogs", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log('Article created:', response.data);
-      toast.success("Article Created Successfully !!")
+      toast.success("Article Created Successfully !!");
       reset();
-      navigate('/articles')
+      navigate("/articles");
       // You can add a success message or redirect here
     } catch (error) {
-      console.error('Error creating article:', error);
+      console.error("Error creating article:", error);
       // You can add an error message here
     }
   };
-  
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Article</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Title
           </label>
           <input
             id="title"
             type="text"
-            {...register('title', { required: 'Title is required' })}
+            {...register("title", { required: "Title is required" })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.title && <p className="mt-1 text-xs text-red-500">{errors.title.message}</p>}
+          {errors.title && (
+            <p className="mt-1 text-xs text-red-500">{errors.title.message}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="dateMetaData" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="dateMetaData"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Date Section
           </label>
           <input
             id="dateMetaData"
             type="text"
-            placeholder=''
-            {...register('dateMetaData', { required: 'Date meta data is required' })}
+            placeholder=""
+            {...register("dateMetaData", {
+              required: "Date meta data is required",
+            })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.dateMetaData && <p className="mt-1 text-xs text-red-500">{errors.dateMetaData.message}</p>}
+          {errors.dateMetaData && (
+            <p className="mt-1 text-xs text-red-500">
+              {errors.dateMetaData.message}
+            </p>
+          )}
         </div>
 
-<div>
+        <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Choose Article Type
           </label>
@@ -138,8 +156,8 @@ const AddArticle = () => {
               <input
                 type="radio"
                 value="link"
-                checked={articleType === 'link'}
-                onChange={() => setArticleType('link')}
+                checked={articleType === "link"}
+                onChange={() => setArticleType("link")}
                 className="form-radio h-4 w-4 text-blue-600"
               />
               <span className="ml-2">Link to Article</span>
@@ -148,8 +166,8 @@ const AddArticle = () => {
               <input
                 type="radio"
                 value="write"
-                checked={articleType === 'write'}
-                onChange={() => setArticleType('write')}
+                checked={articleType === "write"}
+                onChange={() => setArticleType("write")}
                 className="form-radio h-4 w-4 text-blue-600"
               />
               <span className="ml-2">Write Own</span>
@@ -157,18 +175,23 @@ const AddArticle = () => {
           </div>
         </div>
 
-        {articleType === 'link' ? (
+        {articleType === "link" ? (
           <div>
-            <label htmlFor="link" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="link"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Link
             </label>
             <input
               id="link"
               type="url"
-              {...register('link', { required: 'Link is required' })}
+              {...register("link", { required: "Link is required" })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.link && <p className="mt-1 text-xs text-red-500">{errors.link.message}</p>}
+            {errors.link && (
+              <p className="mt-1 text-xs text-red-500">{errors.link.message}</p>
+            )}
           </div>
         ) : (
           // <div>
@@ -183,40 +206,47 @@ const AddArticle = () => {
           //   ></textarea>
           //   {errors.body && <p className="mt-1 text-xs text-red-500">{errors.body.message}</p>}
           // </div>
-            <div>
-              <label htmlFor='blogBody' className='block text-sm font-medium text-gray-700 mb-1'>
-                Body
-              </label>
-              <Controller
-                control={control}
-                name='blogBody'
-                rules={{ required: "Body is required" }}
-                render={({ field }) => (
-                  <JoditEditor
-                    //   ref={editorRef}
-                    value={field.value}
-                    config={config}
-                    onBlur={field.onBlur}
-                    onChange={(content) => field.onChange(content)}
-                  />
-                )}
-              />
-            </div>
+          <div>
+            <label
+              htmlFor="blogBody"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Body
+            </label>
+            <Controller
+              control={control}
+              name="blogBody"
+              rules={{ required: "Body is required" }}
+              render={({ field }) => (
+                <JoditEditor
+                  //   ref={editorRef}
+                  value={field.value}
+                  config={config}
+                  onBlur={field.onBlur}
+                  onChange={(content) => field.onChange(content)}
+                />
+              )}
+            />
+          </div>
         )}
-         
 
         <div>
-          <label htmlFor="icon" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="icon"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Icon
           </label>
           <input
             id="icon"
             type="file"
             accept="image/*"
-            {...register('icon', { required: 'Icon is required' })}
+            {...register("icon", { required: "Icon is required" })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.icon && <p className="mt-1 text-xs text-red-500">{errors.icon.message}</p>}
+          {errors.icon && (
+            <p className="mt-1 text-xs text-red-500">{errors.icon.message}</p>
+          )}
         </div>
 
         <button

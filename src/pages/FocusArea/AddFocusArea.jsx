@@ -5,6 +5,7 @@ import Select from "react-select";
 import { useDispatch } from "react-redux";
 import { addFocusArea } from "../../features/actions/focusAreaAction";
 import JoditEditor from "jodit-react";
+
 const config = {
   readonly: false,
   height: 400,
@@ -75,6 +76,7 @@ const AddFocusArea = () => {
   } = useForm();
 
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -90,18 +92,23 @@ const AddFocusArea = () => {
       .catch((error) => console.error("Error fetching features:", error));
   }, []);
 
-  const onSubmit = (data) => {
-    console.log("Submitted Data:", data);
+  const onSubmit = async (data) => {
+    setLoading(true); // Start loading
+    try {
+      const formattedData = {
+        title: data.title,
+        focusAreas: data.focusAreas.map((id) => {
+          const selectedFeature = options.find((option) => option.value === id);
+          return { _id: selectedFeature.value, title: selectedFeature.label };
+        }),
+      };
 
-    const formattedData = {
-      title: data.title,
-      focusAreas: data.focusAreas.map((id) => {
-        const selectedFeature = options.find((option) => option.value === id);
-        return { _id: selectedFeature.value, title: selectedFeature.label };
-      }),
-    };
-
-    dispatch(addFocusArea(formattedData));
+      await dispatch(addFocusArea(formattedData));
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false); // Stop loading after submission
+    }
   };
 
   return (
@@ -112,14 +119,6 @@ const AddFocusArea = () => {
       {/* Title Field */}
       <div className="mb-4">
         <label className="block text-gray-700">Title</label>
-        {/* <input
-          {...register("title", { required: "Title is required" })}
-          className="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300"
-          placeholder="Enter Focus Area Title"
-        />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )} */}
         <Controller
           control={control}
           name="title"
@@ -130,7 +129,7 @@ const AddFocusArea = () => {
               config={config}
               onBlur={field.onBlur}
               onChange={(content) => {
-                field.onChange(content); // Ensure new content is saved
+                field.onChange(content);
               }}
             />
           )}
@@ -140,7 +139,6 @@ const AddFocusArea = () => {
       {/* Focus Areas Multi-Select */}
       <div className="mb-4">
         <label className="block text-gray-700">Select Focus Areas</label>
-
         <Controller
           name="focusAreas"
           control={control}
@@ -163,18 +161,18 @@ const AddFocusArea = () => {
             />
           )}
         />
-
         {errors.focusAreas && (
           <p className="text-red-500 text-sm">{errors.focusAreas.message}</p>
         )}
       </div>
 
-      {/* Submit Button */}
+      {/* Submit Button with Loading State */}
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+        className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition disabled:opacity-50"
+        disabled={loading}
       >
-        Create Focus Area
+        {loading ? "Adding..." : "Create Focus Area"}
       </button>
     </form>
   );

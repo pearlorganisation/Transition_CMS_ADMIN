@@ -23,20 +23,30 @@ const ESG = () => {
         <table className="w-full text-sm text-left text-gray-700">
           <thead className="text-xs uppercase bg-gray-200">
             <tr>
-              <th scope="col" className="px-6 py-3">Name</th>
-              <th scope="col" className="px-6 py-3">Actions</th>
+              <th scope="col" className="px-6 py-3">
+                Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(impactData) && impactData.filter(el => el?.impactDataType === "ESGS").length > 0 ? (
+            {Array.isArray(impactData) &&
+            impactData.filter((el) => el?.impactDataType === "ESGS").length >
+              0 ? (
               impactData
                 .filter((el) => el?.impactDataType === "ESGS")
                 .map((el) => (
                   <tr key={el?._id} className="border-b hover:bg-gray-100">
-                    <td className="px-6 py-4 font-medium text-gray-900">{el?.impactDataType}</td>
+                    <td className="px-6 py-4 font-medium text-gray-900">
+                      {el?.impactDataType}
+                    </td>
                     <td className="px-6 py-4 flex gap-4">
-                       <Link to={`/edit-esg/${el?._id}`} state={{ data: el }}>
-                        <button className="text-green-500 hover:text-green-600">Edit</button>
+                      <Link to={`/edit-esg/${el?._id}`} state={{ data: el }}>
+                        <button className="text-green-500 hover:text-green-600">
+                          Edit
+                        </button>
                       </Link>
                     </td>
                   </tr>

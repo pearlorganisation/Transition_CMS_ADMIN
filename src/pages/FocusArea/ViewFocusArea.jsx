@@ -1,10 +1,9 @@
 import { useLocation } from "react-router-dom";
+import parse from "html-react-parser";
 const ViewFocusArea = () => {
   const location = useLocation();
 
   const { focusarea } = location.state || {};
-
-  console.log(focusarea, "location state focus Area");
 
   if (!focusarea) {
     return (
@@ -17,7 +16,7 @@ const ViewFocusArea = () => {
       <h1 className="text-3xl font-bold mb-4">View Focus Area Features Page</h1>
       <div className="bg-white rounded-lg p-6">
         <h2 className="text-xl font-semibold text-center">
-          TITLE : {focusarea.title}
+          TITLE : {parse(focusarea.title)}
         </h2>
 
         <h1 className="mt-3 text-4xl text-green-500 font-semibold">

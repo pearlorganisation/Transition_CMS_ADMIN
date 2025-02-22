@@ -14,6 +14,7 @@ const EditPolicies = () => {
   const { _id } = data || {};
 
   const [iconPreview, setIconPreview] = useState(data?.icon?.secure_url || "");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -37,6 +38,7 @@ const EditPolicies = () => {
   }, [data, reset]);
 
   const submitForm = async (formData) => {
+    setLoading(true);
     try {
       const updatedData = new FormData();
       updatedData.append("title", formData.title);
@@ -68,6 +70,8 @@ const EditPolicies = () => {
         position: "top-right",
         autoClose: 3000,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,28 +81,40 @@ const EditPolicies = () => {
       <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
         {/* Title Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Title
+          </label>
           <input
             {...register("title", { required: "Title is required" })}
             type="text"
             className="border p-2 w-full"
           />
-          {errors.title && <p className="text-red-500">{errors.title.message}</p>}
+          {errors.title && (
+            <p className="text-red-500">{errors.title.message}</p>
+          )}
         </div>
 
         {/* Short Description Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Short Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Short Description
+          </label>
           <textarea
-            {...register("shortDescription", { required: "Short description is required" })}
+            {...register("shortDescription", {
+              required: "Short description is required",
+            })}
             className="border p-2 w-full"
           />
-          {errors.shortDescription && <p className="text-red-500">{errors.shortDescription.message}</p>}
+          {errors.shortDescription && (
+            <p className="text-red-500">{errors.shortDescription.message}</p>
+          )}
         </div>
 
         {/* Icon Upload Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Upload Icon</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Upload Icon
+          </label>
           <input
             type="file"
             {...register("icon")}
@@ -114,14 +130,22 @@ const EditPolicies = () => {
           {iconPreview && (
             <div className="mt-2">
               <p>Preview:</p>
-              <img src={iconPreview} alt="Icon Preview" className="w-20 h-20 object-cover rounded" />
+              <img
+                src={iconPreview}
+                alt="Icon Preview"
+                className="w-20 h-20 object-cover rounded"
+              />
             </div>
           )}
         </div>
 
         {/* Submit Button */}
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Update Policy
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? "Updating..." : "Update Policy"}
         </button>
       </form>
     </>

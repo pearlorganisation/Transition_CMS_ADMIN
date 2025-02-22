@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addTeam } from "../../features/actions/teamsAction";
 import { addTeamDetails } from "../../features/actions/teamDetailsAction";
 
 const AddTeamDetails = () => {
   const dispatch = useDispatch();
-  const [imagePreview, setImagePreview] = useState(null); // For image preview
+  const [imagePreview, setImagePreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -14,16 +15,14 @@ const AddTeamDetails = () => {
     formState: { errors },
   } = useForm();
 
-  // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-
-    dispatch(addTeamDetails(data));
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    await dispatch(addTeamDetails(data));
     reset();
     setImagePreview(null);
+    setIsLoading(false);
   };
 
-  // Handle image preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -32,11 +31,9 @@ const AddTeamDetails = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 bg-gray-300 shadow-lg rounded-lg  mt-2 pb-6">
-      <h1 className="text-2xl font-bold mb-6">Add Team Details </h1>
+    <div className="max-w-2xl mx-auto px-6 bg-gray-300 shadow-lg rounded-lg mt-2 pb-6">
+      <h1 className="text-2xl font-bold mb-6">Add Team Details</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Name Field */}
-
         <div className="w-full">
           <label htmlFor="title" className="block font-medium mb-1">
             Title
@@ -53,7 +50,6 @@ const AddTeamDetails = () => {
           )}
         </div>
 
-        {/* Designation Field */}
         <div className="w-full">
           <label htmlFor="description" className="block font-medium mb-1">
             Description
@@ -67,12 +63,13 @@ const AddTeamDetails = () => {
             className="w-full border border-gray-300 rounded px-3 py-2"
             placeholder="Enter description"
           />
-          {errors.bio && (
-            <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.description.message}
+            </p>
           )}
         </div>
 
-        {/* Image Upload Field */}
         <div>
           <label htmlFor="image" className="block font-medium mb-1">
             Upload Image
@@ -90,7 +87,6 @@ const AddTeamDetails = () => {
           )}
         </div>
 
-        {/* Image Preview */}
         {imagePreview && (
           <div className="mt-4">
             <p className="font-medium mb-1">Image Preview:</p>
@@ -102,12 +98,12 @@ const AddTeamDetails = () => {
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
+          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition flex items-center justify-center"
+          disabled={isLoading}
         >
-          Add Team Details
+          {isLoading ? "Adding..." : "Add Team Details"}
         </button>
       </form>
     </div>

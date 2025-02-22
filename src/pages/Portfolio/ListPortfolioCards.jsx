@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deletePortfolioCard,
@@ -8,22 +8,27 @@ import { useNavigate } from "react-router-dom";
 
 const ListPortfolioCards = () => {
   const { portfolioCards } = useSelector((state) => state.portfolioCards);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     dispatch(getPortfolioCards());
   }, [dispatch]);
 
-  console.log(portfolioCards, "portfolioCards");
+  const confirmDelete = (id) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  };
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete?");
-    if (confirmDelete) {
-      dispatch(deletePortfolioCard(id));
+  const handleDelete = () => {
+    if (selectedId) {
+      dispatch(deletePortfolioCard(selectedId));
     }
+    setIsModalOpen(false);
+    setSelectedId(null);
   };
 
   return (
@@ -34,7 +39,6 @@ const ListPortfolioCards = () => {
           <thead>
             <tr className="bg-gray-100">
               <th className="border border-gray-300 p-2">#</th>
-
               <th className="border border-gray-300 p-2">Title</th>
               <th className="border border-gray-300 p-2">Image</th>
               <th className="border border-gray-300 p-2">Actions</th>
@@ -45,7 +49,6 @@ const ListPortfolioCards = () => {
               portfolioCards.map((item, index) => (
                 <tr key={item.id} className="text-center">
                   <td className="border border-gray-300 p-2">{index + 1}</td>
-
                   <td className="border border-gray-300 p-2">{item.title}</td>
                   <td className="border border-gray-300 p-2">
                     <img
@@ -54,7 +57,6 @@ const ListPortfolioCards = () => {
                       className="w-16 h-16 rounded-full mx-auto"
                     />
                   </td>
-
                   <td className="border border-gray-300 p-2">
                     <button
                       onClick={() =>
@@ -78,7 +80,7 @@ const ListPortfolioCards = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      onClick={() => confirmDelete(item._id)}
                       className="bg-red-500 text-white px-3 py-1 rounded"
                     >
                       Delete
@@ -89,6 +91,29 @@ const ListPortfolioCards = () => {
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
+            <p>Are you sure you want to delete this portfolio card?</p>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

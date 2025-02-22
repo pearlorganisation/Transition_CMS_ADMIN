@@ -81,6 +81,8 @@ const EditFocusArea = () => {
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [submitting, setSubmitting] = useState(false);
+
   useEffect(() => {
     axiosInstance
       .get("/focus-features")
@@ -109,16 +111,24 @@ const EditFocusArea = () => {
       .catch((error) => console.error("Error fetching focus area:", error));
   }, [id, setValue]);
 
-  const onSubmit = (data) => {
-    const formattedData = {
-      title: data.title,
-      focusAreas: data.focusAreas.map((id) => {
-        const selectedFeature = options.find((option) => option.value === id);
-        return { _id: selectedFeature.value, title: selectedFeature.label };
-      }),
-    };
+  const onSubmit = async (data) => {
+    setSubmitting(true);
 
-    dispatch(updateFocusArea({ id, updatedData: formattedData }));
+    try {
+      const formattedData = {
+        title: data.title,
+        focusAreas: data.focusAreas.map((id) => {
+          const selectedFeature = options.find((option) => option.value === id);
+          return { _id: selectedFeature.value, title: selectedFeature.label };
+        }),
+      };
+
+      await dispatch(updateFocusArea({ id, updatedData: formattedData }));
+    } catch (error) {
+      console.error("Error updating focus area:", error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (loading) return <p>Loading...</p>;
@@ -181,9 +191,10 @@ const EditFocusArea = () => {
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+        className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition disabled:opacity-50"
+        disabled={submitting}
       >
-        Update Focus Area
+        {submitting ? "Updating..." : "Update Focus Area"}
       </button>
     </form>
   );

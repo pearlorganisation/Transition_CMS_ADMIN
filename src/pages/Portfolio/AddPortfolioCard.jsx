@@ -49,7 +49,7 @@ const config = {
   ],
   uploader: {
     insertImageAsBase64URI: true,
-    url: "your-upload-url", // If you have a file upload URL
+    url: "your-upload-url",
     format: "json",
   },
   placeholder: "Start typing here...",
@@ -66,24 +66,23 @@ const config = {
 const AddPortfolioCard = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    control
+    control,
   } = useForm();
 
-  // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-
-    dispatch(addPortfolioCard(data));
+  const onSubmit = async (data) => {
+    setLoading(true);
+    await dispatch(addPortfolioCard(data));
+    setLoading(false);
     reset();
     setImagePreview(null);
   };
 
-  // Handle image preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -92,8 +91,8 @@ const AddPortfolioCard = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 bg-gray-300 shadow-lg rounded-lg  mt-2 pb-6">
-      <h1 className="text-2xl font-bold mb-6">Add Portfolio Card </h1>
+    <div className="max-w-2xl mx-auto px-6 bg-gray-300 shadow-lg rounded-lg mt-2 pb-6">
+      <h1 className="text-2xl font-bold mb-6">Add Portfolio Card</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="w-full">
           <label htmlFor="title" className="block font-medium mb-1">
@@ -111,39 +110,19 @@ const AddPortfolioCard = () => {
           )}
         </div>
 
-        {/* Designation Field */}
-        {/* <div className="w-full">
-          <label htmlFor="description" className="block font-medium mb-1">
-            Description
-          </label>
-          <input
-            type="text"
-            id="description"
-            {...register("description", {
-              required: "Description is required",
-            })}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="Enter Description"
-          />
-          {errors.description && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.description.message}
-            </p>
-          )}
-        </div> */}
-
-        {/**overview */}
         <div>
-          <label htmlFor='description' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Overview
           </label>
           <Controller
             control={control}
-            name='description'
-            rules={{ required: "description is required" }}
+            name="description"
+            rules={{ required: "Description is required" }}
             render={({ field }) => (
               <JoditEditor
-                //   ref={editorRef}
                 value={field.value}
                 config={config}
                 onBlur={field.onBlur}
@@ -152,7 +131,7 @@ const AddPortfolioCard = () => {
             )}
           />
         </div>
-        {/* Image Upload Field */}
+
         <div>
           <label htmlFor="icon" className="block font-medium mb-1">
             Upload Icon
@@ -170,7 +149,6 @@ const AddPortfolioCard = () => {
           )}
         </div>
 
-        {/* Image Preview */}
         {imagePreview && (
           <div className="mt-4">
             <p className="font-medium mb-1">Image Preview:</p>
@@ -182,12 +160,16 @@ const AddPortfolioCard = () => {
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
+          className={`w-full font-bold py-2 px-4 rounded transition ${
+            loading
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+          disabled={loading}
         >
-          Add Portfolio Card
+          {loading ? "Adding..." : "Add Portfolio Card"}
         </button>
       </form>
     </div>

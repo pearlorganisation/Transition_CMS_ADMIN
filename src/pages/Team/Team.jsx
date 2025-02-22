@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteTeam, getAllTeams } from "../../features/actions/teamsAction";
@@ -6,17 +6,20 @@ import { deleteTeam, getAllTeams } from "../../features/actions/teamsAction";
 const Team = () => {
   const dispatch = useDispatch();
   const { teamInfo } = useSelector((state) => state.teams);
+  const navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
 
   useEffect(() => {
     dispatch(getAllTeams());
-  }, []);
+  }, [dispatch]);
 
-  const navigate = useNavigate();
-
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete?");
-    if (confirmDelete) {
-      dispatch(deleteTeam(id));
+  const handleDelete = () => {
+    if (selectedTeam) {
+      dispatch(deleteTeam(selectedTeam._id));
+      setShowModal(false);
+      setSelectedTeam(null);
     }
   };
 
@@ -40,7 +43,7 @@ const Team = () => {
             {Array.isArray(teamInfo) &&
               teamInfo.map((item, index) => (
                 <tr
-                  key={item.id}
+                  key={item._id}
                   className="text-center bg-white hover:bg-gray-100 transition"
                 >
                   <td className="border border-gray-300 p-3">{index + 1}</td>
@@ -82,7 +85,10 @@ const Team = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      onClick={() => {
+                        setSelectedTeam(item);
+                        setShowModal(true);
+                      }}
                       className="bg-red-500 text-white py-1 px-3 rounded-lg shadow-md hover:bg-red-600 transition"
                     >
                       Delete
@@ -93,6 +99,32 @@ const Team = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showModal && selectedTeam && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Are you sure you want to delete{" "}
+              <span className="text-red-500">{selectedTeam.name}</span>?
+            </h2>
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-400 text-white py-2 px-4 rounded-lg shadow-md hover:bg-gray-500 transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

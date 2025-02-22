@@ -5,9 +5,7 @@ const ViewFocusAreaFeature = () => {
   const { focusareafeature } = location.state || {};
 
   if (!focusareafeature) {
-    return (
-      <div className="text-center text-red-500">Focus Area not found!</div>
-    );
+    return <div className="text-center text-red-500">Focus Area not found</div>;
   }
 
   return (

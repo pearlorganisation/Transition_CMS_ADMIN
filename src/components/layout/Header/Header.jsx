@@ -111,6 +111,7 @@
 import { useState } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import Logo from "../../../../public/logo.png";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -123,9 +124,11 @@ const Header = () => {
     <header className="bg-[#f4fdfc] text-black shadow-md border-b-4 border-[#ADE9E4]">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Logo Section */}
-        <div className="text-2xl font-semibold tracking-wide">
+        {/* <div className="text-2xl font-semibold tracking-wide">
           Transition Admin
-        </div>
+        </div> */}
+
+        <img src={Logo} className="w-48 h-8" />
 
         {/* User Info Section */}
         <div className="relative">

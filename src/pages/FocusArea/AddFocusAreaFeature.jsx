@@ -6,6 +6,8 @@ import { addFocusAreaFeature } from "../../features/actions/focusAreaAction";
 const AddFocusAreaFeature = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null); // For image preview
+  const [loading, setLoading] = useState(false); // Loading state
+
   const {
     register,
     handleSubmit,
@@ -20,11 +22,12 @@ const AddFocusAreaFeature = () => {
   });
 
   // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    dispatch(addFocusAreaFeature(data));
+  const onSubmit = async (data) => {
+    setLoading(true);
+    await dispatch(addFocusAreaFeature(data));
     reset();
     setImagePreview(null);
+    setLoading(false);
   };
 
   // Handle image preview
@@ -125,12 +128,13 @@ const AddFocusAreaFeature = () => {
           </div>
         )}
 
-        {/* Submit Button */}
+        {/* Submit Button with Loading */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
+          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={loading}
         >
-          Add Focus Area Feature
+          {loading ? "Submitting..." : "Add Focus Area Feature"}
         </button>
       </form>
     </div>

@@ -88,6 +88,8 @@ export default function EditPortfolio() {
   const [selectedInvestment, setSelectedInvestment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   //   const [imageUrl, setImageUrl] = useState(null);
   //   const [bgUrl, setBgUrl] = useState(null);
   //   const [bottomSectionUrl, setBottomSectionUrl] = useState(null);
@@ -257,55 +259,58 @@ export default function EditPortfolio() {
 
   console.log(coInvestors, "my coinvestors");
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("mainDescription", data.mainDescription);
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("mainDescription", data.mainDescription);
 
-    formData.append("title", data.title);
-    formData.append("overview", data.overview);
-    formData.append("bottomSectionContent", data.bottomSectionContent);
-    formData.append("link", data.link);
+      formData.append("title", data.title);
+      formData.append("overview", data.overview);
+      formData.append("bottomSectionContent", data.bottomSectionContent);
+      formData.append("link", data.link);
 
-    // formData.append(
-    //   "investmentTimeline",
-    //   JSON.stringify(data.selectedInvestment?._id)
-    // );
+      if (data.selectedInvestment?._id) {
+        formData.append("investmentTimeline", data.selectedInvestment._id);
+      }
 
-    if (data.selectedInvestment?._id) {
-      formData.append("investmentTimeline", data.selectedInvestment._id);
+      if (data.image && data.image[0]) {
+        formData.append("image", data.image[0]);
+      }
+      if (data.bg && data.bg[0]) {
+        formData.append("bg", data.bg[0]);
+      }
+      if (data.bottomSectionIcon && data.bottomSectionIcon[0]) {
+        formData.append("bottomSectionIcon", data.bottomSectionIcon[0]);
+      }
+
+      formData.append(
+        "cards",
+        JSON.stringify(
+          data.cards.map((card) => ({
+            _id: card.value,
+            portfoliocardname: card.label,
+          }))
+        )
+      );
+      formData.append(
+        "coInvestedBy",
+        JSON.stringify(
+          data.coInvestedBy.map((card) => ({
+            _id: card.value,
+            coInvestorname: card.label,
+          }))
+        )
+      );
+
+      // dispatch(editPortfolio({ id, portfolioData: formData }));
+      await dispatch(editPortfolio({ id, portfolioData: formData }));
+    } catch (error) {
+      console.error("Error updating portfolio:", error);
+    } finally {
+      setIsSubmitting(false);
     }
-
-    if (data.image && data.image[0]) {
-      formData.append("image", data.image[0]);
-    }
-    if (data.bg && data.bg[0]) {
-      formData.append("bg", data.bg[0]);
-    }
-    if (data.bottomSectionIcon && data.bottomSectionIcon[0]) {
-      formData.append("bottomSectionIcon", data.bottomSectionIcon[0]);
-    }
-
-    formData.append(
-      "cards",
-      JSON.stringify(
-        data.cards.map((card) => ({
-          _id: card.value,
-          portfoliocardname: card.label,
-        }))
-      )
-    );
-    formData.append(
-      "coInvestedBy",
-      JSON.stringify(
-        data.coInvestedBy.map((card) => ({
-          _id: card.value,
-          coInvestorname: card.label,
-        }))
-      )
-    );
-
-    dispatch(editPortfolio({ id, portfolioData: formData }));
   };
 
   return (
@@ -526,9 +531,12 @@ export default function EditPortfolio() {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className={`w-full bg-blue-500 text-white p-2 rounded ${
+            isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-600"
+          }`}
+          disabled={isSubmitting}
         >
-          Update
+          {isSubmitting ? "Updating..." : "Update"}
         </button>
       </form>
     </div>

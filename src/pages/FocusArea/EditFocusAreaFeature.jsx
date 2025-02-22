@@ -17,6 +17,7 @@ const EditFocusAreaFeature = () => {
   }, [dispatch, id]);
 
   const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -52,11 +53,12 @@ const EditFocusAreaFeature = () => {
     }
   }, [focusAreaFeature, reset]);
 
-  const onSubmit = (data) => {
-    console.log("Update Fpcus Area Feature Data:", data);
-    dispatch(
+  const onSubmit = async (data) => {
+    setLoading(true);
+    await dispatch(
       updateFocusAreaFeature({ id: focusAreaFeature._id, updatedData: data })
     );
+    setLoading(false);
   };
 
   const handleImageChange = (e) => {
@@ -146,9 +148,10 @@ const EditFocusAreaFeature = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
+          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition disabled:opacity-50"
+          disabled={loading}
         >
-          Update Focus Area Feature
+          {loading ? "Updating..." : "Update Focus Area Feature"}
         </button>
       </form>
     </div>

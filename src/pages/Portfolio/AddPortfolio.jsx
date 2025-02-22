@@ -87,6 +87,7 @@ export default function AddPortfolio() {
   const [investmentTimelines, setInvestmentTimelines] = useState([]);
   const [selectedInvestment, setSelectedInvestment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     axiosInstance
@@ -129,35 +130,40 @@ export default function AddPortfolio() {
       );
   }, []);
 
-  const onSubmit = (data) => {
-    const formattedCards =
-      data.cards?.map((card) => ({
-        _id: card.value,
-        portfoliocardname: card.label,
-      })) || [];
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      const formattedCards =
+        data.cards?.map((card) => ({
+          _id: card.value,
+          portfoliocardname: card.label,
+        })) || [];
+      const formattedCoInvestors =
+        data.coInvestedBy?.map((investor) => ({
+          _id: investor.value,
+          coInvestorname: investor.label,
+        })) || [];
 
-    const formattedCoInvestors =
-      data.coInvestedBy?.map((investor) => ({
-        _id: investor.value,
-        coInvestorname: investor.label,
-      })) || [];
+      const submissionData = {
+        ...data,
+        image: data.image[0],
+        bg: data.bg[0],
+        bottomSectionIcon: data.bottomSectionIcon[0],
+        investmentTimeline: selectedInvestment?._id,
+        cards: formattedCards,
+        coInvestedBy: formattedCoInvestors,
+      };
 
-    const submissionData = {
-      ...data,
-      image: data.image[0], // Convert FileList to a single file
-      bg: data.bg[0],
-      bottomSectionIcon: data.bottomSectionIcon[0],
-      investmentTimeline: selectedInvestment?._id,
-      cards: formattedCards,
-      coInvestedBy: formattedCoInvestors,
-    };
-
-    console.log(
-      "Final Submission Data:",
-      JSON.stringify(submissionData, null, 2)
-    );
-
-    dispatch(addPortfolio(submissionData));
+      await dispatch(addPortfolio(submissionData));
+      reset();
+      setImagePreview(null);
+      setBgPreview(null);
+      setIconPreview(null);
+    } catch (error) {
+      console.error("Error submitting portfolio:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -170,19 +176,16 @@ export default function AddPortfolio() {
           className="w-full p-2 border border-gray-300 rounded"
         />
 
-        {/* <input
-          {...register("title", { required: true })}
-          placeholder="Title"
-          className="w-full p-2 border border-gray-300 rounded"
-        /> */}
-        {/**overview */}
         <div>
-          <label htmlFor='title' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Title
           </label>
           <Controller
             control={control}
-            name='title'
+            name="title"
             rules={{ required: "Title is required" }}
             render={({ field }) => (
               <JoditEditor
@@ -240,13 +243,16 @@ export default function AddPortfolio() {
         )}
         {/**overview */}
         <div>
-          <label htmlFor='overview' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="overview"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Overview
           </label>
           <Controller
             control={control}
-            name='overview'
-            rules={{ required: "Overview is required"}}
+            name="overview"
+            rules={{ required: "Overview is required" }}
             render={({ field }) => (
               <JoditEditor
                 //   ref={editorRef}
@@ -259,18 +265,16 @@ export default function AddPortfolio() {
           />
         </div>
 
-        <textarea
-          {...register("mainDescription", { required: true })}
-          placeholder="Main Description"
-          className="w-full p-2 border border-gray-300 rounded"
-        />
         <div>
-          <label htmlFor='mainDescription' className='block text-sm font-medium text-gray-700 mb-1'>
-              Main Description
+          <label
+            htmlFor="mainDescription"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Main Description
           </label>
           <Controller
             control={control}
-            name='mainDescription'
+            name="mainDescription"
             rules={{ required: "Overview is required" }}
             render={({ field }) => (
               <JoditEditor
@@ -378,9 +382,10 @@ export default function AddPortfolio() {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-blue-400"
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? "Adding..." : "Add Portfolio"}
         </button>
       </form>
     </div>

@@ -11,6 +11,8 @@ import { toast } from "sonner";
 const EditTeamDetails = () => {
   const { id } = useParams();
 
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   const { teamDetails } = useSelector((state) => state.teamDetails);
@@ -40,12 +42,27 @@ const EditTeamDetails = () => {
   }, [teamDetails, reset]);
 
   // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    dispatch(updateTeamDetails({ id: teamDetails._id, updatedData: data }));
-    toast.success("Team Details edited successfully!");
-    reset();
-    setImagePreview(null);
+  // const onSubmit = (data) => {
+  //   dispatch(updateTeamDetails({ id: teamDetails._id, updatedData: data }));
+  //   toast.success("Team Details edited successfully!");
+  //   reset();
+  //   setImagePreview(null);
+  // };
+
+  const onSubmit = async (data) => {
+    setLoading(true); // Start loading
+    try {
+      await dispatch(
+        updateTeamDetails({ id: teamDetails._id, updatedData: data })
+      );
+      toast.success("Team Details edited successfully!");
+      reset();
+      setImagePreview(null);
+    } catch (error) {
+      toast.error("Failed to update team details!");
+    } finally {
+      setLoading(false); // Stop loading
+    }
   };
 
   // Handle image preview
@@ -132,9 +149,10 @@ const EditTeamDetails = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
+          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition flex items-center justify-center"
+          disabled={loading}
         >
-          Edit Team Details
+          {loading ? "Editing..." : "Edit Team Details"}
         </button>
       </form>
     </div>

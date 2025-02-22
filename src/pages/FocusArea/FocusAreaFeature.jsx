@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,21 +8,26 @@ import {
 
 const FocusAreaFeature = () => {
   const dispatch = useDispatch();
-
   const { focusAreaFeatureInfo } = useSelector((state) => state.focusArea);
+  const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     dispatch(getFocusAreaFeatures());
   }, [dispatch]);
 
-  const navigate = useNavigate();
+  const handleDeleteClick = (id) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  };
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete the Focus Area Feature ?"
-    );
-    if (confirmDelete) {
-      dispatch(deleteFocusFeature(id));
+  const confirmDelete = () => {
+    if (selectedId) {
+      dispatch(deleteFocusFeature(selectedId));
+      setIsModalOpen(false);
+      setSelectedId(null);
     }
   };
 
@@ -36,7 +41,6 @@ const FocusAreaFeature = () => {
               <th className="border border-gray-300 p-2">Index</th>
               <th className="border border-gray-300 p-2">Icon</th>
               <th className="border border-gray-300 p-2">Title</th>
-
               <th className="border border-gray-300 p-2">Actions</th>
             </tr>
           </thead>
@@ -46,13 +50,15 @@ const FocusAreaFeature = () => {
                 <tr key={item.id} className="text-center">
                   <td className="border border-gray-300 p-2">{index + 1}</td>
                   <td className="border border-gray-300 p-2">
-                    <img src={item.image.secure_url} className="w-8 h-8" />
+                    <img
+                      src={item.image.secure_url}
+                      className="w-8 h-8"
+                      alt="icon"
+                    />
                   </td>
-
                   <td className="border w-[70%] border-gray-300 p-2">
                     {item.title}
                   </td>
-
                   <td className="border border-gray-300 p-2">
                     <button
                       onClick={() =>
@@ -76,7 +82,7 @@ const FocusAreaFeature = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      onClick={() => handleDeleteClick(item._id)}
                       className="bg-red-500 text-white px-3 py-1 rounded"
                     >
                       Delete
@@ -87,6 +93,32 @@ const FocusAreaFeature = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+            <p className="mb-4">
+              Are you sure you want to delete this feature?
+            </p>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import axiosInstance from "../../axiosInstance";
-import JoditEditor from 'jodit-react'
+import JoditEditor from "jodit-react";
+import { toast } from "react-toastify";
 const config = {
   readonly: false,
   height: 400,
@@ -73,6 +74,7 @@ const AddInvestmentTimeline = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axiosInstance
@@ -88,6 +90,7 @@ const AddInvestmentTimeline = () => {
   }, []);
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("description", data.description);
@@ -105,9 +108,11 @@ const AddInvestmentTimeline = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      alert("Investment Timeline added successfully!");
+      toast.success("Investment Timeline Added Successfully");
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,16 +123,18 @@ const AddInvestmentTimeline = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Description */}
         <div>
-          <label htmlFor='blogBody' className='block text-sm font-medium text-gray-700 mb-1'>
+          <label
+            htmlFor="blogBody"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Description
           </label>
           <Controller
             control={control}
-            name='description'
+            name="description"
             rules={{ required: "Body is required" }}
             render={({ field }) => (
               <JoditEditor
-                //   ref={editorRef}
                 value={field.value}
                 config={config}
                 onBlur={field.onBlur}
@@ -200,9 +207,10 @@ const AddInvestmentTimeline = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded"
+          className="w-full bg-blue-600 text-white py-2 rounded flex justify-center items-center"
+          disabled={loading}
         >
-          Submit
+          {loading ? "Adding..." : "Submit"}
         </button>
       </form>
     </div>
