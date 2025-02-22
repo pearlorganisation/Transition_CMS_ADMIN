@@ -114,6 +114,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { adminLogout } from "../../../features/actions/Auth/authAction";
 import { logout } from "../../../features/slices/Auth/authSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -151,13 +152,15 @@ const Header = () => {
           {/* Dropdown */}
           {isDropdownOpen && (
             <div className="absolute right-0 mt-3 w-48 bg-[#F4FDFC] text-gray-800 rounded-lg shadow-lg border border-[#ADE9E4]">
-
-              <button
-                onClick={() => setIsDropdownOpen(false)}
-                className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#BFF7F2] hover:text-[#12BAAA] transition-colors"
-              >
-                Profile
-              </button>
+               <Link to={`/profile`}>
+                <button
+                  onClick={() => setIsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#BFF7F2] hover:text-[#12BAAA] transition-colors"
+                >
+                  Profile
+                </button>
+               </Link>
+               
               <button
                 onClick={(e) => handleLogout(e)}
                 className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#BFF7F2] hover:text-[#12BAAA] transition-colors"

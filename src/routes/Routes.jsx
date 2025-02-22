@@ -63,6 +63,7 @@ import EditPortfolio from "../pages/Portfolio/EditPortfolio";
 import Login from "../pages/Login/Login";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import Profile from "../pages/Profile/Profile";
 
 const Routes = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const Routes = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+      },
+      {
+       path:"/profile",
+       element:<Profile />
       },
       {
         path: "/news",

@@ -13,7 +13,7 @@ export const baseURL =
 console.log("Base URL:", baseURL);
 
 export const axiosInstance = axios.create({
-  //   withCredentials: true,
+  withCredentials: true,
   baseURL,
 });
 
