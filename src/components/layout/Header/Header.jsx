@@ -111,14 +111,24 @@
 import { useState } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { adminLogout } from "../../../features/actions/Auth/authAction";
+import { logout } from "../../../features/slices/Auth/authSlice";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const dispatch = useDispatch()
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleLogout = async(e)=>{
+    console.log("the button is clicked")
+    dispatch(adminLogout())
+    dispatch(logout())
+    setIsDropdownOpen(false)
+    
+  }
   return (
     <header className="bg-[#f4fdfc] text-black shadow-md border-b-4 border-[#ADE9E4]">
       <div className="flex items-center justify-between px-6 py-4">
@@ -141,12 +151,20 @@ const Header = () => {
           {/* Dropdown */}
           {isDropdownOpen && (
             <div className="absolute right-0 mt-3 w-48 bg-[#F4FDFC] text-gray-800 rounded-lg shadow-lg border border-[#ADE9E4]">
+
               <button
                 onClick={() => setIsDropdownOpen(false)}
                 className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#BFF7F2] hover:text-[#12BAAA] transition-colors"
               >
+                Profile
+              </button>
+              <button
+                onClick={(e) => handleLogout(e)}
+                className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-[#BFF7F2] hover:text-[#12BAAA] transition-colors"
+              >
                 Logout
               </button>
+ 
             </div>
           )}
         </div>
