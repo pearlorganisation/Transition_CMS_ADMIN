@@ -31,9 +31,9 @@ export const updateImpactById = createAsyncThunk(
       console.log("the impact data is", impactData);
       console.log("the id is", id);
       const config = {
-        //    headers: {
-        //        "Content-Type": "multipart/form-data"
-        //    }
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       };
       const { data } = await axiosInstance.put(
         `/impact/${id}`,
