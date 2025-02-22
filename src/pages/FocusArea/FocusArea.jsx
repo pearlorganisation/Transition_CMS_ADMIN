@@ -6,6 +6,8 @@ import {
   deleteFocusArea,
 } from "../../features/actions/focusAreaAction";
 
+import parse from "html-react-parser";
+
 const FocusArea = () => {
   const dispatch = useDispatch();
 
@@ -46,7 +48,7 @@ const FocusArea = () => {
                 <tr key={item.id} className="text-center">
                   <td className="border border-gray-300 p-2">{index + 1}</td>
                   <td className="border w-[70%] border-gray-300 p-2">
-                    {item.title}
+                    {item.title && parse(item.title)}
                   </td>
 
                   <td className="border border-gray-300 p-2">
