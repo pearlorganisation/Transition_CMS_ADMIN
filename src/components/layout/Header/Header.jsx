@@ -111,7 +111,7 @@
 import { useState } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { adminLogout } from "../../../features/actions/Auth/authAction";
 import { logout } from "../../../features/slices/Auth/authSlice";
 import { Link } from "react-router-dom";
@@ -130,6 +130,9 @@ const Header = () => {
     setIsDropdownOpen(false)
     
   }
+
+  const { profileData } = useSelector(state=> state.users)
+  const {profileInfo} = profileData
   return (
     <header className="bg-[#f4fdfc] text-black shadow-md border-b-4 border-[#ADE9E4]">
       <div className="flex items-center justify-between px-6 py-4">
@@ -145,7 +148,7 @@ const Header = () => {
             className="flex items-center space-x-2 text-base font-medium hover:text-[#BFF7F2] focus:outline-none"
           >
             <IoPersonCircleOutline className="text-3xl" />
-            <span className="hidden sm:inline">Admin</span>
+            <span className="hidden sm:inline">{profileInfo?.name}</span>
             <HiOutlineChevronDown className="text-lg" />
           </button>
 
