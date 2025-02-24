@@ -17,14 +17,11 @@ export const loginAdmin = createAsyncThunk(
         config
       );
 
-      toast.success("Admin logged in Successfully", { position: "top-center" });
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
-        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
-        toast.error(error.message, { position: "top-center" });
         return rejectWithValue(error.message);
       }
     }
@@ -42,16 +39,11 @@ export const adminLogout = createAsyncThunk(
       };
       const { data } = await axiosInstance.post(`/auth/logout`, config);
 
-      toast.success("Admin logged out Successfully", {
-        position: "top-center",
-      });
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
-        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
-        toast.error(error.response, { position: "top-center" });
         return rejectWithValue(error.response);
       }
     }
