@@ -7,7 +7,7 @@ const ViewTeamDetails = () => {
   if (!teamDetails) {
     return (
       <div className="text-center text-red-500 font-semibold text-lg mt-10">
-        ⚠️ Team Details not found!
+        Team Details not found!
       </div>
     );
   }

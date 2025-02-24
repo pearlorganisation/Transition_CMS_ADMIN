@@ -90,83 +90,6 @@ export default function EditPortfolio() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //   const [imageUrl, setImageUrl] = useState(null);
-  //   const [bgUrl, setBgUrl] = useState(null);
-  //   const [bottomSectionUrl, setBottomSectionUrl] = useState(null);
-
-  //   useEffect(() => {
-  //     axiosInstance.get("/portfolio-cards").then((response) => {
-  //       const formattedOptions = response.data.data.map((feature) => ({
-  //         value: feature._id,
-  //         label: feature.title,
-  //       }));
-  //       setOptions(formattedOptions);
-  //     });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     axiosInstance.get("/investment-timeline").then((response) => {
-  //       setInvestmentTimelines(response.data.data);
-  //     });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     axiosInstance.get("/co-investors").then((response) => {
-  //       const formattedOptions = response.data.data.map((feature) => ({
-  //         value: feature._id,
-  //         label: feature.name,
-  //       }));
-  //       setCoInvestors(formattedOptions);
-  //     });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     axiosInstance
-  //       .get(`/portfolio/${id}`)
-  //       .then((response) => {
-  //         const {
-  //           cards,
-  //           coInvestedBy,
-  //           mainDescription,
-  //           image,
-  //           bg,
-  //           bottomSectionIcon,
-  //           name,
-  //           title,
-  //           link,
-  //           overview,
-  //           bottomSectionContent,
-  //         } = response.data.data;
-  //         setValue("name", name);
-  //         setValue("mainDescription", mainDescription);
-  //         setValue("title", title);
-  //         setValue("link", link);
-  //         setValue("overview", overview);
-  //         setValue("bottomSectionContent", bottomSectionContent);
-  //         setImagePreview(image?.secure_url);
-  //         setValue("image", []);
-  //         setBgPreview(bg?.secure_url);
-  //         setValue("bg", []);
-  //         setIconPreview(bottomSectionIcon?.secure_url);
-  //         setValue("bottomSectionIcon", []);
-  //         setValue(
-  //           "cards",
-  //           cards.map((card) => ({
-  //             value: card._id,
-  //             label: card.portfoliocardname,
-  //           }))
-  //         );
-  //         setValue(
-  //           "coInvestedBy",
-  //           coInvestedBy.map((card) => ({
-  //             value: card._id,
-  //             label: card.coInvestorname,
-  //           }))
-  //         );
-  //       })
-  //       .catch((error) => console.error("Error fetching focus area:", error));
-  //   }, [id, setValue]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -238,16 +161,6 @@ export default function EditPortfolio() {
     fetchData();
   }, [id, reset]);
 
-  //   const handleImageChange = (e) => {
-  //     const file = e.target.files[0];
-  //     console.log(e.target.files);
-  //     console.log(e.target.name);
-  //     if (file) {
-
-  //       setValue(e.target.name, file);
-  //     }
-  //   };
-
   const handleImageChange = (e, setPreview) => {
     const file = e.target.files[0];
     if (file) {
@@ -270,10 +183,6 @@ export default function EditPortfolio() {
       formData.append("overview", data.overview);
       formData.append("bottomSectionContent", data.bottomSectionContent);
       formData.append("link", data.link);
-
-      if (data.selectedInvestment?._id) {
-        formData.append("investmentTimeline", data.selectedInvestment._id);
-      }
 
       if (data.image && data.image[0]) {
         formData.append("image", data.image[0]);
@@ -304,7 +213,6 @@ export default function EditPortfolio() {
         )
       );
 
-      // dispatch(editPortfolio({ id, portfolioData: formData }));
       await dispatch(editPortfolio({ id, portfolioData: formData }));
     } catch (error) {
       console.error("Error updating portfolio:", error);
