@@ -16,7 +16,8 @@ import investerReducer from "../features/slices/coInvestorSlice";
 import blogsReducer from "../features/slices/Blogs/blogsSlice";
 import contactsReducer from "../features/slices/contactSlice";
 import impactReducer from "../features/slices/Impact/impactSlice";
-
+import authReducer from "../features/slices/Auth/authSlice"
+import updatePasswordReducer from "../features/slices/User/userSlice"
 const persistConfig = {
   key: "Transition_CMS_Admin",
   version: 1,
@@ -47,6 +48,8 @@ const reducer = combineReducers({
   investmentTimelineCards: investmentTimelineCardsReducer,
   coInvestors: investerReducer,
   listInvestTime: investmentTimelineRedcuer,
+  auth: authReducer,
+  users:updatePasswordReducer
 });
 
 const rootReducer = (state, action) => {

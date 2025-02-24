@@ -60,16 +60,33 @@ import EditInvestmentTimeline from "../pages/Portfolio/EditInvestmentTimeline";
 import ViewInvestmentTimeline from "../pages/Portfolio/ViewInvestmentTimeline";
 import AddPortfolio from "../pages/Portfolio/AddPortfolio";
 import EditPortfolio from "../pages/Portfolio/EditPortfolio";
+import Login from "../pages/Login/Login";
+import ProtectedRoute from "../components/ProtectedRoute";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import Profile from "../pages/Profile/Profile";
 
 const Routes = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />,  // Login page outside of protected layout
+  },
+  {
+    path:"/forgot-password",
+    element:<ForgotPassword />
+  },
+
+  {
     path: "/",
-    element: <Layout />,
+    element: <ProtectedRoute> <Layout /> </ ProtectedRoute>,
     errorElement: <ErrorBoundary />,
     children: [
       {
         index: true,
         element: <Dashboard />,
+      },
+      {
+       path:"/profile",
+       element:<Profile />
       },
       {
         path: "/news",
