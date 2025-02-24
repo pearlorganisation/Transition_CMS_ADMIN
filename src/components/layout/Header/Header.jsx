@@ -116,6 +116,8 @@ import { adminLogout } from "../../../features/actions/Auth/authAction";
 import { logout } from "../../../features/slices/Auth/authSlice";
 import { Link } from "react-router-dom";
 
+import Logo from "/logo.png";
+
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dispatch = useDispatch();
