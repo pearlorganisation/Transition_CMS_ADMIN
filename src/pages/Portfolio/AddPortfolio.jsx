@@ -305,12 +305,12 @@ export default function AddPortfolio() {
         </button>
 
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-md shadow-lg max-w-lg w-full">
-              <h2 className="text-xl font-bold mb-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-4xl max-h-[100vh] overflow-y-auto">
+              <h2 className="text-xl font-bold mb-4 text-center">
                 Select Investment Timeline
               </h2>
-              <div className="space-y-4 max-h-96 overflow-auto flex flex-row gap-3">
+              <div className="grid grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto p-2">
                 {investmentTimelines.map((timeline) => (
                   <div
                     key={timeline._id}
@@ -323,7 +323,7 @@ export default function AddPortfolio() {
                     <img
                       src={timeline.image.secure_url}
                       alt="Timeline"
-                      className="h-20 w-full object-cover rounded-md mb-2"
+                      className="h-24 w-full object-cover rounded-md mb-2"
                     />
                     <p className="font-semibold">{timeline.investmentYear}</p>
                     <p className="text-gray-600">{timeline.description}</p>
