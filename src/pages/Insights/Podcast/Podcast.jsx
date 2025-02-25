@@ -1,111 +1,4 @@
-// import React, { useEffect, useState } from 'react'
-// import axiosInstance from '../../../axiosInstance';
-// import { Link } from 'react-router-dom';
-
-// const Podcast = () => {
-
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
-//     const [podcastData,setPodcastData] =  useState(null);;
-//     const fetchData = async () => {
-//         try {
-//           setLoading(true);
-//           setError(null);
-
-//           const response = await axiosInstance.get(`/blogs?podcast=true`);
-
-//           setPodcastData(response?.data?.data);
-//         } catch (err) {
-//           setError(err instanceof Error ? err.message : "Something went wrong");
-//         } finally {
-//           setLoading(false);
-//         }
-//       };
-//     useEffect(() => {
-
-//       fetchData();
-//     }, []);
-
-//         async function deletePodcast(id)
-//         {
-//             try {
-//                 setLoading(true);
-//                 setError(null);
-
-//                 const response = await axiosInstance.delete(`/blogs/${id}`);
-
-//                 fetchData();
-//               } catch (err) {
-//                 setError(err instanceof Error ? err.message : "Something went wrong");
-//               } finally {
-//                 setLoading(false);
-//               }
-//         }
-
-//   return (
-
-// <div class="relative overflow-x-auto p-2 bg-slate-300">
-//     <div className='flex justify-between items-center px-4'>
-//     <h1 className='font-semibold text-xl '>Podcast Related Data </h1>
-//     <Link to="/add_podcast" className='font-semibold text-red-500 hover:text-red-600   text-xl p-8'>Add</Link>
-//     </div>
-//     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-//         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-//             <tr>
-
-//                 <th scope="col" class="px-6 py-3">
-//                     Title
-//                 </th>
-//                 <th scope="col" class="px-6 py-3">
-//                     Image
-//                 </th>
-//                 <th scope="col" class="px-6 py-3">
-//                     Link
-//                 </th>
-//                 <th scope="col" class="px-6 py-3">
-//                     Actions
-//                 </th>
-//             </tr>
-//         </thead>
-
-//         <tbody>
-//         {
-//             podcastData && podcastData.map((el)=>{
-//                 return <tr key={el?._id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-//                 <th scope="row" class="px-6 line-clamp-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-//                     {el?.title}
-//                 </th>
-//                 <td class="px-6 py-4">
-//                     <img className='size-20' src={el?.icon?.secure_url} alt={el?.title} srcset="" />
-//                 </td>
-//                 <td class="px-6 py-4 text-xl text-blue-400 hover:text-red-500">
-//                     <a href={el?.link}>
-//                         Link
-//                     </a>
-//                 </td>
-//                 <td class="px-6 py-4 flex gap-4">
-//                    <Link to={`/edit-podcast/${el?._id}`}>
-//                     <button className='text-green-400 hover:text-green-500'>
-//                         Edit
-//                     </button>
-//                    </Link>
-//                     <button onClick={()=>deletePodcast(el?._id)}  className='text-red-400 hover:text-red-500'>
-//                         Delete
-//                     </button>
-//                 </td>
-//             </tr>
-//             })
-//         }
-//         </tbody>
-//     </table>
-// </div>
-
-//   )
-// }
-
-// export default Podcast;
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance";
 import { Link } from "react-router-dom";
 
@@ -113,6 +6,8 @@ const Podcast = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [podcastData, setPodcastData] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Manage modal visibility
+  const [selectedPodcastId, setSelectedPodcastId] = useState(null); // Store podcast ID to delete
 
   const fetchData = async () => {
     try {
@@ -141,7 +36,17 @@ const Podcast = () => {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
+      setShowDeleteModal(false); // Close the modal after deletion
     }
+  };
+
+  const openDeleteModal = (id) => {
+    setSelectedPodcastId(id);
+    setShowDeleteModal(true); // Open modal
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false); // Close modal without deleting
   };
 
   return (
@@ -164,7 +69,7 @@ const Podcast = () => {
           <table className="min-w-full table-auto border-collapse text-gray-800 dark:text-gray-200">
             <thead>
               <tr className="bg-gray-700 text-white">
-                <th className="p-3">#</th> {/* Index Column */}
+                <th className="p-3">#</th>
                 <th className="p-3">Title</th>
                 <th className="p-3">Image</th>
                 <th className="p-3">Link</th>
@@ -204,7 +109,7 @@ const Podcast = () => {
                         </button>
                       </Link>
                       <button
-                        onClick={() => deletePodcast(el?._id)}
+                        onClick={() => openDeleteModal(el?._id)}
                         className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600 transition"
                       >
                         Delete
@@ -221,6 +126,32 @@ const Podcast = () => {
               )}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Delete Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-lg font-semibold">Confirm Deletion</h3>
+            <p className="mt-2 text-gray-700">
+              Are you sure you want to delete this podcast?
+            </p>
+            <div className="mt-4 flex justify-between gap-4">
+              <button
+                onClick={closeDeleteModal}
+                className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => deletePodcast(selectedPodcastId)}
+                className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

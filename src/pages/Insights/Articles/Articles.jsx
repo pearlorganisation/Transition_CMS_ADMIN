@@ -1,235 +1,4 @@
-// // import React, { useEffect, useState } from "react";
-// // import axiosInstance from "../../../axiosInstance";
-// // import { Link } from "react-router-dom";
-
-// // const Articles = () => {
-// //   const [loading, setLoading] = useState(true);
-// //   const [error, setError] = useState(null);
-// //   const [articleData, setArticlesData] = useState(null);
-// //   const fetchData = async () => {
-// //     try {
-// //       setLoading(true);
-// //       setError(null);
-
-// //       const response = await axiosInstance.get(`/blogs?articles=true`);
-
-// //       setArticlesData(response?.data?.data);
-// //     } catch (err) {
-// //       setError(err instanceof Error ? err.message : "Something went wrong");
-// //     } finally {
-// //       setLoading(false);
-// //     }
-// //   };
-// //   useEffect(() => {
-// //     fetchData();
-// //   }, []);
-
-// //   async function deleteArticle(id) {
-// //     try {
-// //       setLoading(true);
-// //       setError(null);
-
-// //       const response = await axiosInstance.delete(`/blogs/${id}`);
-
-// //       fetchData();
-// //     } catch (err) {
-// //       setError(err instanceof Error ? err.message : "Something went wrong");
-// //     } finally {
-// //       setLoading(false);
-// //     }
-// //   }
-
-// //   return (
-// //     <div class="relative overflow-x-auto p-2 bg-slate-300">
-// //       <div className="flex justify-between items-center px-4">
-// //         <h1 className="font-semibold text-xl ">Articles Related Data </h1>
-// //         <Link
-// //           to="/add_article"
-// //           className="font-semibold text-red-500 hover:text-red-600   text-xl p-8"
-// //         >
-// //           Add
-// //         </Link>
-// //       </div>{" "}
-// //       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-// //         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-// //           <tr>
-// //             <th scope="col" class="px-6 py-3">
-// //               Name
-// //             </th>
-// //             <th scope="col" class="px-6 py-3">
-// //               Image
-// //             </th>
-// //             <th scope="col" class="px-6 py-3">
-// //               Contains Link Or Body
-// //             </th>
-// //             <th scope="col" class="px-6 py-3">
-// //               Actions
-// //             </th>
-// //           </tr>
-// //         </thead>
-
-// //         {!loading && (
-// //           <tbody>
-// //             {articleData &&
-// //               articleData.map((el) => {
-// //                 return (
-// //                   <tr
-// //                     key={el?._id}
-// //                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
-// //                   >
-// //                     <th
-// //                       scope="row"
-// //                       class="px-6 line-clamp-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-// //                     >
-// //                       {el?.title}
-// //                     </th>
-// //                     <td class="px-6 py-4">
-// //                       <img
-// //                         className="size-20"
-// //                         src={el?.icon?.secure_url}
-// //                         alt={el?.title}
-// //                         srcset=""
-// //                       />
-// //                     </td>
-// //                     <td class="px-6 py-4">{el?.link ? "LINK" : "BODY"}</td>
-
-// //                     <td class="px-6 py-4 flex gap-4">
-// //                       <Link to={`/edit-article/${el?._id}`}>
-// //                         <button className="text-green-400 hover:text-green-500">
-// //                           Edit
-// //                         </button>
-// //                       </Link>
-
-// //                       <button
-// //                         onClick={() => deleteArticle(el?._id)}
-// //                         className="text-red-400 hover:text-red-500"
-// //                       >
-// //                         Delete
-// //                       </button>
-// //                     </td>
-// //                   </tr>
-// //                 );
-// //               })}
-// //           </tbody>
-// //         )}
-// //       </table>
-// //     </div>
-// //   );
-// // };
-
-// // export default Articles;
-
-// import React, { useEffect, useState } from "react";
-// import axiosInstance from "../../../axiosInstance";
-// import { Link } from "react-router-dom";
-
-// const Articles = () => {
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [articleData, setArticlesData] = useState([]);
-
-//   const fetchData = async () => {
-//     try {
-//       setLoading(true);
-//       setError(null);
-//       const response = await axiosInstance.get(`/blogs?articles=true`);
-//       setArticlesData(response?.data?.data);
-//     } catch (err) {
-//       setError(err instanceof Error ? err.message : "Something went wrong");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const deleteArticle = async (id) => {
-//     try {
-//       setLoading(true);
-//       setError(null);
-//       await axiosInstance.delete(`/blogs/${id}`);
-//       fetchData();
-//     } catch (err) {
-//       setError(err instanceof Error ? err.message : "Something went wrong");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="p-6">
-//       <div className="bg-white shadow-md rounded-lg p-4">
-//         {/* Header */}
-//         <div className="flex justify-between items-center mb-4">
-//           <h1 className="text-2xl font-bold text-gray-700">Articles</h1>
-//           <Link
-//             to="/add_article"
-//             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-//           >
-//             + Add Article
-//           </Link>
-//         </div>
-
-//         {/* Loading and Error Handling */}
-//         {loading ? (
-//           <p className="text-center text-gray-500">Loading articles...</p>
-//         ) : error ? (
-//           <p className="text-center text-red-500">{error}</p>
-//         ) : (
-//           <div className="overflow-x-auto">
-//             <table className="w-full text-sm text-left text-gray-600">
-//               <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
-//                 <tr>
-//                   <th className="px-6 py-3">Name</th>
-//                   <th className="px-6 py-3">Image</th>
-//                   <th className="px-6 py-3">Type</th>
-//                   <th className="px-6 py-3 text-center">Actions</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {articleData.map((el) => (
-//                   <tr
-//                     key={el?._id}
-//                     className="border-b hover:bg-gray-50 transition"
-//                   >
-//                     <td className="px-6 py-4 font-medium">{el?.title}</td>
-//                     <td className="px-6 py-4">
-//                       <img
-//                         className="w-16 h-16 object-cover rounded-md shadow"
-//                         src={el?.icon?.secure_url}
-//                         alt={el?.title}
-//                       />
-//                     </td>
-//                     <td className="px-6 py-4">{el?.link ? "LINK" : "BODY"}</td>
-//                     <td className="px-6 py-4 flex justify-center space-x-4">
-//                       <Link to={`/edit-article/${el?._id}`}>
-//                         <button className="px-3 py-1 text-green-600 border border-green-500 rounded-lg hover:bg-green-500 hover:text-white transition">
-//                           Edit
-//                         </button>
-//                       </Link>
-//                       <button
-//                         onClick={() => deleteArticle(el?._id)}
-//                         className="px-3 py-1 text-red-600 border border-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
-//                       >
-//                         Delete
-//                       </button>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Articles;
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance";
 import { Link } from "react-router-dom";
 
@@ -237,6 +6,8 @@ const Articles = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [articleData, setArticlesData] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -260,6 +31,7 @@ const Articles = () => {
       setLoading(true);
       setError(null);
       await axiosInstance.delete(`/blogs/${id}`);
+      setShowDeleteModal(false);
       fetchData();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -281,6 +53,7 @@ const Articles = () => {
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
+
       {loading ? (
         <p className="text-center text-lg">Loading...</p>
       ) : (
@@ -288,7 +61,7 @@ const Articles = () => {
           <table className="min-w-full table-auto border-collapse text-gray-800 dark:text-gray-200">
             <thead>
               <tr className="bg-gray-700 text-white">
-                <th className="p-3">#</th> {/* Index Column */}
+                <th className="p-3">#</th>
                 <th className="p-3">Name</th>
                 <th className="p-3">Image</th>
                 <th className="p-3">Type</th>
@@ -319,7 +92,10 @@ const Articles = () => {
                         </button>
                       </Link>
                       <button
-                        onClick={() => deleteArticle(el?._id)}
+                        onClick={() => {
+                          setSelectedArticle(el);
+                          setShowDeleteModal(true);
+                        }}
                         className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600 transition"
                       >
                         Delete
@@ -336,6 +112,34 @@ const Articles = () => {
               )}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Delete Modal */}
+      {showDeleteModal && selectedArticle && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-sm w-full">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+              Are you sure you want to delete this article?
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">
+              This action cannot be undone.
+            </p>
+            <div className="mt-4 flex justify-between">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => deleteArticle(selectedArticle?._id)}
+                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
