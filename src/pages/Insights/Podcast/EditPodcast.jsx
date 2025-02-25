@@ -30,6 +30,7 @@ const EditPodcast = () => {
       title: singleBlogData?.title,
       shortTitle: singleBlogData?.shortTitle,
       link: singleBlogData?.link,
+      order: singleBlogData?.order,
     },
   });
 
@@ -39,6 +40,7 @@ const EditPodcast = () => {
         title: singleBlogData.title || "",
         shortTitle: singleBlogData.shortTitle || "",
         link: singleBlogData.link || "",
+        order: singleBlogData.order,
       });
     }
   }, [singleBlogData, reset]);
@@ -55,8 +57,9 @@ const EditPodcast = () => {
       if (data.title) formData.append("title", data.title);
       if (data.shortTitle) formData.append("shortTitle", data.shortTitle);
       if (data.link) formData.append("link", data.link);
-      formData.append("blogType", "PODCAST");
 
+      formData.append("blogType", "PODCAST");
+      if (data.order) formData.append("order", data.order);
       // Handle file upload
       if (data.icon?.[0]) {
         formData.append("icon", data.icon[0]);
@@ -131,7 +134,24 @@ const EditPodcast = () => {
             <p className="mt-1 text-xs text-red-500">{errors.title.message}</p>
           )}
         </div>
-
+        {/** for setting the order of the news */}
+        <div>
+          <label
+            htmlFor="order"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Enter Order
+          </label>
+          <input
+            id="order"
+            type="number"
+            {...register("order")}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {errors.order && (
+            <p className="mt-1 text-xs text-red-500">{errors.order.message}</p>
+          )}
+        </div>
         <div>
           <label
             htmlFor="shortTitle"
