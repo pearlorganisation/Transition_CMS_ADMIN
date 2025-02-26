@@ -67,6 +67,27 @@ const AddFocusAreaFeature = () => {
             )}
           </div>
 
+          {/**  order */}
+          <div>
+            <label
+              htmlFor="order"
+              className="block font-medium text-gray-700 dark:text-gray-300"
+            >
+              Enter Order
+            </label>
+            <input
+              type="number"
+              id="order"
+              {...register("order", { required: "Order is required" })}
+              className="w-full border rounded-lg px-4 py-2 mt-1 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+              placeholder="Enter Order"
+            />
+            {errors.order && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.order.message}
+              </p>
+            )}
+          </div>
           {/* Features Field */}
           <div>
             <label className="block font-medium text-gray-700 dark:text-gray-300">
