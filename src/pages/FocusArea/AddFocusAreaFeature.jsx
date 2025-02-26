@@ -24,7 +24,7 @@ const AddFocusAreaFeature = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    await dispatch(addFocusAreaFeature(data));
+     dispatch(addFocusAreaFeature(data));
     reset();
     setImagePreview(null);
     setLoading(false);

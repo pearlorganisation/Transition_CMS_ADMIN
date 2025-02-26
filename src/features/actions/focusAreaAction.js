@@ -215,7 +215,7 @@ export const addFocusAreaFeature = createAsyncThunk(
         "features",
         JSON.stringify(userData.features?.map((item) => item.value))
       );
-
+      formData.append("order", userData?.order)
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -290,6 +290,7 @@ export const updateFocusAreaFeature = createAsyncThunk(
         "features",
         JSON.stringify(updatedData?.features?.map((item) => item.value))
       );
+      formData.append("order", updatedData?.order)
 
       const config = {
         headers: {

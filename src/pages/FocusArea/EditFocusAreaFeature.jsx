@@ -56,7 +56,7 @@ const EditFocusAreaFeature = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    await dispatch(
+     dispatch(
       updateFocusAreaFeature({ id: focusAreaFeature._id, updatedData: data })
     );
     setLoading(false);
