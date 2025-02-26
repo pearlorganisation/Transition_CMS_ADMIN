@@ -65,6 +65,13 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import Profile from "../pages/Profile/Profile";
 
+
+/**
+  // <ProtectedRoute>
+        // {" "}
+        <Layout />
+        // {" "}
+      {/* </ProtectedRoute> */
 const Routes = createBrowserRouter([
   {
     path: "/login",
@@ -78,10 +85,9 @@ const Routes = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ProtectedRoute>
-        {" "}
-        <Layout />{" "}
-      </ProtectedRoute>
+  
+        <Layout />
+     
     ),
     errorElement: <ErrorBoundary />,
     children: [

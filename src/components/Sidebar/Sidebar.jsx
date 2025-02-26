@@ -28,6 +28,29 @@ const routes = [
     icon: <FaHome />,
   },
   {
+    path: "/focusarea",
+    name: "Focus Area",
+    icon: <FaBullseye />,
+    subRoutes: [
+      {
+        path: "/focusareafeature",
+        name: "List Focus Area Features",
+        icon: <MdInsights />,
+      },
+      {
+        path: "/focusarea/add-focusareafeature",
+        name: "Add Focus Area Feature",
+        icon: <MdAddBox />,
+      },
+      { path: "/focusarea", name: "List Focus Areas", icon: <MdInsights /> },
+      {
+        path: "/focusarea/add-focusarea",
+        name: "Add Focus Area",
+        icon: <MdAddBox />,
+      },
+    ],
+  },
+  {
     path: "/team",
     name: "Team",
     icon: <MdPeople />,
@@ -52,63 +75,15 @@ const routes = [
       { path: "/podcast", name: "Podcast", icon: <MdMic /> },
     ],
   },
-  {
-    path: "/focusarea",
-    name: "Focus Area",
-    icon: <FaBullseye />,
-    subRoutes: [
-      {
-        path: "/focusareafeature",
-        name: "List Focus Area Features",
-        icon: <MdInsights />,
-      },
-      {
-        path: "/focusarea/add-focusareafeature",
-        name: "Add Focus Area Feature",
-        icon: <MdAddBox />,
-      },
-      { path: "/focusarea", name: "List Focus Areas", icon: <MdInsights /> },
-      {
-        path: "/focusarea/add-focusarea",
-        name: "Add Focus Area",
-        icon: <MdAddBox />,
-      },
-    ],
-  },
+   
   {
     path: "/portfolios",
     name: "Portfolios",
     icon: <MdWork />,
     subRoutes: [
-      { path: "/portfolios", name: "List All Portfolios", icon: <MdWork /> },
       {
-        path: "/portfolios/add-portfolio",
-        name: "Add Portfolio",
-        icon: <MdAddBox />,
-      },
-      {
-        path: "/portfolios/portfolio-cards",
-        name: "List All Portfolio Cards",
-        icon: <MdWork />,
-      },
-      {
-        path: "/portfolios/add-portfolio-card",
-        name: "Add Portfolio Card",
-        icon: <MdAddBox />,
-      },
-      {
-        path: "/portfolios/invest-timeline-cards",
-        name: "List All Investment Timeline Cards",
-        icon: <MdWork />,
-      },
-      {
-        path: "/portfolios/add-investment-timeline-card",
-        name: "Add Investment Timeline Card",
-        icon: <MdAddBox />,
-      },
-      {
-        path: "/portfolios/invest-timelines",
-        name: "List Investment Timelines",
+        path: "/portfolios/add-coinvestor",
+        name: "List Co Investors",
         icon: <MdWork />,
       },
       {
@@ -117,11 +92,42 @@ const routes = [
         icon: <MdAddBox />,
       },
       {
-        path: "/portfolios/add-coinvestor",
-        name: "List Co Investors",
+        path: "/portfolios/invest-timelines",
+        name: "List Investment Timelines",
+        icon: <MdWork />,
+      },
+      {
+        path: "/portfolios/add-investment-timeline-card",
+        name: "Add Investment Timeline Card",
+        icon: <MdAddBox />,
+      },
+      {
+        path: "/portfolios/invest-timeline-cards",
+        name: "List All Investment Timeline Cards",
+        icon: <MdWork />,
+      },
+      {
+        path: "/portfolios/add-portfolio-card",
+        name: "Add Portfolio Card",
+        icon: <MdAddBox />,
+      },
+      {
+        path: "/portfolios/portfolio-cards",
+        name: "List of why we invested cards",
+        icon: <MdWork />,
+      },
+      {
+        path: "/portfolios/add-portfolio",
+        name: "Add Portfolio",
+        icon: <MdAddBox />,
+      },
+      {
+        path: "/portfolios",
+        name: "List All Portfolios",
         icon: <MdWork />,
       },
     ],
+
   },
   {
     path: "/impact",
