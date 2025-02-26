@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import parse from "html-react-parser";
 const ViewInvestmentTimeline = () => {
   const location = useLocation();
 
@@ -17,7 +18,7 @@ const ViewInvestmentTimeline = () => {
       <h1 className="text-3xl font-bold mb-4">View Investment Timeline Page</h1>
       <div className="bg-white rounded-lg p-6">
         <h1 className="text-2xl font-bold">
-          Description : {investmentTimeline.description}
+          Description : {parse(investmentTimeline.description)}
         </h1>
 
         <h1 className="text-2xl font-bold">

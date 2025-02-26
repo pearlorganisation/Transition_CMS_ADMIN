@@ -95,16 +95,19 @@ const EditMission = () => {
   }, [watch("title")]);
 
   const submitForm = async (formData) => {
-    const updatedData = {...formData, id: _id, impactDataType: "MISSION" };
-    console.log("Submitting updated data:", updatedData);
+    const updatedData = { ...formData, id: _id, impactDataType: "MISSION" };
+
     dispatch(updateImpactById(updatedData));
   };
 
   return (
     <>
-      <div>Edit Mission</div>
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+      <div className="mt-5">Edit Mission</div>
+      <div className="mt-12">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Body
         </label>
         <form onSubmit={handleSubmit(submitForm)}>
@@ -123,8 +126,15 @@ const EditMission = () => {
               />
             )}
           />
-          {errors.title && <p className="text-red-500">{errors.title.message}</p>}
-          <button type="submit">Update Mission</button>
+          {errors.title && (
+            <p className="text-red-500">{errors.title.message}</p>
+          )}
+          <button
+            type="submit"
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Update Mission
+          </button>
         </form>
       </div>
     </>

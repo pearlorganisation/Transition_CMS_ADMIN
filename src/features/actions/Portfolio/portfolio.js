@@ -69,8 +69,6 @@ export const addPortfolio = createAsyncThunk(
         JSON.stringify(portfolioData.coInvestedBy)
       );
 
-      console.log(formData, "Form 12346");
-
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",

@@ -12,8 +12,6 @@ const AddNews = () => {
 
   // Handle form submission
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    alert("News added successfully!");
     reset();
     setImagePreview(null);
   };

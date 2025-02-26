@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../axiosInstance";
+import { toast } from "react-toastify";
 
 export const getImpact = createAsyncThunk(
   "get/impact",
@@ -15,9 +16,11 @@ export const getImpact = createAsyncThunk(
       return data?.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
-        return rejectWithValue(error.response);
+        toast.error(error.message, { position: "top-center" });
+        return rejectWithValue(error.message);
       }
     }
   }
@@ -31,9 +34,9 @@ export const updateImpactById = createAsyncThunk(
       console.log("the impact data is", impactData);
       console.log("the id is", id);
       const config = {
-           headers: {
-               "Content-Type": "multipart/form-data"
-           }
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       };
       const { data } = await axiosInstance.put(
         `/impact/${id}`,
@@ -43,8 +46,10 @@ export const updateImpactById = createAsyncThunk(
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
         return rejectWithValue(error.response.data.message);
       } else {
+        toast.error(error.response, { position: "top-center" });
         return rejectWithValue(error.response);
       }
     }

@@ -7,123 +7,114 @@ const ViewPortfolio = () => {
 
   if (!portfolio) {
     return (
-      <div className="text-center text-red-500">Portfolio item not found!</div>
+      <div className="text-center text-red-500 text-xl font-semibold mt-10">
+        Portfolio item not found!
+      </div>
     );
   }
 
-  console.log(portfolio, "portfolio 1234546");
-
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">View portfolio Page</h1>
+    <div className="p-8 max-w-5xl mx-auto min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white rounded-lg shadow-xl">
+      <h1 className="text-4xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
+        Portfolio Details
+      </h1>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        <div className="flex flex-col items-center">
+          <img
+            src={portfolio?.image?.secure_url}
+            alt={portfolio.name}
+            className="w-40 h-40 rounded-full shadow-md border-4 border-blue-500 dark:border-blue-400"
+          />
+          <h2 className="text-2xl font-semibold mt-4">{portfolio.name}</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
+            {parse(portfolio.title)}
+          </p>
+        </div>
 
-      <div className="bg-white rounded-lg p-6">
-        <h1 className="text-lg"> Image </h1>
-        <img
-          src={portfolio?.image?.secure_url}
-          alt={portfolio.name}
-          className="w-32 h-32 rounded-full mx-auto mb-4"
-        />
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            Main Description
+          </h2>
+          <p className="text-gray-700 dark:text-gray-300 mt-2 text-lg">
+            {parse(portfolio.mainDescription)}
+          </p>
+        </div>
 
-        <h1 className="text-lg"> Background Image </h1>
-        <img
-          src={portfolio?.bg?.secure_url}
-          alt={portfolio.name}
-          className="w-32 h-32 rounded-full mx-auto mb-4"
-        />
-        <h2 className="text-xl font-semibold text-center">
-          {" "}
-          Name : {portfolio.name}
-        </h2>
-        <h2 className="text-xl font-semibold text-center mt-6"> TITLE</h2>
-        <p className="text-gray-600 text-center">{parse(portfolio.title)}</p>
+        <div className="mt-6 flex flex-col items-center">
+          <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            Background Image
+          </h2>
+          <img
+            src={portfolio?.bg?.secure_url}
+            alt={portfolio.name}
+            className="w-full md:w-3/4 h-64 object-cover rounded-lg mt-4 shadow-md"
+          />
+        </div>
 
-        <h2 className="text-xl font-semibold text-center mt-6">
-          {" "}
-          MAIN DESCRIPTION
-        </h2>
-        <p className="text-gray-600 text-center">
-          {parse(portfolio.mainDescription)}
-        </p>
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            Overview
+          </h2>
+          <p className="text-gray-700 dark:text-gray-300 mt-2 text-lg">
+            {parse(portfolio.overview)}
+          </p>
+        </div>
 
-        <h2 className="text-xl font-semibold text-center mt-6">
-          {" "}
-          BOTTOM SECTION ICON
-        </h2>
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            Bottom Section Icon
+          </h2>
+          <img
+            src={portfolio?.bottomSectionIcon?.secure_url}
+            alt={portfolio.name}
+            className="w-24 h-24 mx-auto rounded-lg shadow-md border-2 border-gray-300"
+          />
+        </div>
 
-        <img
-          src={portfolio?.bottomSectionIcon?.secure_url}
-          alt={portfolio.name}
-          className="w-32 h-32 rounded-full mx-auto mb-4"
-        />
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            Investment Timeline
+          </h2>
+          <img
+            src={portfolio?.investmentTimeline?.image?.secure_url}
+            alt={portfolio.name}
+            className="w-full md:w-3/4 h-64 object-cover rounded-lg mt-4 shadow-md"
+          />
+          <p className="mt-4 text-lg">
+            {parse(portfolio?.investmentTimeline?.description)}
+          </p>
+          <p className="mt-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+            Investment Year: {portfolio?.investmentTimeline?.investmentYear}
+          </p>
+        </div>
 
-        <h2 className="text-xl font-semibold text-center mt-6">OVERVIEW </h2>
-        <p className="text-gray-600 text-center">{parse(portfolio.overview)}</p>
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            Investment Cards
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            {Array.isArray(portfolio?.investmentTimeline?.cards) &&
+              portfolio?.investmentTimeline?.cards.map((card, index) => (
+                <div
+                  key={card._id}
+                  className="p-4 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-md"
+                >
+                  <h3 className="text-lg font-semibold">
+                    {index + 1}. {card.body}
+                  </h3>
+                </div>
+              ))}
+          </div>
+        </div>
+
         <a
           href={portfolio.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 hover:underline text-center block mt-4"
+          className="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-2 px-4 rounded-lg shadow-md transition"
         >
-          View Link
+          View Portfolio
         </a>
-
-        <div className="">
-          <h1 className="mt-6"> List of CARDS </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.isArray(portfolio?.cards) &&
-              portfolio?.cards?.map((pCard, index) => (
-                <div className="" key={pCard?._id}>
-                  <h1 className="mt-2">
-                    {index + 1} . {pCard?.portfoliocardname}
-                  </h1>
-                </div>
-              ))}
-          </div>
-        </div>
-
-        <div className="">
-          <h1 className="mt-6"> List of Co Investors </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.isArray(portfolio?.coInvestedBy) &&
-              portfolio?.coInvestedBy?.map((pCard, index) => (
-                <div className="" key={pCard?._id}>
-                  <h1 className="mt-2">
-                    {index + 1} . {pCard?.coInvestorname}
-                  </h1>
-                </div>
-              ))}
-          </div>
-        </div>
-
-        <div className="">
-          <h1 className="mt-6"> INVESTMENT TIMELINE</h1>
-
-          <img
-            src={portfolio?.investmentTimeline?.image?.secure_url}
-            alt={portfolio?.name}
-            className="w-32 h-32 rounded-full mx-auto mb-4"
-          />
-
-          <h1 className="mt-6"> Description </h1>
-          <p>{parse(portfolio?.investmentTimeline?.description)}</p>
-
-          <h1 className="mt-6"> Investment Year </h1>
-          <p>{portfolio?.investmentTimeline?.investmentYear}</p>
-
-          <h1 className="mt-6 mb-6"> INVESTMENT CARDS</h1>
-
-          <div className="grid grid-cols-1  gap-3 mt-6 mb-6">
-            {Array.isArray(portfolio?.investmentTimeline?.cards) &&
-              portfolio?.investmentTimeline?.cards.map((card, index) => (
-                <div className="" key={card._id}>
-                  <h1 className="">
-                    {index + 1} . {card.body}{" "}
-                  </h1>
-                </div>
-              ))}
-          </div>
-        </div>
       </div>
     </div>
   );

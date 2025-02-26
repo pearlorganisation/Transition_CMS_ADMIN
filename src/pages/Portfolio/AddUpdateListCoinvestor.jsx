@@ -20,15 +20,15 @@ const AddCoinvester = () => {
   const { loading, coInvestors } = useSelector((state) => state.coInvestors);
   const [editingId, setEditingId] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [id, setId] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     dispatch(getInvestors());
-  }, [id]);
+  }, []);
+
   const onSubmit = (data) => {
     const formData = new FormData();
-    console.log("data", data.logo);
-
     formData.append("name", data.name);
 
     if (data.logo && data.logo.length > 0) {
@@ -38,13 +38,13 @@ const AddCoinvester = () => {
     if (editingId) {
       dispatch(updateInvestor({ id: editingId, updatedData: formData })).then(
         () => {
-          dispatch(getInvestors()); // Fetch updated data
+          dispatch(getInvestors());
         }
       );
       setEditingId(null);
     } else {
       dispatch(CreateCoInvester(formData)).then(() => {
-        dispatch(getInvestors()); // Fetch updated data
+        dispatch(getInvestors());
       });
     }
   };
@@ -57,8 +57,15 @@ const AddCoinvester = () => {
       setEditingId(id);
     }
   };
-  const handleDelete = (id) => {
-    dispatch(deleteInvestor(id));
+
+  const confirmDelete = () => {
+    if (selectedId) {
+      dispatch(deleteInvestor(selectedId)).then(() => {
+        dispatch(getInvestors());
+      });
+      setShowModal(false);
+      setSelectedId(null);
+    }
   };
 
   return (
@@ -70,8 +77,6 @@ const AddCoinvester = () => {
         <h2 className="text-2xl font-semibold text-center text-gray-800">
           {editingId ? "Edit Co-Investor" : "Add Co-Investor"}
         </h2>
-
-        {/* Name Input */}
         <div>
           <label className="block text-gray-700 font-medium">Name</label>
           <input
@@ -79,13 +84,12 @@ const AddCoinvester = () => {
             placeholder="Enter name"
             {...register("name", { required: "Name is required" })}
             className="w-full border rounded-lg p-3 mt-1 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            disabled={loading}
           />
           {errors.name && (
             <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
           )}
         </div>
-
-        {/* File Upload */}
         <div>
           <label className="block text-gray-700 font-medium">Upload Logo</label>
           <input
@@ -94,6 +98,7 @@ const AddCoinvester = () => {
             {...register("logo")}
             className="w-full border rounded-lg p-2 mt-1 bg-gray-50"
             onChange={(e) => setPreview(URL.createObjectURL(e.target.files[0]))}
+            disabled={loading}
           />
           {preview && (
             <img
@@ -103,18 +108,44 @@ const AddCoinvester = () => {
             />
           )}
         </div>
-
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+          className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-300 flex justify-center items-center"
+          disabled={loading}
         >
-          {editingId ? "Update" : "Submit"}
+          {loading ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 11-8 8z"
+                ></path>
+              </svg>
+              Processing...
+            </>
+          ) : editingId ? (
+            "Update"
+          ) : (
+            "Submit"
+          )}
         </button>
       </form>
 
-      {/* Table */}
-      {coInvestors?.data?.length > 0 ? (
+      {loading ? (
+        <div className="text-center text-gray-500 mt-4">Loading...</div>
+      ) : coInvestors?.data?.length > 0 ? (
         <table className="w-full table-auto border-collapse mt-6">
           <thead>
             <tr className="bg-gray-200 w-full">
@@ -124,47 +155,68 @@ const AddCoinvester = () => {
             </tr>
           </thead>
           <tbody>
-            {coInvestors?.data?.map((item) =>
-              item?.logo && item?.logo?.secure_url ? (
-                <tr key={item?._id} className="border-b">
-                  <td className="px-6 py-3 text-center">
-                    <img
-                      src={item?.logo?.secure_url}
-                      alt={`Logo of ${item?.name}`}
-                      className="w-16 h-16 object-cover rounded-lg mx-auto"
-                    />
-                  </td>
-                  <td className="px-6 py-3 text-left whitespace-nowrap">
-                    {item?.name}
-                  </td>
-                  <td className="px-6 py-3 text-center whitespace-nowrap">
-                    <button
-                      onClick={() => {
-                        handleEdit(item?._id);
-                        setId(item?._id);
-                      }}
-                      className="text-blue-600 hover:text-blue-800 mr-4"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleDelete(item?._id);
-                        setId(item?._id);
-                      }}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ) : null
-            )}
+            {coInvestors?.data?.map((item) => (
+              <tr key={item?._id} className="border-b">
+                <td className="px-6 py-3 text-center">
+                  <img
+                    src={item?.logo?.secure_url}
+                    alt={`Logo of ${item?.name}`}
+                    className="w-16 h-16 object-cover rounded-lg mx-auto"
+                  />
+                </td>
+                <td className="px-6 py-3 text-left whitespace-nowrap">
+                  {item?.name}
+                </td>
+                <td className="px-6 py-3 text-center whitespace-nowrap">
+                  <button
+                    onClick={() => handleEdit(item?._id)}
+                    className="text-blue-600 hover:text-blue-800 mr-4"
+                    disabled={loading}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedId(item?._id);
+                      setShowModal(true);
+                    }}
+                    className="text-red-600 hover:text-red-800"
+                    disabled={loading}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       ) : (
         <div className="text-center text-gray-500 mt-4">
           No co-investors found.
+        </div>
+      )}
+
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Confirm Delete</h2>
+            <p>Are you sure you want to delete this co-investor?</p>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded"
+                disabled={loading}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -6,6 +6,7 @@ import { addInvestmentTimelineCard } from "../../features/actions/Portfolio/inve
 const AddInvestmentTimelineCard = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -14,10 +15,10 @@ const AddInvestmentTimelineCard = () => {
   } = useForm();
 
   // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-
-    dispatch(addInvestmentTimelineCard(data));
+  const onSubmit = async (data) => {
+    setLoading(true);
+    await dispatch(addInvestmentTimelineCard(data));
+    setLoading(false);
     reset();
     setImagePreview(null);
   };
@@ -31,8 +32,8 @@ const AddInvestmentTimelineCard = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 bg-gray-300 shadow-lg rounded-lg  mt-2 pb-6">
-      <h1 className="text-2xl font-bold mb-6">Add Investment Timeline Card </h1>
+    <div className="max-w-2xl mx-auto px-6 bg-gray-300 shadow-lg rounded-lg mt-2 pb-6">
+      <h1 className="text-2xl font-bold mb-6">Add Investment Timeline Card</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="w-full">
           <label htmlFor="title" className="block font-medium mb-1">
@@ -50,7 +51,7 @@ const AddInvestmentTimelineCard = () => {
           )}
         </div>
 
-        {/* Designation Field */}
+        {/* Body Field */}
         <div className="w-full">
           <label htmlFor="body" className="block font-medium mb-1">
             Body
@@ -58,9 +59,7 @@ const AddInvestmentTimelineCard = () => {
           <input
             type="text"
             id="body"
-            {...register("body", {
-              required: "body is required",
-            })}
+            {...register("body", { required: "Body is required" })}
             className="w-full border border-gray-300 rounded px-3 py-2"
             placeholder="Enter Body Text"
           />
@@ -102,9 +101,14 @@ const AddInvestmentTimelineCard = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition"
+          className={`w-full text-white font-bold py-2 px-4 rounded transition ${
+            loading
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600"
+          }`}
+          disabled={loading}
         >
-          Add Investment Timeline Card
+          {loading ? "Adding..." : "Add Investment Timeline Card"}
         </button>
       </form>
     </div>

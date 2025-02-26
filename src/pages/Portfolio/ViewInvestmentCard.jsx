@@ -7,7 +7,7 @@ const ViewInvestmentCard = () => {
   if (!investmentTimelineCard) {
     return (
       <div className="text-center text-red-500">
-        portfolio Card item not found!
+        Portfolio Card item not found!
       </div>
     );
   }

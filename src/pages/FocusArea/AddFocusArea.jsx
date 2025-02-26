@@ -5,6 +5,7 @@ import Select from "react-select";
 import { useDispatch } from "react-redux";
 import { addFocusArea } from "../../features/actions/focusAreaAction";
 import JoditEditor from "jodit-react";
+
 const config = {
   readonly: false,
   height: 400,
@@ -51,19 +52,12 @@ const config = {
   ],
   uploader: {
     insertImageAsBase64URI: true,
-    url: "your-upload-url",
-    format: "json",
   },
   placeholder: "Start typing here...",
   showCharsCounter: true,
   showWordsCounter: true,
-  showXPathInStatusbar: false,
   spellcheck: true,
   allowResizeY: true,
-  allowResizeX: false,
-  language: "en",
-  askBeforePasteHTML: true,
-  askBeforePasteFromWord: true,
 };
 
 const AddFocusArea = () => {
@@ -71,10 +65,11 @@ const AddFocusArea = () => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
-
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -90,93 +85,97 @@ const AddFocusArea = () => {
       .catch((error) => console.error("Error fetching features:", error));
   }, []);
 
-  const onSubmit = (data) => {
-    console.log("Submitted Data:", data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const formattedData = {
+        title: data.title,
+        focusAreas: data.focusAreas.map((id) => {
+          const selectedFeature = options.find((option) => option.value === id);
+          return { _id: selectedFeature.value, title: selectedFeature.label };
+        }),
+      };
 
-    const formattedData = {
-      title: data.title,
-      focusAreas: data.focusAreas.map((id) => {
-        const selectedFeature = options.find((option) => option.value === id);
-        return { _id: selectedFeature.value, title: selectedFeature.label };
-      }),
-    };
-
-    dispatch(addFocusArea(formattedData));
+      await dispatch(addFocusArea(formattedData));
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
-    >
-      {/* Title Field */}
-      <div className="mb-4">
-        <label className="block text-gray-700">Title</label>
-        {/* <input
-          {...register("title", { required: "Title is required" })}
-          className="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300"
-          placeholder="Enter Focus Area Title"
-        />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )} */}
-        <Controller
-          control={control}
-          name="title"
-          rules={{ required: "Body is required" }}
-          render={({ field }) => (
-            <JoditEditor
-              value={field.value || ""}
-              config={config}
-              onBlur={field.onBlur}
-              onChange={(content) => {
-                field.onChange(content); // Ensure new content is saved
-              }}
-            />
-          )}
-        />
-      </div>
-
-      {/* Focus Areas Multi-Select */}
-      <div className="mb-4">
-        <label className="block text-gray-700">Select Focus Areas</label>
-
-        <Controller
-          name="focusAreas"
-          control={control}
-          rules={{ required: "At least one focus area is required" }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={options}
-              isMulti
-              className="mt-1"
-              classNamePrefix="react-select"
-              getOptionLabel={(e) => e.label}
-              getOptionValue={(e) => e.value}
-              value={options.filter((option) =>
-                field.value?.includes(option.value)
-              )}
-              onChange={(selectedOptions) => {
-                field.onChange(selectedOptions.map((option) => option.value));
-              }}
-            />
-          )}
-        />
-
-        {errors.focusAreas && (
-          <p className="text-red-500 text-sm">{errors.focusAreas.message}</p>
-        )}
-      </div>
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
-      >
+    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-10">
+      <h1 className="text-3xl font-bold text-center mb-6 text-gray-700">
         Create Focus Area
-      </button>
-    </form>
+      </h1>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Title Field */}
+        <div>
+          <label className="block text-gray-700 font-semibold mb-1">
+            Title
+          </label>
+          <Controller
+            control={control}
+            name="title"
+            rules={{ required: "Title is required" }}
+            render={({ field }) => (
+              <JoditEditor
+                value={field.value || ""}
+                config={config}
+                onBlur={field.onBlur}
+                onChange={field.onChange}
+              />
+            )}
+          />
+          {errors.title && (
+            <p className="text-red-500 text-sm">{errors.title.message}</p>
+          )}
+        </div>
+
+        {/* Focus Areas Multi-Select */}
+        <div>
+          <label className="block text-gray-700 font-semibold mb-1">
+            Select Focus Areas
+          </label>
+          <Controller
+            name="focusAreas"
+            control={control}
+            rules={{ required: "At least one focus area is required" }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={options}
+                isMulti
+                className="mt-1"
+                classNamePrefix="react-select"
+                getOptionLabel={(e) => e.label}
+                getOptionValue={(e) => e.value}
+                value={options.filter((option) =>
+                  field.value?.includes(option.value)
+                )}
+                onChange={(selectedOptions) => {
+                  field.onChange(selectedOptions.map((option) => option.value));
+                }}
+              />
+            )}
+          />
+          {errors.focusAreas && (
+            <p className="text-red-500 text-sm">{errors.focusAreas.message}</p>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300 disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create Focus Area"}
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -68,16 +68,21 @@ import Profile from "../pages/Profile/Profile";
 const Routes = createBrowserRouter([
   {
     path: "/login",
-    element: <Login />,  // Login page outside of protected layout
+    element: <Login />, // Login page outside of protected layout
   },
   {
-    path:"/forgot-password",
-    element:<ForgotPassword />
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
 
   {
     path: "/",
-    element: <ProtectedRoute> <Layout /> </ ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        {" "}
+        <Layout />{" "}
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorBoundary />,
     children: [
       {
@@ -85,8 +90,8 @@ const Routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-       path:"/profile",
-       element:<Profile />
+        path: "/profile",
+        element: <Profile />,
       },
       {
         path: "/news",
@@ -283,7 +288,7 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/contactUs",
-        element: <ContactUs />
+        element: <ContactUs />,
       },
       {
         path: "/portfolios/add-portfolio",
