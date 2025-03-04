@@ -34,6 +34,7 @@ const Team = () => {
               <th className="p-3">Name</th>
               <th className="p-3">Designation</th>
               <th className="p-3">Type</th>
+              <th className="p-3">Order</th>
               <th className="p-3">Image</th>
               <th className="p-3">LinkedIn</th>
               <th className="p-3">Actions</th>
@@ -50,6 +51,8 @@ const Team = () => {
                   <td className="p-3 font-medium">{item.name}</td>
                   <td className="p-3">{item.bio}</td>
                   <td className="p-3">{item.type}</td>
+                  <td className="p-3">{item.order}</td>
+
                   <td className="p-3">
                     <img
                       src={item.image.secure_url}

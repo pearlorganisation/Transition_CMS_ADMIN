@@ -57,7 +57,7 @@ const AddTeam = () => {
                 </p>
               )}
             </div>
-
+  
             <div>
               <label htmlFor="bio" className="block text-gray-700 font-medium">
                 Designation
@@ -96,7 +96,24 @@ const AddTeam = () => {
               <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
             )}
           </div>
-
+{/** order */}
+          <div>
+            <label htmlFor="order" className="block text-gray-700 font-medium">
+              Select Order
+            </label>
+            <input
+              type="number"
+              id="order"
+              {...register("order", { required: "Order is required" })}
+              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+              placeholder="Enter Order"
+            />
+            {errors.order && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.order.message}
+              </p>
+            )}
+          </div>
           {/* LinkedIn Link */}
           <div>
             <label htmlFor="link" className="block text-gray-700 font-medium">

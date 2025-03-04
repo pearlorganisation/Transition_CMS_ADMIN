@@ -29,6 +29,8 @@ const EditTeam = () => {
         name: team.name || "",
         bio: team.bio || "",
         link: team.link || "",
+        order: team?.order || 0,
+        type:team?.type
       });
       if (team.image) {
         setImagePreview(team.image.secure_url);
@@ -75,7 +77,22 @@ const EditTeam = () => {
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
           </div>
-
+          <div>
+            <label htmlFor="type" className="block text-gray-700 font-medium">
+              Type
+            </label>
+            <input
+              type="text"
+              id="type"
+              {...register("type")}
+              disabled={true}
+              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder=""
+            />
+            {errors.type && (
+              <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
+            )}
+          </div>
           {/* Designation */}
           <div>
             <label htmlFor="bio" className="block text-gray-700 font-medium">
@@ -92,7 +109,21 @@ const EditTeam = () => {
               <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>
             )}
           </div>
-
+          <div>
+            <label htmlFor="order" className="block text-gray-700 font-medium">
+              Order
+            </label>
+            <input
+              type="number"
+              id="order"
+              {...register("order", { required: "Order is required" })}
+              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Enter Order"
+            />
+            {errors.order && (
+              <p className="text-red-500 text-sm mt-1">{errors.order.message}</p>
+            )}
+          </div>
           {/* LinkedIn Link */}
           <div>
             <label htmlFor="link" className="block text-gray-700 font-medium">
